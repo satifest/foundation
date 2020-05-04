@@ -17,6 +17,8 @@ class CreateRepositoriesTable extends Migration
             $table->id();
 
             $table->string('name');
+            $table->string('title')->nullable();
+            $table->longText('description')->nullable();
             $table->string('type')->default('vcs');
             $table->string('url');
 
