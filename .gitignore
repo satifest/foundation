@@ -1,0 +1,12 @@
+# Composer
+/composer.lock
+/vendor/*
+
+# NPM
+/node_modules/*
+
+# PHPUnit
+/.phpunit.result.cache
+
+# Satis development build
+/build

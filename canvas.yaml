@@ -1,0 +1,26 @@
+preset: package
+
+namespace: Satifest\Foundation
+
+paths:
+  src: src
+  resource: resources
+
+factory:
+  path: database/factories
+
+migration:
+  path: database/migrations
+  prefix: ''
+
+console:
+  namespace: Satifest\Foundation\Console
+
+model:
+  namespace: Satifest\Foundation
+
+provider:
+  namespace: Satifest\Foundation\Providers
+
+testing:
+  namespace: Satifest\Foundation\Tests
