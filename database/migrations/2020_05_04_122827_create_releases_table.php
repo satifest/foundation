@@ -18,6 +18,7 @@ class CreateReleasesTable extends Migration
 
             $table->unsignedBigInteger('repository_id');
             $table->string('version');
+            $table->string('checksum')->nullable();
 
             $table->string('title')->nullable();
             $table->longText('description')->nullable();
