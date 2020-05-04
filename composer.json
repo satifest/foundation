@@ -1,6 +1,6 @@
 {
     "name": "satifest/foundation",
-    "description": "Foundation for Satifest",
+    "description": "Shared Foundation for Satifest",
     "type": "library",
     "license": "MIT",
     "authors": [
