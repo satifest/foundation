@@ -9,6 +9,12 @@ use Satifest\Foundation\Tests\User;
 class SatifestTest extends TestCase
 {
     /** @test */
+    public function it_does_run_migrations_by_default()
+    {
+        $this->assertTrue(Satifest::$runsMigrations);
+    }
+
+    /** @test */
     public function it_can_set_custom_purchaser_model()
     {
         Satifest::setPurchaserModel(User::class);

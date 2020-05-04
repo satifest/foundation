@@ -28,6 +28,16 @@
         "orchestra/canvas": "^5.0",
         "orchestra/testbench": "^5.0"
     },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        },
+        "laravel": {
+            "providers": [
+                "Satifest\\Foundation\\SatifestServiceProvider"
+            ]
+        }
+    },
     "prefer-stable": true,
     "minimum-stability": "dev"
 }

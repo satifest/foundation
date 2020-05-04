@@ -14,6 +14,13 @@ class Satifest
     protected static $purchaserModel;
 
     /**
+     * Indicates if Satifest migrations will be run.
+     *
+     * @var bool
+     */
+    public static $runsMigrations = true;
+
+    /**
      * Set purchaser model.
      */
     public static function setPurchaserModel(string $purchaserModel): void
@@ -41,4 +48,11 @@ class Satifest
         return static::$purchaserModel;
     }
 
+    /**
+     * Configure Satifest to not register its migrations.
+     */
+    public static function ignoreMigrations(): void
+    {
+        static::$runsMigrations = false;
+    }
 }
