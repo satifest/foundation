@@ -2,9 +2,9 @@
 
 namespace Satifest\Foundation\Casts;
 
-use Illuminate\Contracts\Database\Eloquent\CastsInboundAttributes;
-use Illuminate\Support\Str;
 use Spatie\Url\Url;
+use Illuminate\Support\Str;
+use Illuminate\Contracts\Database\Eloquent\CastsInboundAttributes;
 
 class PackageName implements CastsInboundAttributes
 {
@@ -15,6 +15,7 @@ class PackageName implements CastsInboundAttributes
      * @param  string  $key
      * @param  array  $value
      * @param  array  $attributes
+     *
      * @return string
      */
     public function set($model, $key, $value, $attributes)
