@@ -13,7 +13,6 @@ class PlanTest extends TestCase
     public function it_can_cast_to_money()
     {
         $repository = \factory(Repository::class)->create([
-            'name' => 'satifest/demo-test-package',
             'url' => 'https://github.com/satifest/demo-test-package',
         ]);
 

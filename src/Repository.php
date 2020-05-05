@@ -13,6 +13,16 @@ class Repository extends Model
      */
     protected $table = 'repositories';
 
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'url' => Casts\PackageName::class,
+    ];
+
     /**
      * Perform any actions required after the model boots.
      *

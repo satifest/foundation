@@ -25,4 +25,4 @@ provider:
 testing:
   namespace: Satifest\Foundation\Tests
   extends:
-    - feature: Satifest\Foundation\Tests\TestCase
+    feature: Satifest\Foundation\Tests\TestCase
