@@ -17,6 +17,8 @@ class CreateReleasesTable extends Migration
             $table->id();
 
             $table->unsignedBigInteger('repository_id');
+            $table->string('semver');
+
             $table->string('version');
             $table->string('checksum')->nullable();
 
@@ -29,7 +31,7 @@ class CreateReleasesTable extends Migration
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
 
-            $table->unique(['repository_id', 'version']);
+            $table->unique(['repository_id', 'semver']);
         });
     }
 
