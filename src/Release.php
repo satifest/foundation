@@ -13,6 +13,16 @@ class Release extends Model
      */
     protected $table = 'releases';
 
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'published_at' => 'datetime',
+    ];
+
     /**
      * Release belongs to a Repository.
      *

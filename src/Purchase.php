@@ -17,6 +17,16 @@ class Purchase extends Model
     protected $table = 'purchases';
 
     /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'amount' => Casts\Money::class.':amount,currency',
+        'purchased_at' => 'datetime',
+    ];
+
+    /**
      * Purchase belongs to a Plan.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

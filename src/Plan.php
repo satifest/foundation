@@ -17,6 +17,15 @@ class Plan extends Model
     protected $table = 'plans';
 
     /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'amount' => Casts\Money::class.':amount,currency',
+    ];
+
+    /**
      * Plan belongs to a Repository.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
