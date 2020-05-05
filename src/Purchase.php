@@ -24,6 +24,7 @@ class Purchase extends Model
     protected $casts = [
         'amount' => Casts\Money::class.':amount,currency',
         'purchased_at' => 'datetime',
+        'revoked_at' => 'datetime',
     ];
 
     /**
