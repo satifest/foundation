@@ -2,9 +2,9 @@
 
 namespace Satifest\Foundation\Tests;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Orchestra\Testbench\TestCase as Testbench;
 use Satifest\Foundation\Satifest;
+use Orchestra\Testbench\TestCase as Testbench;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 abstract class TestCase extends Testbench
 {
@@ -24,6 +24,7 @@ abstract class TestCase extends Testbench
      * Define environment setup.
      *
      * @param  \Illuminate\Foundation\Application  $app
+     *
      * @return void
      */
     protected function getEnvironmentSetUp($app)

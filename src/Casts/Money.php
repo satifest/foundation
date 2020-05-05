@@ -2,9 +2,9 @@
 
 namespace Satifest\Foundation\Casts;
 
-use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Money\Currency;
 use Money\Money as MoneyObject;
+use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 
 class Money implements CastsAttributes
 {
@@ -38,6 +38,7 @@ class Money implements CastsAttributes
      * @param  string  $key
      * @param  mixed  $value
      * @param  array  $attributes
+     *
      * @return array
      */
     public function get($model, $key, $value, $attributes)
@@ -55,6 +56,7 @@ class Money implements CastsAttributes
      * @param  string  $key
      * @param  array  $value
      * @param  array  $attributes
+     *
      * @return string
      */
     public function set($model, $key, $value, $attributes)

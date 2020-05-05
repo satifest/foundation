@@ -1,9 +1,8 @@
 <?php
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-
-use Faker\Generator as Faker;
 use Money\Money;
+use Faker\Generator as Faker;
 use Satifest\Foundation\Plan;
 
 $factory->define(Plan::class, function (Faker $faker) {

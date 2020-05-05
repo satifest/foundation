@@ -2,8 +2,8 @@
 
 namespace Satifest\Foundation\Rules;
 
-use Illuminate\Contracts\Validation\Rule;
 use Spatie\Url\Url;
+use Illuminate\Contracts\Validation\Rule;
 
 class SupportedVcsUrl implements Rule
 {
@@ -21,6 +21,7 @@ class SupportedVcsUrl implements Rule
      *
      * @param  string  $attribute
      * @param  mixed  $value
+     *
      * @return bool
      */
     public function passes($attribute, $value)
