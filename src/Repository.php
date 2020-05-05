@@ -14,6 +14,16 @@ class Repository extends Model
     protected $table = 'repositories';
 
     /**
+     * Perform any actions required after the model boots.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::observe(new Observers\RepositoryObserver());
+    }
+
+    /**
      * Repository has many Plans.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
