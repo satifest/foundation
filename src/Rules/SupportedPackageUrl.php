@@ -2,20 +2,11 @@
 
 namespace Satifest\Foundation\Rules;
 
-use Spatie\Url\Url;
 use Illuminate\Contracts\Validation\Rule;
+use Satifest\Foundation\Value\PackageUrl;
 
-class SupportedVcsUrl implements Rule
+class SupportedPackageUrl implements Rule
 {
-    /**
-     * List of supported VCS hosts.
-     *
-     * @var array
-     */
-    protected $supportedVcsHosts = [
-        'github.com',
-    ];
-
     /**
      * Determine if the validation rule passes.
      *
@@ -26,10 +17,7 @@ class SupportedVcsUrl implements Rule
      */
     public function passes($attribute, $value)
     {
-        $url = Url::fromString($value);
-
-        return \in_array($url->getHost(), $this->supportedVcsHosts)
-            && $url->getScheme('https');
+        return PackageUrl::make($value)->isValid();
     }
 
     /**

@@ -2,8 +2,7 @@
 
 namespace Satifest\Foundation\Casts;
 
-use Spatie\Url\Url;
-use Illuminate\Support\Str;
+use Satifest\Foundation\Value\PackageUrl;
 use Illuminate\Contracts\Database\Eloquent\CastsInboundAttributes;
 
 class PackageName implements CastsInboundAttributes
@@ -20,12 +19,10 @@ class PackageName implements CastsInboundAttributes
      */
     public function set($model, $key, $value, $attributes)
     {
-        $url = Url::fromString($value);
+        $url = PackageUrl::make($value);
 
         return [
-            'name' => (string) Str::of($url->getPath())->trim('/')->replaceMatches('/^(.*)\.git$/', static function ($match) {
-                return $match[1];
-            }),
+            'name' => $url->packageName(),
             $key => $value,
         ];
     }
