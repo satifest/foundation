@@ -5,7 +5,7 @@ namespace Satifest\Foundation\Casts;
 use Satifest\Foundation\Value\PackageUrl;
 use Illuminate\Contracts\Database\Eloquent\CastsInboundAttributes;
 
-class PackageName implements CastsInboundAttributes
+class Package implements CastsInboundAttributes
 {
     /**
      * Prepare the given value for storage.
