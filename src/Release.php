@@ -13,7 +13,6 @@ class Release extends Model
      */
     protected $table = 'releases';
 
-
     /**
      * The attributes that should be cast.
      *

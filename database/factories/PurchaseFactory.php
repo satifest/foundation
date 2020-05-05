@@ -9,8 +9,7 @@ use Satifest\Foundation\Purchase;
 $factory->define(Purchase::class, function (Faker $faker) {
     return [
         'name' => $faker->domainName,
-        'amount' => 2500,
-        'currency' => 'USD',
+        'amount' => Money::USD(2500),
         'purchased_at' => Carbon::now(),
     ];
 });
