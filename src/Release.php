@@ -2,6 +2,7 @@
 
 namespace Satifest\Foundation;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Release extends Model
@@ -30,5 +31,15 @@ class Release extends Model
     public function repository()
     {
         return $this->belongsTo(Repository::class, 'repository_id', 'id', 'repository');
+    }
+
+    /**
+     * Scope release by repository name.
+     */
+    public function scopeByRepositoryName(Builder $query, string $name): Builder
+    {
+        return $query->whereHas('repository', static function ($query) use ($name) {
+            return $query->where('name', '=', $name);
+        });
     }
 }
