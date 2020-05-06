@@ -87,4 +87,18 @@ class Satifest
             }
         });
     }
+
+    /**
+     * Get package name from GitHub.
+     */
+    public function packageNameFromGitHub(string $githubUrl): string
+    {
+        $package = Value\PackageUrl::make($githubUrl);
+
+        if ($package->domain() !== 'github.com') {
+            throw new InvalidArgumentException("Unable to resolved none GitHub url: {$githubUrl}");
+        }
+
+        return $package->packageName();
+    }
 }

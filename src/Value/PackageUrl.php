@@ -68,6 +68,14 @@ class PackageUrl
     }
 
     /**
+     * Get the domain for package.
+     */
+    public function domain(): string
+    {
+        return $this->url->getHost();
+    }
+
+    /**
      * Render as string.
      *
      * @return string
