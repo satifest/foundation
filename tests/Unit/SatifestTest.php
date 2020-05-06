@@ -30,4 +30,22 @@ class SatifestTest extends TestCase
 
         Satifest::setPurchaserModel('Illuminate\Foundation\Auth\User');
     }
+
+    /**
+     * @test
+     * @dataProvider validGitHubPackages
+     */
+    public function it_can_get_package_name_from_valid_github($given, $expected)
+    {
+        $this->assertSame($expected, Satifest::packageNameFromGitHub($given));
+    }
+
+    /**
+     * Valid GitHub Packages data provider.
+     */
+    public function validGitHubPackages()
+    {
+        yield ['https://github.com/satifest/satifest', 'satifest/satifest'];
+        yield ['https://github.com/satifest/satifest.git', 'satifest/satifest'];
+    }
 }

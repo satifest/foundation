@@ -91,7 +91,7 @@ class Satifest
     /**
      * Get package name from GitHub.
      */
-    public function packageNameFromGitHub(string $githubUrl): string
+    public static function packageNameFromGitHub(string $githubUrl): string
     {
         $package = Value\PackageUrl::make($githubUrl);
 
