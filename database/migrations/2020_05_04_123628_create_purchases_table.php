@@ -20,6 +20,9 @@ class CreatePurchasesTable extends Migration
             $table->unsignedBigInteger('purchaser_id');
             $table->unsignedBigInteger('plan_id');
 
+            $table->string('transaction_provider')->nullable();
+            $table->string('transaction_id')->nullable();
+
             $table->string('name')->nullable();
             $table->unsignedInteger('amount')->default(0);
             $table->string('currency')->default(Config::get('satifest.currency', 'USD'));
@@ -31,6 +34,7 @@ class CreatePurchasesTable extends Migration
             $table->softDeletes();
 
             $table->index(['purchaser_id', 'plan_id']);
+            $table->index(['transaction_provider', 'transaction_id']);
         });
     }
 
