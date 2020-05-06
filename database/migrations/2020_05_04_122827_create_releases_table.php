@@ -27,6 +27,7 @@ class CreateReleasesTable extends Migration
 
             $table->string('artifact_disk')->nullable();
             $table->string('artifact_url')->nullable();
+            $table->string('artifact_file')->nullable();
 
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
