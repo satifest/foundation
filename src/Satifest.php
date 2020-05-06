@@ -6,6 +6,8 @@ use InvalidArgumentException;
 
 class Satifest
 {
+    use Concerns\AuthorizesRequests;
+
     /**
      * Purchaser model (normally refer to the user).
      *
