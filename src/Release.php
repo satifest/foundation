@@ -2,8 +2,8 @@
 
 namespace Satifest\Foundation;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Release extends Model
 {
