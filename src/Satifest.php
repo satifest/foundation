@@ -2,7 +2,10 @@
 
 namespace Satifest\Foundation;
 
+use Spatie\Url\Url;
 use InvalidArgumentException;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Routing\RouteRegistrar;
 
 class Satifest
 {
@@ -21,6 +24,13 @@ class Satifest
      * @var bool
      */
     public static $runsMigrations = true;
+
+    /**
+     * Ignored hosts.
+     *
+     * @var array
+     */
+    protected static $ignoredHosts = ['', 'http://localhost', 'https://localhost'];
 
     /**
      * Set purchaser model.
@@ -56,5 +66,25 @@ class Satifest
     public static function ignoreMigrations(): void
     {
         static::$runsMigrations = false;
+    }
+
+    /**
+     * Register routing for Satifest.
+     */
+    public static function route(string $namespace): RouteRegistrar
+    {
+        return \tap(Route::namespace($namespace), function ($router) {
+            $url = Url::fromString(\config('satifest.url'));
+
+            $router->prefix($url->getPath());
+
+            $domain = \transform($url->getHost(), static function ($host) use ($ignoredHosts) {
+                return ! \in_array($host, $ignoredHosts) ? $host : null;
+            });
+
+            if (! \is_null($domain)) {
+                $router->domain($domain);
+            }
+        });
     }
 }
