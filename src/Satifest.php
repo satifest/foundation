@@ -78,8 +78,8 @@ class Satifest
 
             $router->prefix($url->getPath());
 
-            $domain = \transform($url->getHost(), static function ($host) use ($ignoredHosts) {
-                return ! \in_array($host, $ignoredHosts) ? $host : null;
+            $domain = \transform($url->getHost(), static function ($host) {
+                return ! \in_array($host, static::$ignoredHosts) ? $host : null;
             });
 
             if (! \is_null($domain)) {
