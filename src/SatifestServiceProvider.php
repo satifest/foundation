@@ -24,12 +24,21 @@ class SatifestServiceProvider extends ServiceProvider
     public function boot()
     {
         if ($this->app->runningInConsole()) {
+            $this->registerPublishing();
             $this->registerMigrations();
-
-            $this->publishes([
-                __DIR__.'/../database/migrations' => \database_path('migrations'),
-            ], 'satifest-migrations');
         }
+    }
+
+    /**
+     * Register the package's publishable resources.
+     *
+     * @return void
+     */
+    protected function registerPublishing(): void
+    {
+        $this->publishes([
+            __DIR__.'/../database/migrations' => \database_path('migrations'),
+        ], 'satifest-migrations');
     }
 
     /**
