@@ -2,8 +2,8 @@
 
 namespace Satifest\Foundation\Casts;
 
-use Satifest\Foundation\Value\PackageUrl;
 use Illuminate\Contracts\Database\Eloquent\CastsInboundAttributes;
+use Satifest\Foundation\Value\PackageUrl;
 
 class Package implements CastsInboundAttributes
 {

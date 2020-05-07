@@ -2,9 +2,9 @@
 
 namespace Satifest\Foundation\Value;
 
-use Spatie\Url\Url;
 use Illuminate\Support\Str;
 use InvalidArgumentException;
+use Spatie\Url\Url;
 
 class PackageUrl
 {

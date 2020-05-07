@@ -2,10 +2,10 @@
 
 namespace Satifest\Foundation;
 
-use Spatie\Url\Url;
-use InvalidArgumentException;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Routing\RouteRegistrar;
+use Illuminate\Support\Facades\Route;
+use InvalidArgumentException;
+use Spatie\Url\Url;
 
 class Satifest
 {

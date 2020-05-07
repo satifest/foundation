@@ -2,9 +2,9 @@
 
 namespace Satifest\Foundation\Casts;
 
+use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Money\Currency;
 use Money\Money as MoneyObject;
-use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 
 class Money implements CastsAttributes
 {

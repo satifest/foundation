@@ -2,9 +2,9 @@
 
 namespace Satifest\Foundation\Tests;
 
-use Satifest\Foundation\Satifest;
-use Orchestra\Testbench\TestCase as Testbench;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Orchestra\Testbench\TestCase as Testbench;
+use Satifest\Foundation\Satifest;
 
 abstract class TestCase extends Testbench
 {

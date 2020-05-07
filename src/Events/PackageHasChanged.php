@@ -2,10 +2,10 @@
 
 namespace Satifest\Foundation\Events;
 
-use Satifest\Foundation\Repository;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Queue\SerializesModels;
+use Satifest\Foundation\Repository;
 
 class PackageHasChanged
 {

@@ -2,8 +2,8 @@
 
 namespace Satifest\Foundation\Observers;
 
-use Satifest\Foundation\Repository;
 use Satifest\Foundation\Events\PackageHasChanged;
+use Satifest\Foundation\Repository;
 
 class RepositoryObserver
 {
