@@ -74,7 +74,7 @@ class Satifest
     public static function route(string $namespace): RouteRegistrar
     {
         return \tap(Route::namespace($namespace), function ($router) {
-            $url = Url::fromString(\config('satifest.url', '/'));
+            $url = Url::fromString(\config('satifest.url') ?? '/');
 
             $router->prefix($url->getPath());
 
