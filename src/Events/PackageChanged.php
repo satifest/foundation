@@ -2,14 +2,13 @@
 
 namespace Satifest\Foundation\Events;
 
-use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Satifest\Foundation\Repository;
 
 class PackageChanged
 {
-    use Dispatchable, InteractsWithSockets, SerializesModels;
+    use Dispatchable, SerializesModels;
 
     /**
      * The Repository model.
