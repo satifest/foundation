@@ -13,7 +13,6 @@ class Repository extends Model
      */
     protected $table = 'repositories';
 
-
     /**
      * The attributes that should be cast.
      *
