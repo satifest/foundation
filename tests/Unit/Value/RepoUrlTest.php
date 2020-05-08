@@ -3,9 +3,9 @@
 namespace Satifest\Foundation\Tests\Unit\Value;
 
 use PHPUnit\Framework\TestCase;
-use Satifest\Foundation\Value\PackageUrl;
+use Satifest\Foundation\Value\RepoUrl;
 
-class PackageUrlTest extends TestCase
+class RepoUrlTest extends TestCase
 {
     /**
      * @test
@@ -13,11 +13,11 @@ class PackageUrlTest extends TestCase
      */
     public function it_can_validate_github_packages($given, $expected)
     {
-        $package = PackageUrl::make($given);
+        $package = RepoUrl::make($given);
 
         $this->assertTrue($package->isValid());
         $this->assertSame('github.com', $package->domain());
-        $this->assertSame($expected, $package->packageName());
+        $this->assertSame($expected, $package->name());
     }
 
     /**

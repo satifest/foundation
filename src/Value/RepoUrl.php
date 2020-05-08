@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 use InvalidArgumentException;
 use Spatie\Url\Url;
 
-class PackageUrl
+class RepoUrl
 {
     /**
      * The URL.
@@ -45,7 +45,7 @@ class PackageUrl
     /**
      * Get package name from URL.
      */
-    public function packageName(): string
+    public function name(): string
     {
         if (! $this->isValid()) {
             throw new InvalidArgumentException('Unable to find package name from invalid VCS URL');
@@ -59,20 +59,20 @@ class PackageUrl
     }
 
     /**
+     * Get the domain for package.
+     */
+    public function domain(): string
+    {
+        return $this->url->getHost();
+    }
+
+    /**
      * Validate URL.
      */
     public function isValid(): bool
     {
         return \in_array($this->url->getHost(), $this->supportedHosts)
             && $this->url->getScheme('https');
-    }
-
-    /**
-     * Get the domain for package.
-     */
-    public function domain(): string
-    {
-        return $this->url->getHost();
     }
 
     /**

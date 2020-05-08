@@ -93,12 +93,12 @@ class Satifest
      */
     public static function packageNameFromGitHub(string $githubUrl): string
     {
-        $package = Value\PackageUrl::make($githubUrl);
+        $package = Value\RepoUrl::make($githubUrl);
 
         if ($package->domain() !== 'github.com') {
             throw new InvalidArgumentException("Unable to resolved none GitHub url: {$githubUrl}");
         }
 
-        return $package->packageName();
+        return $package->name();
     }
 }

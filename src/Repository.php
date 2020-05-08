@@ -19,7 +19,7 @@ class Repository extends Model
      * @var array
      */
     protected $casts = [
-        'url' => Casts\Package::class,
+        'url' => Casts\Repo::class,
     ];
 
     /**

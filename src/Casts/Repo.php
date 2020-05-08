@@ -3,9 +3,9 @@
 namespace Satifest\Foundation\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsInboundAttributes;
-use Satifest\Foundation\Value\PackageUrl;
+use Satifest\Foundation\Value\RepoUrl;
 
-class Package implements CastsInboundAttributes
+class Repo implements CastsInboundAttributes
 {
     /**
      * Prepare the given value for storage.
@@ -19,10 +19,10 @@ class Package implements CastsInboundAttributes
      */
     public function set($model, $key, $value, $attributes)
     {
-        $url = PackageUrl::make($value);
+        $url = RepoUrl::make($value);
 
         return [
-            'name' => $url->packageName(),
+            'name' => $url->name(),
             $key => $value,
         ];
     }

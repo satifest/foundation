@@ -3,9 +3,9 @@
 namespace Satifest\Foundation\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use Satifest\Foundation\Value\PackageUrl;
+use Satifest\Foundation\Value\RepoUrl;
 
-class SupportedPackageUrl implements Rule
+class SupportedRepoUrl implements Rule
 {
     /**
      * Determine if the validation rule passes.
@@ -17,7 +17,7 @@ class SupportedPackageUrl implements Rule
      */
     public function passes($attribute, $value)
     {
-        return PackageUrl::make($value)->isValid();
+        return RepoUrl::make($value)->isValid();
     }
 
     /**

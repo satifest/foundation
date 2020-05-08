@@ -36,7 +36,7 @@ class Release extends Model
     /**
      * Scope release by repository name.
      */
-    public function scopeByRepositoryName(Builder $query, string $name): Builder
+    public function scopeByRepoName(Builder $query, string $name): Builder
     {
         return $query->whereHas('repository', static function ($query) use ($name) {
             return $query->where('name', '=', $name);
