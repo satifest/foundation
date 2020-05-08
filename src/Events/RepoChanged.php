@@ -6,7 +6,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Satifest\Foundation\Repository;
 
-class PackageChanged
+class RepoChanged
 {
     use Dispatchable, SerializesModels;
 
