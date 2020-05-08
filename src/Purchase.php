@@ -28,13 +28,13 @@ class Purchase extends Model
     ];
 
     /**
-     * Purchase belongs to a Plan.
+     * Purchase belongs to many Plans.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function plan()
+    public function plans()
     {
-        return $this->belongsTo(Plan::class, 'plan_id', 'id', 'plan');
+        return $this->belongsToMany(Plan::class, 'plan_purchase', 'purchase_id', 'plan_id')->withTimestamps();
     }
 
     /**

@@ -19,7 +19,7 @@ class CreatePlanPurchaseTable extends Migration
             $table->unsignedBigInteger('plan_id');
             $table->unsignedBigInteger('purchase_id');
 
-            $table->timestamp('revoked_at')->nullable();
+            $table->timestamps();
 
             $table->index(['plan_id', 'purchase_id']);
         });

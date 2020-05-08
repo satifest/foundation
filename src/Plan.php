@@ -26,6 +26,16 @@ class Plan extends Model
     ];
 
     /**
+     * Plan belongs to many Purchasess.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function purchases()
+    {
+        return $this->belongsToMany(Purchase::class, 'plan_purchase', 'plan_id', 'purchase_id')->withTimestamps();
+    }
+
+    /**
      * Plan belongs to a Repository.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

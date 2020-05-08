@@ -27,6 +27,7 @@ class CreatePurchasesTable extends Migration
             $table->string('currency')->default(Config::get('satifest.currency', 'USD'));
 
             $table->timestamp('purchased_at');
+            $table->timestamp('revoked_at')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
