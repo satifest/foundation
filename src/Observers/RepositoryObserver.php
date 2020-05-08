@@ -2,7 +2,7 @@
 
 namespace Satifest\Foundation\Observers;
 
-use Satifest\Foundation\Events\PackageHasChanged;
+use Satifest\Foundation\Events\PackageChanged;
 use Satifest\Foundation\Repository;
 
 class RepositoryObserver
@@ -16,7 +16,7 @@ class RepositoryObserver
      */
     public function created(Repository $repository)
     {
-        \event(new PackageHasChanged($repository));
+        \event(new PackageChanged($repository));
     }
 
     /**
@@ -29,7 +29,7 @@ class RepositoryObserver
     public function updated(Repository $repository)
     {
         if ($repository->wasChanged(['name', 'type', 'url'])) {
-            \event(new PackageHasChanged($repository));
+            \event(new PackageChanged($repository));
         }
     }
 
@@ -42,7 +42,7 @@ class RepositoryObserver
      */
     public function deleted(Repository $repository)
     {
-        \event(new PackageHasChanged($repository));
+        \event(new PackageChanged($repository));
     }
 
     /**
@@ -54,7 +54,7 @@ class RepositoryObserver
      */
     public function restored(Repository $repository)
     {
-        \event(new PackageHasChanged($repository));
+        \event(new PackageChanged($repository));
     }
 
     /**
@@ -66,6 +66,6 @@ class RepositoryObserver
      */
     public function forceDeleted(Repository $repository)
     {
-        \event(new PackageHasChanged($repository));
+        \event(new PackageChanged($repository));
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Satifest\Foundation\Repository;
 
-class PackageHasChanged
+class PackageChanged
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 

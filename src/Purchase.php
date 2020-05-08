@@ -28,6 +28,16 @@ class Purchase extends Model
     ];
 
     /**
+     * Perform any actions required after the model boots.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::observe(new Observers\PurchaseObserver());
+    }
+
+    /**
      * Purchase belongs to many Plans.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
