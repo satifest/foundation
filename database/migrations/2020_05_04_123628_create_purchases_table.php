@@ -17,8 +17,7 @@ class CreatePurchasesTable extends Migration
         Schema::create('purchases', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('purchaser_id');
-            $table->unsignedBigInteger('plan_id');
+            $table->unsignedBigInteger('purchaser_id')->index();
 
             $table->string('transaction_provider')->nullable();
             $table->string('transaction_id')->nullable();
@@ -28,12 +27,10 @@ class CreatePurchasesTable extends Migration
             $table->string('currency')->default(Config::get('satifest.currency', 'USD'));
 
             $table->timestamp('purchased_at');
-            $table->timestamp('revoked_at')->nullable();
 
             $table->timestamps();
             $table->softDeletes();
 
-            $table->index(['purchaser_id', 'plan_id']);
             $table->index(['transaction_provider', 'transaction_id']);
         });
     }
