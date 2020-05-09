@@ -12,7 +12,7 @@ class Release extends Model
      *
      * @var string
      */
-    protected $table = 'releases';
+    protected $table = 'sf_releases';
 
     /**
      * The attributes that should be cast.

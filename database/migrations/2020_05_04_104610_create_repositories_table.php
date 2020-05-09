@@ -13,7 +13,7 @@ class CreateRepositoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('repositories', function (Blueprint $table) {
+        Schema::create('sf_repositories', function (Blueprint $table) {
             $table->id();
 
             $table->string('name');
@@ -33,6 +33,6 @@ class CreateRepositoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('repositories');
+        Schema::dropIfExists('sf_repositories');
     }
 }

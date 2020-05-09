@@ -14,7 +14,7 @@ class Plan extends Model
      *
      * @var string
      */
-    protected $table = 'plans';
+    protected $table = 'sf_plans';
 
     /**
      * Plan belongs to a Repository.

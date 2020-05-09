@@ -11,7 +11,7 @@ class Repository extends Model
      *
      * @var string
      */
-    protected $table = 'repositories';
+    protected $table = 'sf_repositories';
 
     /**
      * The attributes that should be cast.

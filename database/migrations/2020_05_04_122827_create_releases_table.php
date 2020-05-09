@@ -13,7 +13,7 @@ class CreateReleasesTable extends Migration
      */
     public function up()
     {
-        Schema::create('releases', function (Blueprint $table) {
+        Schema::create('sf_releases', function (Blueprint $table) {
             $table->id();
 
             $table->unsignedBigInteger('repository_id');
@@ -43,6 +43,6 @@ class CreateReleasesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('releases');
+        Schema::dropIfExists('sf_releases');
     }
 }
