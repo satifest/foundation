@@ -29,7 +29,7 @@ class CreateSatifestLicensesTable extends Migration
 
             $table->timestamps();
 
-            $table->index(['transaction_provider', 'transaction_uid']);
+            $table->index(['provider', 'uid']);
         });
     }
 
