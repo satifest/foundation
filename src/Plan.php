@@ -17,6 +17,16 @@ class Plan extends Model
     protected $table = 'sf_plans';
 
     /**
+     * Plan has many and belongs to relationship with Licenses.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function licenses()
+    {
+        return $this->belongsToMany(License::class, 'sf_license_plan', 'plan_id', 'license_id')->withTimestamps();
+    }
+
+    /**
      * Plan belongs to a Repository.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

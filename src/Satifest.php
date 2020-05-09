@@ -16,7 +16,7 @@ class Satifest
      *
      * @var string
      */
-    protected static $purchaserModel;
+    protected static $userModel;
 
     /**
      * Indicates if Satifest migrations will be run.
@@ -35,29 +35,29 @@ class Satifest
     /**
      * Set purchaser model.
      */
-    public static function setPurchaserModel(string $purchaserModel): void
+    public static function setUserModel(string $userModel): void
     {
-        $uses = \class_uses_recursive($purchaserModel);
+        $uses = \class_uses_recursive($userModel);
 
-        if (! isset($uses[Concerns\HasPurchases::class])) {
-            throw new InvalidArgumentException("Given [$purchaserModel] does not implements '".Concerns\HasPurchases::class."' trait.");
+        if (! isset($uses[Concerns\Licensable::class])) {
+            throw new InvalidArgumentException("Given [$userModel] does not implements '".Concerns\Licensable::class."' trait.");
         }
 
-        static::$purchaserModel = $purchaserModel;
+        static::$userModel = $userModel;
     }
 
     /**
      * Get the purchaser model.
      */
-    public static function getPurchaserModel(): string
+    public static function getUserModel(): string
     {
-        if (! isset(static::$purchaserModel)) {
+        if (! isset(static::$userModel)) {
             $provider = \config('auth.guards.web.provider');
 
-            static::setPurchaserModel(\config("auth.providers.{$provider}.model"));
+            static::setUserModel(\config("auth.providers.{$provider}.model"));
         }
 
-        return static::$purchaserModel;
+        return static::$userModel;
     }
 
     /**

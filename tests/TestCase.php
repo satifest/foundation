@@ -29,7 +29,7 @@ abstract class TestCase extends Testbench
      */
     protected function getEnvironmentSetUp($app)
     {
-        Satifest::setPurchaserModel(User::class);
+        Satifest::setUserModel(User::class);
     }
 
     /**

@@ -17,18 +17,18 @@ class SatifestTest extends TestCase
     /** @test */
     public function it_can_set_custom_purchaser_model()
     {
-        Satifest::setPurchaserModel(User::class);
+        Satifest::setUserModel(User::class);
 
-        $this->assertSame(User::class, Satifest::getPurchaserModel());
+        $this->assertSame(User::class, Satifest::getUserModel());
     }
 
     /** @test */
     public function it_cant_set_custom_puchaser_model_that_doesnt_implement_has_purchases_trait()
     {
         $this->expectException('InvalidArgumentException');
-        $this->expectExceptionMessage("Given [Illuminate\Foundation\Auth\User] does not implements 'Satifest\Foundation\Concerns\HasPurchases' trait.");
+        $this->expectExceptionMessage("Given [Illuminate\Foundation\Auth\User] does not implements 'Satifest\Foundation\Concerns\Licensable' trait.");
 
-        Satifest::setPurchaserModel('Illuminate\Foundation\Auth\User');
+        Satifest::setUserModel('Illuminate\Foundation\Auth\User');
     }
 
     /**
