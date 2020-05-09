@@ -74,11 +74,16 @@ class Satifest
     public static function route(string $namespace): RouteRegistrar
     {
         return \tap(Route::namespace($namespace), function ($router) {
-            $url = Url::fromString(\config('satifest.url') ?? '/');
+            $satifestUrl = Url::fromString(\config('satifest.url') ?? '/');
+            $appUrl = Url::fromString(\config('app.url') ?? '/');
 
-            $router->prefix($url->getPath());
+            $router->prefix($satifestUrl->getPath());
 
-            $domain = \transform($url->getHost(), static function ($host) {
+            $domain = \transform($satifestUrl->getHost(), static function ($host) use ($appUrl) {
+                if ($appUrl->getHost() === $host) {
+                    return null;
+                }
+
                 return ! \in_array($host, static::$ignoredHosts) ? $host : null;
             });
 
