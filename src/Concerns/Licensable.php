@@ -8,6 +8,16 @@ use Satifest\Value\Licensing;
 trait Licensable
 {
     /**
+     * Licensable has many licenses.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function licenses()
+    {
+        return $this->hasMany(License::class, 'user_id', 'id');
+    }
+
+    /**
      * Create a new license for the user.
      */
     public static function createLicense(Licensing $licensing): License
