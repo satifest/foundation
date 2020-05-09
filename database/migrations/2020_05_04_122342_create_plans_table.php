@@ -21,8 +21,6 @@ class CreatePlansTable extends Migration
 
             $table->string('constraint')->default('*');
             $table->string('name');
-            $table->unsignedInteger('amount')->default(0);
-            $table->string('currency')->default(Config::get('satifest.currency', 'USD'));
 
             $table->timestamps();
             $table->softDeletes();

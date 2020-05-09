@@ -9,6 +9,5 @@ $factory->define(Plan::class, function (Faker $faker) {
     return [
         'constraint' => '*',
         'name' => $faker->colorName,
-        'amount' => Money::USD(2500),
     ];
 });
