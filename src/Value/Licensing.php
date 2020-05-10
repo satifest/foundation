@@ -22,7 +22,7 @@ class Licensing
     protected $uid;
 
     /**
-     * Licensing type (either one-off, sponsorship or recurring)
+     * Licensing type (either one-off, sponsorship or recurring).
      *
      * @var string
      */

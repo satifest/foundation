@@ -3,6 +3,7 @@
 namespace Satifest\Foundation;
 
 use Illuminate\Routing\RouteRegistrar;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 use InvalidArgumentException;
 use Spatie\Url\Url;
@@ -66,6 +67,18 @@ class Satifest
     public static function ignoreMigrations(): void
     {
         static::$runsMigrations = false;
+    }
+
+    /**
+     * Register an event listener for the Nova "serving" event.
+     *
+     * @param  \Closure|string  $callback
+     *
+     * @return void
+     */
+    public static function serving($callback): void
+    {
+        Event::listen(Events\ServingSatifest::class, $callback);
     }
 
     /**
