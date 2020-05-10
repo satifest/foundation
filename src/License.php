@@ -20,6 +20,7 @@ class License extends Model
      */
     protected $casts = [
         'price' => Casts\Money::class.':amount,currency',
+        'ends_at' => 'datetime',
     ];
 
     /**
