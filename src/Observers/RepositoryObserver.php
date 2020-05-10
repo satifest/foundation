@@ -3,6 +3,7 @@
 namespace Satifest\Foundation\Observers;
 
 use Satifest\Foundation\Events\RepoChanged;
+use Satifest\Foundation\Events\RepoCreated;
 use Satifest\Foundation\Repository;
 
 class RepositoryObserver
@@ -16,7 +17,9 @@ class RepositoryObserver
      */
     public function created(Repository $repository)
     {
-        \event(new RepoChanged($repository));
+        \event(new RepoCreated($repository));
+
+        $repository->createPlan();
     }
 
     /**

@@ -51,4 +51,16 @@ class Repository extends Model
     {
         return $this->hasMany(Release::class, 'repository_id', 'id');
     }
+
+    /**
+     * Create plan for Repository.
+     */
+    public function createPlan(?string $name = null, string $constraint = '*'): Plan
+    {
+        return Plan::forceCreate([
+            'repository_id' => $this->getKey(),
+            'name' => $name ?? "Basic Plan for {$this->name}",
+            'constraint' => $constraint,
+        ]);
+    }
 }
