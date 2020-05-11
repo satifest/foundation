@@ -3,7 +3,7 @@
 namespace Satifest\Foundation\Concerns;
 
 use Satifest\Foundation\License;
-use Satifest\Value\Licensing;
+use Satifest\Foundation\Licensing;
 
 trait Licensable
 {

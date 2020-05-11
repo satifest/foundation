@@ -1,6 +1,6 @@
 <?php
 
-namespace Satifest\Value;
+namespace Satifest\Foundation;
 
 use DateTimeImmutable;
 use Money\Money;
@@ -81,6 +81,18 @@ class Licensing
     public static function makeSponsor(string $provider, string $uid, ?Money $price, ?DateTimeImmutable $endsAt)
     {
         return new static($provider, $uid, 'sponsor', $price, $endsAt);
+    }
+
+    /**
+     * Explicitly set supported until (ends at) for the licensing.
+     *
+     * @return $this
+     */
+    public function supportedUntil(DateTimeImmutable $endsAt = null)
+    {
+        $this->endsAt = $endsAt;
+
+        return $this;
     }
 
     /**
