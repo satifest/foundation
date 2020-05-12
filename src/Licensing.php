@@ -62,9 +62,9 @@ class Licensing
     /**
      * Construct a new Licensing using "off-one" payment.
      */
-    public static function makeOneOff(string $provider, string $uid, Money $price)
+    public static function makePurchase(string $provider, string $uid, Money $price)
     {
-        return new static($provider, $uid, 'one-off', $price, null);
+        return new static($provider, $uid, 'purchase', $price, null);
     }
 
     /**
