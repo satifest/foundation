@@ -42,4 +42,12 @@ class Release extends Model
             return $query->where('name', '=', $name);
         });
     }
+
+    /**
+     * Get virtual "name" accessor.
+     */
+    public function getNameAttribute(): string
+    {
+        return $this->title ?? $this->name;
+    }
 }
