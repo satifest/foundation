@@ -48,6 +48,6 @@ class Release extends Model
      */
     public function getNameAttribute(): string
     {
-        return $this->title ?? $this->name;
+        return $this->title ?? $this->version;
     }
 }
