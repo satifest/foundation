@@ -20,7 +20,7 @@ trait Licensable
     /**
      * Create a new license for the user.
      */
-    public static function createLicense(Licensing $licensing): License
+    public function createLicense(Licensing $licensing): License
     {
         return License::forceCreate([
             'user_id' => $this->getKey(),
