@@ -7,7 +7,6 @@ use Money\Money;
 
 interface Licensing
 {
-
     /**
      * Get licensing provider.
      */

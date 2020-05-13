@@ -2,8 +2,8 @@
 
 namespace Satifest\Foundation\Concerns;
 
-use Satifest\Foundation\License;
 use Satifest\Foundation\Contracts\Licensing;
+use Satifest\Foundation\License;
 
 trait Licensable
 {
