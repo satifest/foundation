@@ -29,7 +29,12 @@ class RepoUrl
      */
     public function __construct(string $url)
     {
-        $this->url = Url::fromString($url);
+        $url = (string) Str::of($url)
+            ->replaceMatches('/^(.*)\.git$/', static function ($match) {
+                return $match[1];
+            });
+
+        $this->url = Url::fromString((string) $url);
     }
 
     /**
@@ -51,11 +56,7 @@ class RepoUrl
             throw new InvalidArgumentException('Unable to find package name from invalid VCS URL');
         }
 
-        return Str::of($this->url->getPath())
-            ->trim('/')
-            ->replaceMatches('/^(.*)\.git$/', static function ($match) {
-                return $match[1];
-            });
+        return \trim($this->url->getPath(), '/');
     }
 
     /**
