@@ -23,7 +23,7 @@
     "require": {
         "php": ">=7.3",
         "illuminate/database": "^7.0",
-        "composer/semver": "^2.0",
+        "composer/semver": "^2.0 || ^3.0",
         "moneyphp/money": "^3.3",
         "spatie/url": "^1.3"
     },
