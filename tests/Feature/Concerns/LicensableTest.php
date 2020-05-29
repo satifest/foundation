@@ -2,6 +2,7 @@
 
 namespace Satifest\Foundation\Tests\Feature\Concerns;
 
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Money\Money;
@@ -12,6 +13,21 @@ use Satifest\Foundation\Tests\User;
 
 class LicensableTest extends TestCase
 {
+    /** @test */
+    public function it_has_many_licenses_relation()
+    {
+        $user = \factory(User::class)->make();
+
+        $licenses = $user->licenses();
+
+        $this->assertInstanceOf(HasMany::class, $licenses);
+        $this->assertNull($licenses->getParentKey());
+        $this->assertSame('users.id', $licenses->getQualifiedParentKeyName());
+        $this->assertSame('user_id', $licenses->getForeignKeyName());
+        $this->assertSame('sf_licenses.user_id', $licenses->getQualifiedForeignKeyName());
+        $this->assertSame('id', $licenses->getLocalKeyName());
+    }
+
     /** @test */
     public function it_can_create_license_for_user()
     {
