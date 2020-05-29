@@ -29,7 +29,9 @@ abstract class TestCase extends Testbench
      */
     protected function getEnvironmentSetUp($app)
     {
-        Satifest::setUserModel(User::class);
+        $app['config']->set([
+            'auth.providers.users.model' => User::class,
+        ]);
     }
 
     /**
