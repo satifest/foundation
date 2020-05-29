@@ -18,6 +18,8 @@ class RepoUrlTest extends TestCase
         $this->assertTrue($package->isValid());
         $this->assertSame('github.com', $package->domain());
         $this->assertSame($expected, $package->name());
+
+        $this->assertSame("https://github.com/{$expected}", (string) $package);
     }
 
     /**

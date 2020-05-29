@@ -83,6 +83,6 @@ class RepoUrl
      */
     public function __toString()
     {
-        return $this->url->__toString();
+        return (string) $this->url;
     }
 }
