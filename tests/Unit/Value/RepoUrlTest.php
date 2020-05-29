@@ -23,11 +23,36 @@ class RepoUrlTest extends TestCase
     }
 
     /**
+     * @test
+     * @dataProvider invalidGitHubPackages
+     */
+    public function it_cant_validate_invalid_github_packages($given)
+    {
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('Unable to find package name from invalid VCS URL');
+
+        $package = RepoUrl::make($given);
+
+        $this->assertFalse($package->isValid());
+
+        $package->name();
+    }
+
+    /**
      * Valid GitHub Packages data provider.
      */
     public function validGitHubPackages()
     {
         yield ['https://github.com/satifest/satifest', 'satifest/satifest'];
         yield ['https://github.com/satifest/satifest.git', 'satifest/satifest'];
+    }
+
+    /**
+     * Invalid GitHub Packages data provider.
+     */
+    public function invalidGitHubPackages()
+    {
+        yield ['https://gitlab.com/satifest/satifest'];
+        yield ['https://gitlab.com/satifest/satifest.git'];
     }
 }
