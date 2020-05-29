@@ -39,7 +39,7 @@ class Release extends Model
     public function scopeByRepoName(Builder $query, string $name): Builder
     {
         return $query->whereHas('repository', static function ($query) use ($name) {
-            return $query->where('name', '=', $name);
+            return $query->where(column_name(Repository::class, 'name'), '=', $name);
         });
     }
 

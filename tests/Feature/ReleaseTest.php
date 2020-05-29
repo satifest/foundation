@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Satifest\Foundation\Release;
+use Satifest\Foundation\Repository;
 use Satifest\Foundation\Tests\TestCase;
 
 class ReleaseTest extends TestCase
@@ -39,6 +40,43 @@ class ReleaseTest extends TestCase
         ]);
 
         $this->assertSame('v1.0.0', $release->name);
+    }
+
+    /** @test */
+    public function it_can_scoped_by_repo_name()
+    {
+        $repository = \factory(Repository::class)->create([
+            'url' => 'https://github.com/satifest/demo-test-package',
+        ]);
+
+        \factory(Release::class)->create([
+            'repository_id' => $repository->id,
+            'semver' => '1.0.0.0',
+            'version' => 'v1.0.0',
+        ]);
+
+        \factory(Release::class)->create([
+            'repository_id' => $repository->id,
+            'semver' => '1.1.0.0',
+            'version' => 'v1.1.0',
+        ]);
+
+        \factory(Release::class)->create([
+            'repository_id' => 2,
+            'semver' => '0.1.0.0',
+            'version' => 'v0.1.0',
+        ]);
+
+        $query = Release::byRepoName('satifest/demo-test-package');
+
+        $this->assertSame('select * from "sf_releases" where exists (select * from "sf_repositories" where "sf_releases"."repository_id" = "sf_repositories"."id" and "sf_repositories"."name" = ?)', $query->toSql());
+
+        $releases = $query->get();
+
+        $this->assertSame([
+            'v1.0.0',
+            'v1.1.0',
+        ], $releases->pluck('version')->all());
     }
 
     /** @test */
