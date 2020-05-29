@@ -3,8 +3,6 @@
 namespace Satifest\Foundation\Tests\Feature\Concerns;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Money\Money;
 use Satifest\Foundation\License;
 use Satifest\Foundation\Licensing;

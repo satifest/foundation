@@ -15,24 +15,18 @@ trait AuthorizesRequests
      * Register the Satifest authentication callback.
      *
      * @param  \Closure  $callback
-     *
-     * @return static
      */
-    public static function auth($callback)
+    public static function auth($callback): void
     {
         static::$authUsing = $callback;
-
-        return new static();
     }
 
     /**
      * Determine if the given request can access the Satifest dashboard.
      *
      * @param  \Illuminate\Http\Request  $request
-     *
-     * @return bool
      */
-    public static function check($request)
+    public static function check($request): bool
     {
         return (static::$authUsing ?: static function () {
             return \app()->environment('local');

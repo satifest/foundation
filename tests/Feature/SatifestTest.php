@@ -11,6 +11,18 @@ use Satifest\Foundation\Tests\User;
 class SatifestTest extends TestCase
 {
     /** @test */
+    public function it_can_customize_auth()
+    {
+        Satifest::auth(static function () {
+            return true;
+        });
+
+        $request = m::mock('Illuminate\Http\Request');
+
+        $this->assertTrue(Satifest::check($request));
+    }
+
+    /** @test */
     public function it_can_get_user_model()
     {
         $this->assertSame(User::class, Satifest::getUserModel());

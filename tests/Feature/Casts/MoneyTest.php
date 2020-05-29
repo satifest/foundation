@@ -2,8 +2,6 @@
 
 namespace Satifest\Foundation\Tests\Feature\Casts;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Money\Money;
 use Satifest\Foundation\License;
 use Satifest\Foundation\Tests\TestCase;
@@ -24,7 +22,6 @@ class MoneyTest extends TestCase
         $this->assertSame(3500, (int) $money->getAmount());
         $this->assertSame('MYR', (string) $money->getCurrency());
     }
-
 
     /** @test */
     public function it_cast_from_money()

@@ -2,6 +2,7 @@
 
 namespace Satifest\Foundation\Tests\Unit;
 
+use Mockery as m;
 use PHPUnit\Framework\TestCase;
 use Satifest\Foundation\Satifest;
 use Satifest\Foundation\Tests\User;
@@ -14,6 +15,21 @@ class SatifestTest extends TestCase
     protected function tearDown(): void
     {
         Satifest::$runsMigrations = true;
+
+        m::close();
+    }
+
+    /** @test */
+    public function it_has_the_default_authorize_on_local()
+    {
+        $app = m::mock('Illuminate\Contracts\Foundation\Application');
+        $app->shouldReceive('environment')->with('local')->andReturn(true);
+
+        \Illuminate\Container\Container::setInstance($app);
+
+        $request = m::mock('Illuminate\Http\Request');
+
+        $this->assertTrue(Satifest::check($request));
     }
 
     /** @test */
