@@ -39,7 +39,6 @@ class RepositoryTest extends TestCase
         $this->assertSame('id', $plans->getLocalKeyName());
     }
 
-
     /** @test */
     public function it_has_many_releases_relation()
     {
