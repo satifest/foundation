@@ -2,13 +2,9 @@
 
 namespace Satifest\Foundation\Tests\Feature\Observers;
 
-use Carbon\Carbon;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Support\Facades\Event;
 use Satifest\Foundation\Events\RepoChanged;
 use Satifest\Foundation\Events\RepoCreated;
-use Satifest\Foundation\Observers\RepositoryObserver;
 use Satifest\Foundation\Repository;
 use Satifest\Foundation\Tests\TestCase;
 

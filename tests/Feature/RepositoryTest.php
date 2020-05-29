@@ -2,8 +2,6 @@
 
 namespace Satifest\Foundation\Tests\Feature;
 
-use Illuminate\Support\Facades\Event;
-use Satifest\Foundation\Events\RepoCreated;
 use Satifest\Foundation\Repository;
 use Satifest\Foundation\Tests\TestCase;
 
