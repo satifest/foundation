@@ -5,7 +5,7 @@ namespace Satifest\Foundation;
 use DateTimeImmutable;
 use Money\Money;
 
-class Licensing
+class Licensing implements Contracts\Licensing
 {
     /**
      * Licensing provider.
@@ -76,11 +76,11 @@ class Licensing
     }
 
     /**
-     * Construct a new Licensing using "recurring" payment.
+     * Construct a new Licensing using "sponsorware" payment.
      */
-    public static function makeSponsor(string $provider, string $uid, ?Money $price, ?DateTimeImmutable $endsAt)
+    public static function makeSponsorware(string $provider, string $uid, ?Money $price, ?DateTimeImmutable $endsAt = null)
     {
-        return new static($provider, $uid, 'sponsor', $price, $endsAt);
+        return new static($provider, $uid, 'sponsorware', $price, $endsAt);
     }
 
     /**
