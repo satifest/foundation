@@ -41,11 +41,40 @@ class SatifestTest extends TestCase
     }
 
     /**
+     * @test
+     * @dataProvider invalidGitHubPackages
+     */
+    public function it_cant_get_package_name_from_invalid_github($given, $expected)
+    {
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage("Unable to resolved none GitHub url: {$given}");
+
+        $this->assertSame($expected, Satifest::packageNameFromGitHub($given));
+    }
+
+    /**
      * Valid GitHub Packages data provider.
      */
     public function validGitHubPackages()
     {
+        yield ['https://github.com/satifest/demo-test-package', 'satifest/demo-test-package'];
+        yield ['https://github.com/satifest/demo-test-package.git', 'satifest/demo-test-package'];
+        yield ['https://github.com/satifest/foundation', 'satifest/foundation'];
+        yield ['https://github.com/satifest/foundation.git', 'satifest/foundation'];
         yield ['https://github.com/satifest/satifest', 'satifest/satifest'];
         yield ['https://github.com/satifest/satifest.git', 'satifest/satifest'];
+    }
+
+    /**
+     * Invalid GitHub Packages data provider.
+     */
+    public function invalidGitHubPackages()
+    {
+        yield ['https://gitlab.com/satifest/demo-test-package', 'satifest/demo-test-package'];
+        yield ['https://gitlab.com/satifest/demo-test-package.git', 'satifest/demo-test-package'];
+        yield ['https://gitlab.com/satifest/foundation', 'satifest/foundation'];
+        yield ['https://gitlab.com/satifest/foundation.git', 'satifest/foundation'];
+        yield ['https://gitlab.com/satifest/satifest', 'satifest/satifest'];
+        yield ['https://gitlab.com/satifest/satifest.git', 'satifest/satifest'];
     }
 }
