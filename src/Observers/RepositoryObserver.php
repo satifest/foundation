@@ -47,28 +47,4 @@ class RepositoryObserver
     {
         \event(new RepoChanged($repository));
     }
-
-    /**
-     * Handle the repository "restored" event.
-     *
-     * @param  \Satifest\Foundation\Repository  $repository
-     *
-     * @return void
-     */
-    public function restored(Repository $repository)
-    {
-        \event(new RepoChanged($repository));
-    }
-
-    /**
-     * Handle the repository "force deleted" event.
-     *
-     * @param  \Satifest\Foundation\Repository  $repository
-     *
-     * @return void
-     */
-    public function forceDeleted(Repository $repository)
-    {
-        \event(new RepoChanged($repository));
-    }
 }

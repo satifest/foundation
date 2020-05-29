@@ -24,22 +24,4 @@ class RepositoryTest extends TestCase
         $this->assertSame('satifest/demo-test-package', $repository->name);
         $this->assertSame('https://github.com/satifest/demo-test-package.git', $repository->url);
     }
-
-    /** @test */
-    public function it_create_default_plan_on_create()
-    {
-        Event::fake([
-            RepoCreated::class,
-        ]);
-
-        $repository = \factory(Repository::class)->create([
-            'url' => 'https://github.com/satifest/demo-test-package',
-        ]);
-
-        $this->assertDatabaseHas('sf_plans', [
-            'repository_id' => $repository->getKey(),
-            'name' => 'Basic Plan for satifest/demo-test-package',
-            'constraint' => '*',
-        ]);
-    }
 }
