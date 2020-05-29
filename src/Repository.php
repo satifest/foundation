@@ -59,7 +59,7 @@ class Repository extends Model
     {
         return Plan::forceCreate([
             'repository_id' => $this->getKey(),
-            'name' => $name ?? "Basic Plan for {$this->name}",
+            'name' => $name ?? "Plan for {$this->name}",
             'constraint' => $constraint,
         ]);
     }
