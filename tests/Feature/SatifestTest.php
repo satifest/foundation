@@ -37,4 +37,24 @@ class SatifestTest extends TestCase
 
         unset($GLOBALS['satifest-serving']);
     }
+
+    /** @test */
+    public function it_can_create_route_for_satifest()
+    {
+        config([
+            'app.url' => 'http://satifest.test',
+            'satifest.url' => 'http://satifest.test/satis',
+        ]);
+
+        Satifest::route(null)
+            ->group(function ($router) {
+                $router->get('test-route', function () {
+                    return 'satifest route test';
+                });
+            });
+
+        $this->get('satis/test-route')
+            ->assertOk()
+            ->assertSee('satifest route test');
+    }
 }
