@@ -1,0 +1,117 @@
+<?php
+
+namespace Satifest\Foundation\Value;
+
+use Illuminate\Contracts\Support\Arrayable;
+use Spatie\Url\Url;
+
+class Routing implements Arrayable
+{
+    /**
+     * The URL.
+     *
+     * @var \Spatie\Url\Url
+     */
+    protected $url;
+
+    /**
+     * The routing prefix.
+     *
+     * @var string
+     */
+    protected $prefix = '/';
+
+    /**
+     * The routing domain.
+     *
+     * @var string|null
+     */
+    protected $domain = null;
+
+    /**
+     * Ignored hosts.
+     *
+     * @var array
+     */
+    protected $ignoredHosts = ['', 'localhost', 'http://localhost', 'https://localhost'];
+
+    /**
+     * Construct a new URL Routing.
+     */
+    public function __construct(Url $url)
+    {
+        $this->url = $url;
+
+        $this->prefix = $this->parsePrefixFrom($url);
+        $this->domain = $this->parseDomainFrom($url);
+    }
+
+    /**
+     * Make a new URL Routing.
+     *
+     * @return static
+     */
+    public static function make(string $url = '/')
+    {
+        return new static(Url::fromString($url));
+    }
+
+    /**
+     * Get domain value.
+     */
+    public function domain(): ?string
+    {
+        return $this->domain;
+    }
+
+    /**
+     * Get prefix value.
+     */
+    public function prefix(): string
+    {
+        return $this->prefix;
+    }
+
+    /**
+     * Get the instance as an array.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        return [
+            'domain' => $this->domain,
+            'prefix' => $this->prefix,
+        ];
+    }
+
+    /**
+     * Parse domain from URL.
+     */
+    protected function parseDomainFrom(Url $url): ?string
+    {
+        return \transform($url->getHost(), function ($host) {
+            $appUrl = Url::fromString(\config('app.url') ?? '/');
+
+            if ($appUrl->getHost() === $host) {
+                return null;
+            }
+
+            return ! \in_array($host, $this->ignoredHosts) ? $host : null;
+        });
+    }
+
+    /**
+     * Parse prefix from URL.
+     */
+    protected function parsePrefixFrom(Url $url): string
+    {
+        return \transform($url->getPath(), static function ($prefix) {
+            if ($prefix === '/') {
+                return $prefix;
+            }
+
+            return \trim($prefix, '/');
+        });
+    }
+}

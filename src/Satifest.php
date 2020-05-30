@@ -27,13 +27,6 @@ class Satifest
     public static $runsMigrations = true;
 
     /**
-     * Ignored hosts.
-     *
-     * @var array
-     */
-    protected static $ignoredHosts = ['', 'http://localhost', 'https://localhost'];
-
-    /**
      * Set purchaser model.
      */
     public static function setUserModel(string $userModel): void
@@ -86,30 +79,14 @@ class Satifest
      */
     public static function route(?string $namespace): RouteRegistrar
     {
-        $satifestUrl = Url::fromString(\config('satifest.url') ?? '/');
+        $routing = Value\Routing::make(\config('satifest.url') ?? '/');
 
-        $prefix = $satifestUrl->getPath();
-
-        if ($prefix !== '/') {
-            $prefix = \trim($prefix, '/');
-        }
-
-        return \tap(Route::prefix($prefix), function ($router) use ($satifestUrl, $namespace) {
+        return \tap(Route::prefix($routing->prefix()), function ($router) use ($routing, $namespace) {
             if (! empty($namespace)) {
                 $router->namespace($namespace);
             }
 
-            $domain = \transform($satifestUrl->getHost(), static function ($host) {
-                $appUrl = Url::fromString(\config('app.url') ?? '/');
-
-                if ($appUrl->getHost() === $host) {
-                    return null;
-                }
-
-                return ! \in_array($host, static::$ignoredHosts) ? $host : null;
-            });
-
-            if (! \is_null($domain)) {
+            if (! \is_null($domain = $routing->domain())) {
                 $router->domain($domain);
             }
         });
