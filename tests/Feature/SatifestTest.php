@@ -8,6 +8,9 @@ use Satifest\Foundation\Satifest;
 use Satifest\Foundation\Tests\TestCase;
 use Satifest\Foundation\Tests\User;
 
+/**
+ * @testdox Satifest\Foundation\Satifest feature tests
+ */
 class SatifestTest extends TestCase
 {
     /** @test */

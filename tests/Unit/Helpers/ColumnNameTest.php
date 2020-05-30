@@ -7,7 +7,7 @@ use function Satifest\Foundation\column_name;
 use Satifest\Foundation\Tests\User;
 
 /**
- * @testdox Satifest\Foundation\column_name() tests
+ * @testdox Satifest\Foundation\column_name() unit tests
  */
 class ColumnNameTest extends TestCase
 {

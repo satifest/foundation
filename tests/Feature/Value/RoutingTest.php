@@ -8,6 +8,9 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Satifest\Foundation\Tests\TestCase;
 use Satifest\Foundation\Value\Routing;
 
+/**
+ * @testdox Satifest\Foundation\Value\Routing feature tests
+ */
 class RoutingTest extends TestCase
 {
     /**
@@ -40,6 +43,9 @@ class RoutingTest extends TestCase
         ], $routing->toArray());
     }
 
+    /**
+     * Routing data provider.
+     */
     public function routingDataProvider()
     {
         yield ['/', null, '/'];

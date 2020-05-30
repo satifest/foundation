@@ -6,6 +6,9 @@ use Money\Money;
 use Satifest\Foundation\License;
 use Satifest\Foundation\Tests\TestCase;
 
+/**
+ * @testdox Satifest\Foundation\Casts\Money feature tests
+ */
 class MoneyTest extends TestCase
 {
     /** @test */

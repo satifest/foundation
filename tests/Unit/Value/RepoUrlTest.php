@@ -5,6 +5,9 @@ namespace Satifest\Foundation\Tests\Unit\Value;
 use PHPUnit\Framework\TestCase;
 use Satifest\Foundation\Value\RepoUrl;
 
+/**
+ * @testdox Satifest\Foundation\Value\RepoUrl unit tests
+ */
 class RepoUrlTest extends TestCase
 {
     /**

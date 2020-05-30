@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Satifest\Foundation\Plan;
 use Satifest\Foundation\Tests\TestCase;
 
+/**
+ * @testdox Satifest\Foundation\Plan feature tests
+ */
 class PlanTest extends TestCase
 {
     /** @test */

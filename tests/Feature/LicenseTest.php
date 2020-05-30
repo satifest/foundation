@@ -10,6 +10,9 @@ use Money\Money;
 use Satifest\Foundation\License;
 use Satifest\Foundation\Tests\TestCase;
 
+/**
+ * @testdox Satifest\Foundation\License feature tests
+ */
 class LicenseTest extends TestCase
 {
     /** @test */

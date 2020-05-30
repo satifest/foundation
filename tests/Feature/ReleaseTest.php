@@ -9,6 +9,9 @@ use Satifest\Foundation\Release;
 use Satifest\Foundation\Repository;
 use Satifest\Foundation\Tests\TestCase;
 
+/**
+ * @testdox Satifest\Foundation\Release feature tests
+ */
 class ReleaseTest extends TestCase
 {
     /** @test */

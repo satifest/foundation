@@ -7,6 +7,9 @@ use PHPUnit\Framework\TestCase;
 use Satifest\Foundation\Satifest;
 use Satifest\Foundation\Tests\User;
 
+/**
+ * @testdox Satifest\Foundation\Satifest unit tests
+ */
 class SatifestTest extends TestCase
 {
     /**

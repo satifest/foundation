@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Satifest\Foundation\Repository;
 use Satifest\Foundation\Tests\TestCase;
 
+/**
+ * @testdox Satifest\Foundation\Repository feature tests
+ */
 class RepositoryTest extends TestCase
 {
     /** @test */

@@ -8,6 +8,9 @@ use Satifest\Foundation\Events\RepoCreated;
 use Satifest\Foundation\Repository;
 use Satifest\Foundation\Tests\TestCase;
 
+/**
+ * @testdox Satifest\Foundation\Observers\RepositoryObserver feature tests
+ */
 class RepositoryObserverTest extends TestCase
 {
     /** @test */

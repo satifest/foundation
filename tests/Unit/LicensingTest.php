@@ -9,7 +9,7 @@ use Satifest\Foundation\Contracts\Licensing as LicensingContract;
 use Satifest\Foundation\Licensing;
 
 /**
- * @testdox Satifest\Licensing tests
+ * @testdox Satifest\Foundation\Licensing unit tests
  */
 class LicensingTest extends TestCase
 {

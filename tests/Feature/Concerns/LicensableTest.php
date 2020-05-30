@@ -9,6 +9,9 @@ use Satifest\Foundation\Licensing;
 use Satifest\Foundation\Tests\TestCase;
 use Satifest\Foundation\Tests\User;
 
+/**
+ * @testdox Satifest\Foundation\Concerns\Licensable feature tests
+ */
 class LicensableTest extends TestCase
 {
     /** @test */
