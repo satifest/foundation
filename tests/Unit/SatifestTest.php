@@ -29,6 +29,8 @@ class SatifestTest extends TestCase
 
         $request = m::mock('Illuminate\Http\Request');
 
+        $this->assertTrue(app()->environment('local'));
+
         $this->assertTrue(Satifest::check($request));
     }
 
