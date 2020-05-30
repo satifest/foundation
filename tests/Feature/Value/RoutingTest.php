@@ -42,6 +42,7 @@ class RoutingTest extends TestCase
 
     public function routingDataProvider()
     {
+        yield ['/', null, '/'];
         yield ['satis', null, 'satis'];
         yield ['/satis', null, 'satis'];
         yield ['satis/', null, 'satis'];
