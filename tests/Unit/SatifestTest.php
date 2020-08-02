@@ -12,14 +12,40 @@ use Satifest\Foundation\Tests\User;
  */
 class SatifestTest extends TestCase
 {
+    protected $defaultSupportedHosts = [];
+
+    protected function setUp(): void
+    {
+        $this->defaultSupportedHosts = Satifest::getSupportedHosts();
+    }
     /**
      * Teardown the test environment.
      */
     protected function tearDown(): void
     {
         Satifest::$runsMigrations = true;
+        Satifest::setSupportedHosts($this->defaultSupportedHosts);
 
         m::close();
+    }
+
+    /** @test */
+    public function it_has_the_default_supported_hosts()
+    {
+        $this->assertSame([
+            'github.com',
+            'gitlab.com',
+        ], Satifest::getSupportedHosts());
+    }
+
+    /** @test */
+    public function it_can_set_supported_hosts()
+    {
+        Satifest::setSupportedHosts(['github.com']);
+
+        $this->assertSame([
+            'github.com',
+        ], Satifest::getSupportedHosts());
     }
 
     /** @test */

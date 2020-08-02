@@ -96,4 +96,26 @@ class ReleaseTest extends TestCase
         $this->assertSame('sf_repositories.id', $repository->getQualifiedOwnerKeyName());
         $this->assertSame('repository', $repository->getRelationName());
     }
+
+    /** @test */
+    public function it_can_verify_stable_version()
+    {
+        $release = \factory(Release::class)->make([
+            'type' => Release::STABLE,
+        ]);
+
+        $this->assertTrue($release->stableVersion());
+        $this->assertFalse($release->notStableVersion());
+    }
+
+    /** @test */
+    public function it_can_verify_unstable_version()
+    {
+        $release = \factory(Release::class)->make([
+            'type' => Release::NIGHTLY,
+        ]);
+
+        $this->assertFalse($release->stableVersion());
+        $this->assertTrue($release->notStableVersion());
+    }
 }

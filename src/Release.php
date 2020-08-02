@@ -12,7 +12,6 @@ class Release extends Model
      */
     public const STABLE = 'stable';
     public const NIGHTLY = 'nightly';
-    public const DEV = 'dev';
 
     /**
      * The table associated with the model.

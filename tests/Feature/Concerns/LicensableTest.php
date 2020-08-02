@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Money\Money;
 use Satifest\Foundation\License;
 use Satifest\Foundation\Licensing;
+use Satifest\Foundation\Plan;
+use Satifest\Foundation\Repository;
 use Satifest\Foundation\Tests\TestCase;
 use Satifest\Foundation\Tests\User;
 
@@ -48,5 +50,37 @@ class LicensableTest extends TestCase
             'currency' => 'USD',
             'user_id' => $user->getKey(),
         ]);
+
+        $this->assertSame(0, $license->plans()->count());
+    }
+
+    /** @test */
+    public function it_can_create_license_with_plans_for_user()
+    {
+        $user = \factory(User::class)->create();
+        $repository = \factory(Repository::class)->create([
+            'name' => 'satifest/test-demo-package',
+            'url' => 'http://github.com/satifest/test-demo-package',
+        ]);
+        $plans = \factory(Plan::class, 2)->create([
+            'repository_id' => $repository->id,
+        ]);
+
+        $license = $user->createLicense(Licensing::makePurchase(
+            'stripe', '4eC39HqLyjWDarjtT1zdp7dc', Money::USD(3500)
+        ), $plans->pluck('id')->all());
+
+        $this->assertInstanceOf(License::class, $license);
+
+        $this->assertDatabaseHas('sf_licenses', [
+            'provider' => 'stripe',
+            'uid' => '4eC39HqLyjWDarjtT1zdp7dc',
+            'type' => 'purchase',
+            'amount' => '3500',
+            'currency' => 'USD',
+            'user_id' => $user->getKey(),
+        ]);
+
+        $this->assertSame(2, $license->plans()->count());
     }
 }
