@@ -32,6 +32,7 @@ class CreateSatifestReleasesTable extends Migration
             $table->string('type')->index()->default(Release::STABLE);
 
             $table->timestamp('published_at')->nullable();
+            $table->timestamp('synced_at')->nullable();
             $table->timestamps();
 
             $table->unique(['repository_id', 'semver']);

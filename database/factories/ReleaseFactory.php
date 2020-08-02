@@ -1,6 +1,7 @@
 <?php
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
+use Carbon\Carbon;
 use Faker\Generator as Faker;
 use Satifest\Foundation\Release;
 
@@ -11,5 +12,6 @@ $factory->define(Release::class, function (Faker $faker) {
         'artifact_disk' => 'local',
         'artifact_url' => $faker->sha1,
         'type' => 'stable',
+        'synced_at' => Carbon::now(),
     ];
 });
