@@ -46,6 +46,53 @@ class ReleaseTest extends TestCase
     }
 
     /** @test */
+    public function it_can_scoped_by_stable_release()
+    {
+        $repository = \factory(Repository::class)->create([
+            'url' => 'https://github.com/satifest/demo-test-package',
+        ]);
+
+        \factory(Release::class)->create([
+            'repository_id' => $repository->id,
+            'semver' => '1.0.0.0',
+            'version' => 'v1.0.0',
+            'type' => 'stable'
+        ]);
+
+        \factory(Release::class)->create([
+            'repository_id' => $repository->id,
+            'semver' => '1.1.0.0',
+            'version' => 'v1.1.0',
+        ]);
+
+        \factory(Release::class)->create([
+            'repository_id' => 2,
+            'semver' => '0.1.0.0',
+            'version' => 'v0.1.0',
+        ]);
+
+        \factory(Release::class)->create([
+            'repository_id' => $repository->id,
+            'semver' => '9999999-dev',
+            'version' => 'dev-master',
+            'type' => Release::NIGHTLY,
+        ]);
+
+        $query = Release::stable();
+
+        $this->assertSame('select * from "sf_releases" where "type" in (?)', $query->toSql());
+        $this->assertSame(['stable'], $query->getBindings());
+
+        $releases = $query->get();
+
+        $this->assertSame([
+            'v1.0.0',
+            'v1.1.0',
+            'v0.1.0',
+        ], $releases->pluck('version')->all());
+    }
+
+    /** @test */
     public function it_can_scoped_by_repo_name()
     {
         $repository = \factory(Repository::class)->create([
