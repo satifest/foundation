@@ -51,7 +51,7 @@ class RepoUrl
             throw new InvalidArgumentException('Unable to find package name from invalid VCS URL');
         }
 
-        return \trim($this->url->getPath(), '/');
+        return \implode('/', $this->url->getSegments());
     }
 
     /**
