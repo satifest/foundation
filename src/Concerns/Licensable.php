@@ -2,6 +2,7 @@
 
 namespace Satifest\Foundation\Concerns;
 
+use Illuminate\Database\Eloquent\Collection;
 use Satifest\Foundation\Contracts\Licensing;
 use Satifest\Foundation\License;
 
@@ -19,10 +20,12 @@ trait Licensable
 
     /**
      * Create a new license for the user.
+     *
+     * @param  \Illuminate\Support\Collection|array  $plans
      */
-    public function createLicense(Licensing $licensing): License
+    public function createLicense(Licensing $licensing, $plans = []): License
     {
-        return License::forceCreate([
+        $license = License::forceCreate([
             'user_id' => $this->getKey(),
             'provider' => $licensing->provider(),
             'uid' => $licensing->uid(),
@@ -31,5 +34,13 @@ trait Licensable
             'currency' => (string) $licensing->price()->getCurrency(),
             'ends_at' => $licensing->endsAt(),
         ]);
+
+        if (($plans instanceof Collection && $plans->isNotEmpty())
+            || (\is_array($plans) && ! empty($plans))
+        ) {
+            $license->plans()->sync($plans);
+        }
+
+        return $license;
     }
 }
