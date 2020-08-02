@@ -48,6 +48,7 @@ class RepoUrlTest extends TestCase
     {
         yield ['https://github.com/satifest/satifest', 'satifest/satifest'];
         yield ['https://github.com/satifest/satifest.git', 'satifest/satifest'];
+        yield ['git@github.com:satifest/satifest.git', 'satifest/satifest'];
     }
 
     /**

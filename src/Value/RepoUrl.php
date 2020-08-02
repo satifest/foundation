@@ -30,8 +30,11 @@ class RepoUrl
     public function __construct(string $url)
     {
         $url = (string) Str::of($url)
-            ->replaceMatches('/^(.*)\.git$/', static function ($match) {
-                return $match[1];
+            ->replaceMatches('/^(.*)\.git$/', static function ($matches) {
+                return $matches[1];
+            })
+            ->replaceMatches('/^git@(.*)$/', static function ($matches) {
+                return 'https://'.\str_replace(':', '/', $matches[1]);
             });
 
         $this->url = Url::fromString((string) $url);
