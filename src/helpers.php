@@ -3,6 +3,7 @@
 namespace Satifest\Foundation;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 
 /**
@@ -23,4 +24,14 @@ function column_name($model, string $attribute): string
     }
 
     return $model->qualifyColumn($attribute);
+}
+
+/**
+ * Get release stability from SemVer format.
+ */
+function release_stability(string $semver): string
+{
+    return Str::endsWith($semver, '-dev')
+        ? Release::NIGHTLY
+        : Release::STABLE;
 }
