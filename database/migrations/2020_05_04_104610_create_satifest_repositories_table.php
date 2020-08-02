@@ -20,6 +20,7 @@ class CreateSatifestRepositoriesTable extends Migration
             $table->string('type')->default('vcs')->index();
 
             $table->string('name');
+            $table->string('package')->nullable();
             $table->string('title')->nullable();
             $table->longText('description')->nullable();
             $table->string('url');
