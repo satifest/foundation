@@ -73,4 +73,12 @@ class Release extends Model
     {
         return $this->type === self::STABLE;
     }
+
+    /**
+     * Check if release is not stable version.
+     */
+    public function notStableVersion(): bool
+    {
+        return ! $this->stableVersion();
+    }
 }
