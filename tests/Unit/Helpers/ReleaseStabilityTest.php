@@ -36,12 +36,10 @@ class ReleaseStabilityTest extends TestCase
     }
 
     /**
-     * Nightly releases
+     * Nightly releases.
      */
     public function nightlyReleases()
     {
         yield ['9999999-dev'];
     }
-
-
 }

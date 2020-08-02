@@ -18,6 +18,7 @@ class SatifestTest extends TestCase
     {
         $this->defaultSupportedHosts = Satifest::getSupportedHosts();
     }
+
     /**
      * Teardown the test environment.
      */

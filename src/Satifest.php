@@ -6,7 +6,6 @@ use Illuminate\Routing\RouteRegistrar;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
 use InvalidArgumentException;
-use Spatie\Url\Url;
 
 class Satifest
 {

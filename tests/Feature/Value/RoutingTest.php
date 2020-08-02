@@ -3,8 +3,6 @@
 namespace Satifest\Foundation\Tests\Feature\Value;
 
 use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Satifest\Foundation\Tests\TestCase;
 use Satifest\Foundation\Value\Routing;
 

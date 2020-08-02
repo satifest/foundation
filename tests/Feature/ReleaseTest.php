@@ -56,7 +56,7 @@ class ReleaseTest extends TestCase
             'repository_id' => $repository->id,
             'semver' => '1.0.0.0',
             'version' => 'v1.0.0',
-            'type' => 'stable'
+            'type' => 'stable',
         ]);
 
         \factory(Release::class)->create([
