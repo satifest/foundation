@@ -8,6 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Release extends Model
 {
     /**
+     * Release type constants.
+     */
+    public const STABLE = 'stable';
+    public const DEV = 'dev';
+
+    /**
      * The table associated with the model.
      *
      * @var string

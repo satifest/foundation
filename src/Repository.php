@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Repository extends Model
 {
     /**
+     * Repository provider constants.
+     */
+    public const GITHUB_PROVIDER = 'github';
+
+    /**
      * The table associated with the model.
      *
      * @var string

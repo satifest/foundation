@@ -16,10 +16,12 @@ class CreateSatifestRepositoriesTable extends Migration
         Schema::create('sf_repositories', function (Blueprint $table) {
             $table->id();
 
+            $table->string('provider')->default('github')->index();
+            $table->string('type')->default('vcs')->index();
+
             $table->string('name');
             $table->string('title')->nullable();
             $table->longText('description')->nullable();
-            $table->string('type')->default('vcs');
             $table->string('url');
 
             $table->timestamps();

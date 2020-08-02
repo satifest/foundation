@@ -6,6 +6,7 @@ use Satifest\Foundation\Repository;
 
 $factory->define(Repository::class, function (Faker $faker) {
     return [
+        'provider' => 'github',
         'type' => 'vcs',
     ];
 });

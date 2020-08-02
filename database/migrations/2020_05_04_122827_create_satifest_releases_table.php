@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Satifest\Foundation\Release;
 
 class CreateSatifestReleasesTable extends Migration
 {
@@ -28,6 +29,7 @@ class CreateSatifestReleasesTable extends Migration
             $table->string('artifact_disk')->nullable();
             $table->string('artifact_url')->nullable();
             $table->string('artifact_file')->nullable();
+            $table->string('type')->index()->default(Release::STABLE);
 
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
