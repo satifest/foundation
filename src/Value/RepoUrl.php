@@ -22,6 +22,7 @@ class RepoUrl
      */
     protected $supportedHosts = [
         'github.com',
+        'gitlab.com',
     ];
 
     /**
@@ -75,8 +76,17 @@ class RepoUrl
      */
     public function isValid(): bool
     {
-        return \in_array($this->url->getHost(), $this->supportedHosts)
+        return $this->isSupportedDomain()
+            && count($this->url->getSegments()) === 2
             && $this->url->getScheme('https');
+    }
+
+    /**
+     * Validate supported domain.
+     */
+    public function isSupportedDomain(): bool
+    {
+        return \in_array($this->url->getHost(), $this->supportedHosts);
     }
 
     /**

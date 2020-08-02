@@ -12,24 +12,23 @@ class RepoUrlTest extends TestCase
 {
     /**
      * @test
-     * @dataProvider validGitHubPackages
+     * @dataProvider validPackageUrls
      */
-    public function it_can_validate_github_packages($given, $expected)
+    public function it_can_validate_valid_packages($given, $expected)
     {
         $package = RepoUrl::make($given);
 
         $this->assertTrue($package->isValid());
-        $this->assertSame('github.com', $package->domain());
         $this->assertSame($expected, $package->name());
 
-        $this->assertSame("https://github.com/{$expected}", (string) $package);
+        $this->assertSame("https://{$package->domain()}/{$expected}", (string) $package);
     }
 
     /**
      * @test
-     * @dataProvider invalidGitHubPackages
+     * @dataProvider invalidPackageUrls
      */
-    public function it_cant_validate_invalid_github_packages($given)
+    public function it_cant_validate_invalid_packages($given)
     {
         $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('Unable to find package name from invalid VCS URL');
@@ -44,19 +43,25 @@ class RepoUrlTest extends TestCase
     /**
      * Valid GitHub Packages data provider.
      */
-    public function validGitHubPackages()
+    public function validPackageUrls()
     {
         yield ['https://github.com/satifest/satifest', 'satifest/satifest'];
         yield ['https://github.com/satifest/satifest.git', 'satifest/satifest'];
         yield ['git@github.com:satifest/satifest.git', 'satifest/satifest'];
+
+        yield ['https://gitlab.com/satifest/satifest', 'satifest/satifest'];
+        yield ['https://gitlab.com/satifest/satifest.git', 'satifest/satifest'];
+        yield ['git@gitlab.com:satifest/satifest.git', 'satifest/satifest'];
     }
 
     /**
      * Invalid GitHub Packages data provider.
      */
-    public function invalidGitHubPackages()
+    public function invalidPackageUrls()
     {
-        yield ['https://gitlab.com/satifest/satifest'];
-        yield ['https://gitlab.com/satifest/satifest.git'];
+        yield ['https://github.com/orgs/satifest/satifest'];
+        yield ['https://bitbucket.org/satifest/satifest'];
+        yield ['https://bitbucket.org/satifest/satifest.git'];
+        yield ['https://bitbucket.org/orgs/satifest/satifest'];
     }
 }
