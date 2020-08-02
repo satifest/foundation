@@ -20,6 +20,16 @@ class Satifest
     protected static $userModel;
 
     /**
+     * Get list of supported hosts.
+     *
+     * @var array
+     */
+    protected static $supportedHosts = [
+        'github.com',
+        'gitlab.com',
+    ];
+
+    /**
      * Indicates if Satifest migrations will be run.
      *
      * @var bool
@@ -52,6 +62,24 @@ class Satifest
         }
 
         return static::$userModel;
+    }
+
+    /**
+     * Set supported hosts.
+     */
+    public static function setSupportedHosts(array $hosts): void
+    {
+        static::$supportedHosts = $hosts;
+    }
+
+    /**
+     * Get supported hosts.
+     *
+     * @return array
+     */
+    public static function getSupportedHosts(): array
+    {
+        return static::$supportedHosts;
     }
 
     /**

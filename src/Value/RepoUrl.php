@@ -4,6 +4,7 @@ namespace Satifest\Foundation\Value;
 
 use Illuminate\Support\Str;
 use InvalidArgumentException;
+use Satifest\Foundation\Satifest;
 use Spatie\Url\Url;
 
 class RepoUrl
@@ -14,16 +15,6 @@ class RepoUrl
      * @var \Spatie\Url\Url
      */
     protected $url;
-
-    /**
-     * List of supported VCS hosts.
-     *
-     * @var array
-     */
-    protected $supportedHosts = [
-        'github.com',
-        'gitlab.com',
-    ];
 
     /**
      * Construct a new Package URL value object.
@@ -86,7 +77,7 @@ class RepoUrl
      */
     public function isSupportedDomain(): bool
     {
-        return \in_array($this->url->getHost(), $this->supportedHosts);
+        return \in_array($this->url->getHost(), Satifest::getSupportedHosts());
     }
 
     /**
