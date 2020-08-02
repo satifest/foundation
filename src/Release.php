@@ -11,6 +11,7 @@ class Release extends Model
      * Release type constants.
      */
     public const STABLE = 'stable';
+    public const NIGHTLY = 'nightly';
     public const DEV = 'dev';
 
     /**
@@ -37,6 +38,14 @@ class Release extends Model
     public function repository()
     {
         return $this->belongsTo(Repository::class, 'repository_id', 'id', 'repository');
+    }
+
+    /**
+     * Scope stable release.
+     */
+    public function scopeStable(Builder $query): Builder
+    {
+        return $query->whereIn('type', [self::STABLE]);
     }
 
     /**
