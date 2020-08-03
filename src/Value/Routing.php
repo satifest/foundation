@@ -3,6 +3,8 @@
 namespace Satifest\Foundation\Value;
 
 use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Routing\RouteRegistrar;
+use Illuminate\Support\Facades\Route;
 use Spatie\Url\Url;
 
 class Routing implements Arrayable
@@ -83,6 +85,19 @@ class Routing implements Arrayable
             'domain' => $this->domain,
             'prefix' => $this->prefix,
         ];
+    }
+
+    public function __invoke(?string $namespace): RouteRegistrar
+    {
+        return \tap(Route::prefix($this->prefix()), function ($router) use ($namespace) {
+            if (! empty($namespace)) {
+                $router->namespace($namespace);
+            }
+
+            if (! \is_null($domain = $this->domain())) {
+                $router->domain($domain);
+            }
+        });
     }
 
     /**

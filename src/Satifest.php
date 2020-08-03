@@ -108,15 +108,7 @@ class Satifest
     {
         $routing = Value\Routing::make(\config('satifest.url') ?? '/');
 
-        return \tap(Route::prefix($routing->prefix()), function ($router) use ($routing, $namespace) {
-            if (! empty($namespace)) {
-                $router->namespace($namespace);
-            }
-
-            if (! \is_null($domain = $routing->domain())) {
-                $router->domain($domain);
-            }
-        });
+        return $routing($namespace);
     }
 
     /**
