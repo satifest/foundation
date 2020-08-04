@@ -58,6 +58,16 @@ class Repository extends Model
     }
 
     /**
+     * Scope release by repository name.
+     */
+    public function scopeByPackageUrl(Builder $query, string $url): Builder
+    {
+        $repoUrl = Value\RepoUrl::make($url);
+
+        return $query->where('url', '=', (string) $repoUrl);
+    }
+
+    /**
      * Create plan for Repository.
      */
     public function createPlan(?string $name = null, string $constraint = '*'): Plan
