@@ -49,10 +49,16 @@ class Release extends Model
     }
 
     /**
-     * Scope release by repository name.
+     * Scope release by package name.
+     *
+     * @param  string|array  $name
      */
-    public function scopeByPackage(Builder $query, string $name): Builder
+    public function scopeByPackage(Builder $query, $name): Builder
     {
+        if (! \is_string($name)) {
+            $name = \implode('/', $name);
+        }
+
         return $query->whereHas('repository', static function ($query) use ($name) {
             return $query->where(column_name(Repository::class, 'package'), '=', $name);
         });
@@ -60,9 +66,15 @@ class Release extends Model
 
     /**
      * Scope release by repository name.
+     *
+     * @param  string|array  $name
      */
-    public function scopeByRepoName(Builder $query, string $name): Builder
+    public function scopeByName(Builder $query, $name): Builder
     {
+        if (! \is_string($name)) {
+            $name = \implode('/', $name);
+        }
+
         return $query->whereHas('repository', static function ($query) use ($name) {
             return $query->where(column_name(Repository::class, 'name'), '=', $name);
         });

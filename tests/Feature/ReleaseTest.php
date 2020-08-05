@@ -117,7 +117,7 @@ class ReleaseTest extends TestCase
             'version' => 'v0.1.0',
         ]);
 
-        $query = Release::byRepoName('satifest/demo-test-package');
+        $query = Release::byName('satifest/demo-test-package');
 
         $this->assertSame('select * from "sf_releases" where exists (select * from "sf_repositories" where "sf_releases"."repository_id" = "sf_repositories"."id" and "sf_repositories"."name" = ?)', $query->toSql());
 
