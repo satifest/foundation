@@ -59,9 +59,9 @@ class Repository extends Model
     }
 
     /**
-     * Scope release by repository name.
+     * Scope release by repository url.
      */
-    public function scopeByPackageUrl(Builder $query, ?string $url): Builder
+    public function scopeByUrl(Builder $query, ?string $url): Builder
     {
         if (\is_null($url)) {
             return $query->where('id', '<', 1);
@@ -70,6 +70,16 @@ class Repository extends Model
         $repoUrl = Value\RepoUrl::make($url);
 
         return $query->where('url', '=', (string) $repoUrl);
+    }
+
+     /**
+     * Scope release by repository name.
+     *
+     * @deprecated
+     */
+    public function scopeByPackageUrl(Builder $query, ?string $url): Builder
+    {
+        return $this->scopeByUrl($query, $url);
     }
 
     /**
