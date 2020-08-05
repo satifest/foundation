@@ -7,6 +7,26 @@ use Illuminate\Support\Str;
 use InvalidArgumentException;
 
 /**
+ * Get table name from Eloquent model.
+ *
+ * @param  string|\Illuminate\Database\Eloquent\Model  $model
+ *
+ * @throws \InvalidArgumentException
+ */
+function table_name($model): string
+{
+    if (\is_string($model)) {
+        $model = new $model();
+    }
+
+    if (! $model instanceof Model) {
+        throw new InvalidArgumentException(\sprintf('Given $model is not an instance of [%s].', Model::class));
+    }
+
+    return $model->getTable();
+}
+
+/**
  * Get qualify column name from Eloquent model.
  *
  * @param  string|\Illuminate\Database\Eloquent\Model  $model

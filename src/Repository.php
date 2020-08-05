@@ -72,7 +72,7 @@ class Repository extends Model
         return $query->where('url', '=', (string) $repoUrl);
     }
 
-     /**
+    /**
      * Scope release by repository name.
      *
      * @deprecated
