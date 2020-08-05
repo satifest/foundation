@@ -28,6 +28,7 @@
         "composer/semver": "^1.5 || ^2.0 || ^3.0",
         "illuminate/database": "^7.10",
         "illuminate/support": "^7.10",
+        "laravie/query-filter": "^1.6",
         "moneyphp/money": "^3.3",
         "ramsey/uuid": "^4.0",
         "spatie/url": "^1.3"
