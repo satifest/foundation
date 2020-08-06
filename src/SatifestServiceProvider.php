@@ -43,10 +43,8 @@ class SatifestServiceProvider extends ServiceProvider
 
     /**
      * Register Satifest's migration files.
-     *
-     * @return void
      */
-    protected function registerMigrations()
+    protected function registerMigrations(): void
     {
         if (Satifest::$runsMigrations) {
             return $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
