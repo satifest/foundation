@@ -41,6 +41,18 @@ class Release extends Model
     }
 
     /**
+     * Scope accessible by.
+     */
+    public function scopeAccessibleBy(Builder $query, Model $user): Builder
+    {
+        // return $query->whereHas('respository', static function ($query) use ($user) {
+        //     return $query->whereIn(column_name(Repository::class, 'id'), '=', $name);
+        // });
+
+        return $query;
+    }
+
+    /**
      * Scope stable release.
      */
     public function scopeStable(Builder $query): Builder

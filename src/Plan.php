@@ -35,4 +35,14 @@ class Plan extends Model
     {
         return $this->belongsTo(Repository::class, 'repository_id', 'id', 'repository');
     }
+
+    /**
+     * Scope accessible by.
+     */
+    public function scopeAccessibleBy(Builder $query, Model $user): Builder
+    {
+        return $query->whereHas('licenses', static function ($query) use ($user) {
+            return $query->accessibleBy($user);
+        });
+    }
 }

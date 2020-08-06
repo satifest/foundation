@@ -59,6 +59,16 @@ class Repository extends Model
     }
 
     /**
+     * Scope accessible by.
+     */
+    public function scopeAccessibleBy(Builder $query, Model $user): Builder
+    {
+        return $query->whereHas('plans', static function ($query) use ($user) {
+            return $query->accessibleBy($user);
+        });
+    }
+
+    /**
      * Scope release by repository url.
      */
     public function scopeByUrl(Builder $query, ?string $url): Builder

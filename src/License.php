@@ -42,4 +42,12 @@ class License extends Model
     {
         return $this->belongsTo(Satifest::getUserModel(), 'user_id', 'id', 'user');
     }
+
+    /**
+     * Scope stable release.
+     */
+    public function scopeAccessibleBy(Builder $query, Model $user): Builder
+    {
+        return $query->where('user_id', '=', $user->getKey());
+    }
 }
