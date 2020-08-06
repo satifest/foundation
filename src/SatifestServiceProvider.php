@@ -49,7 +49,7 @@ class SatifestServiceProvider extends ServiceProvider
         if (Satifest::$runsMigrations) {
             $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
-            return ;
+            return;
         }
     }
 }
