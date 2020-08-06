@@ -41,7 +41,7 @@ class Satifest
      *
      * @var string
      */
-    protected static $authTokenName = 'api_token';
+    protected static $authTokenName = 'satifest_token';
 
     /**
      * Set purchaser model.
