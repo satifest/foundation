@@ -9,7 +9,7 @@ trait HasAuthToken
     /**
      * Initialize Has Auth Token trait.
      */
-    public static function initializeHasAuthToken(): void
+    public function initializeHasAuthToken(): void
     {
         $this->hidden[] = Satifest::getAuthTokenName();
     }
