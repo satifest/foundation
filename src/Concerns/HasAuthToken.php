@@ -11,7 +11,7 @@ trait HasAuthToken
      */
     public static function bootHasAuthToken(): void
     {
-        $this->hidden[] = Satifest::getAuthToken();
+        $this->hidden[] = Satifest::getAuthTokenName();
     }
 
     /**
@@ -19,6 +19,6 @@ trait HasAuthToken
      */
     public function getSatifestAuthToken(): string
     {
-        return $this->getAttribute(Satifest::getAuthToken());
+        return $this->getAttribute(Satifest::getAuthTokenName());
     }
 }

@@ -47,7 +47,9 @@ class SatifestServiceProvider extends ServiceProvider
     protected function registerMigrations(): void
     {
         if (Satifest::$runsMigrations) {
-            return $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+            $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+
+            return ;
         }
     }
 }
