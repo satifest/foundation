@@ -7,9 +7,9 @@ use Satifest\Foundation\Satifest;
 trait HasAuthToken
 {
     /**
-     * Boot Has Auth Token
+     * Initialize Has Auth Token trait.
      */
-    public static function bootHasAuthToken(): void
+    public static function initializeHasAuthToken(): void
     {
         $this->hidden[] = Satifest::getAuthTokenName();
     }
