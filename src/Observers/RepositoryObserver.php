@@ -31,7 +31,7 @@ class RepositoryObserver
      */
     public function updated(Repository $repository)
     {
-        if ($repository->wasChanged(['name', 'type', 'url'])) {
+        if ($repository->wasChanged(['name', 'package', 'type', 'url'])) {
             \event(new RepoChanged($repository));
         }
     }
