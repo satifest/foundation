@@ -31,4 +31,3 @@ $factory->state(License::class, 'utilised', function ($faker) {
         'utilisation' => 10,
     ];
 });
-

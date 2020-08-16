@@ -39,7 +39,7 @@ class SatifestTest extends TestCase
         $this->assertSame(User::class, Satifest::getUserModel());
     }
 
-     /** @test */
+    /** @test */
     public function it_can_get_auth_token()
     {
         $this->assertSame('satifest_token', Satifest::getAuthTokenName());
@@ -52,7 +52,6 @@ class SatifestTest extends TestCase
 
         $this->assertSame('api_token', Satifest::getAuthTokenName());
     }
-
 
     /** @test */
     public function it_cant_override_auth_token_with_blank_value()
@@ -108,7 +107,6 @@ class SatifestTest extends TestCase
             ->assertOk()
             ->assertSee('satifest route test');
     }
-
 
     /**
      * Valid column name data provider.
