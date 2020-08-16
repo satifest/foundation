@@ -43,6 +43,13 @@ class Licensing implements Contracts\Licensing
     protected $endsAt;
 
     /**
+     * Collaborator allocation.
+     *
+     * @var int
+     */
+    protected $allocation = 0;
+
+    /**
      * Construct a new Licensing value object.
      */
     public function __construct(
@@ -50,7 +57,8 @@ class Licensing implements Contracts\Licensing
         string $uid,
         string $type,
         ?Money $price,
-        ?DateTimeImmutable $endsAt = null
+        ?DateTimeImmutable $endsAt = null,
+        int $allocation = 0
     ) {
         $this->provider = $provider;
         $this->uid = $uid;
@@ -62,25 +70,25 @@ class Licensing implements Contracts\Licensing
     /**
      * Construct a new Licensing using "off-one" payment.
      */
-    public static function makePurchase(string $provider, string $uid, Money $price)
+    public static function makePurchase(string $provider, string $uid, Money $price, int $allocation = 0)
     {
-        return new static($provider, $uid, 'purchase', $price, null);
+        return new static($provider, $uid, 'purchase', $price, null, $allocation);
     }
 
     /**
      * Construct a new Licensing using "recurring" payment.
      */
-    public static function makeRecurring(string $provider, string $uid, Money $price, DateTimeImmutable $endsAt)
+    public static function makeRecurring(string $provider, string $uid, Money $price, DateTimeImmutable $endsAt, int $allocation = 0)
     {
-        return new static($provider, $uid, 'recurring', $price, $endsAt);
+        return new static($provider, $uid, 'recurring', $price, $endsAt, $allocation);
     }
 
     /**
      * Construct a new Licensing using "sponsorware" payment.
      */
-    public static function makeSponsorware(string $provider, string $uid, ?Money $price, ?DateTimeImmutable $endsAt = null)
+    public static function makeSponsorware(string $provider, string $uid, ?Money $price, ?DateTimeImmutable $endsAt = null, int $allocation = 0)
     {
-        return new static($provider, $uid, 'sponsorware', $price, $endsAt);
+        return new static($provider, $uid, 'sponsorware', $price, $endsAt, $allocation);
     }
 
     /**
@@ -91,6 +99,18 @@ class Licensing implements Contracts\Licensing
     public function supportedUntil(DateTimeImmutable $endsAt = null)
     {
         $this->endsAt = $endsAt;
+
+        return $this;
+    }
+
+    /**
+     * Set collaborator allocation to licensing.
+     *
+     * @return $this
+     */
+    public function collaborators(int $allocation)
+    {
+        $this->allocation = $allocation;
 
         return $this;
     }
@@ -133,5 +153,13 @@ class Licensing implements Contracts\Licensing
     public function endsAt(): ?DateTimeImmutable
     {
         return $this->endsAt;
+    }
+
+    /**
+     * Get collaborator allocation.
+     */
+    public function allocation(): int
+    {
+        return $this->allocation;
     }
 }

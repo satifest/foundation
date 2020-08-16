@@ -48,6 +48,7 @@ trait Licensable
             'amount' => (int) $licensing->price()->getAmount(),
             'currency' => (string) $licensing->price()->getCurrency(),
             'ends_at' => $licensing->endsAt(),
+            'allocation' => $licensing->allocation(),
         ]);
 
         if ($plans === '*') {
