@@ -5,12 +5,60 @@ namespace Satifest\Foundation\Tests\Feature;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Satifest\Foundation\Repository;
 use Satifest\Foundation\Tests\TestCase;
+use Satifest\Foundation\Tests\User;
 
 /**
  * @testdox Satifest\Foundation\Repository feature tests
  */
 class RepositoryTest extends TestCase
 {
+    /** @test */
+    public function it_can_use_accessible_by_scope()
+    {
+        $user = \factory(User::class)->create();
+
+        $query = Repository::query()->accessibleBy($user);
+
+        $this->assertSame(
+            'select * from "sf_repositories" where exists (select * from "sf_plans" where "sf_repositories"."id" = "sf_plans"."repository_id" and exists (select * from "sf_licenses" inner join "sf_license_plan" on "sf_licenses"."id" = "sf_license_plan"."license_id" where "sf_plans"."id" = "sf_license_plan"."plan_id" and "user_id" = ?) and "sf_plans"."deleted_at" is null)',
+            $query->toSql()
+        );
+
+        $this->assertSame(
+            [$user->getKey()], $query->getBindings()
+        );
+    }
+
+    /** @test */
+    public function it_can_use_by_url_scope()
+    {
+        $query = Repository::query()->byUrl('https://github.com/satifest/test-demo-package');
+
+        $this->assertSame(
+            'select * from "sf_repositories" where "url" = ?',
+            $query->toSql()
+        );
+
+        $this->assertSame(
+            ['https://github.com/satifest/test-demo-package'], $query->getBindings()
+        );
+    }
+
+    /** @test */
+    public function it_can_use_by_url_scope_but_will_not_return_any_result_if_given_null()
+    {
+        $query = Repository::query()->byUrl(null);
+
+        $this->assertSame(
+            'select * from "sf_repositories" where "id" < ?',
+            $query->toSql()
+        );
+
+        $this->assertSame(
+            [1], $query->getBindings()
+        );
+    }
+
     /** @test */
     public function it_can_cast_name_from_url()
     {
