@@ -39,6 +39,20 @@ class SatifestTest extends TestCase
         $this->assertSame(User::class, Satifest::getUserModel());
     }
 
+     /** @test */
+    public function it_can_get_auth_token()
+    {
+        $this->assertSame('satifest_token', Satifest::getAuthTokenName());
+    }
+
+    /** @test */
+    public function it_can_override_auth_token()
+    {
+        Satifest::setAuthTokenName('api_token');
+
+        $this->assertSame('api_token', Satifest::getAuthTokenName());
+    }
+
     /** @test */
     public function it_can_handle_serving_event()
     {
