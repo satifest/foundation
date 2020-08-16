@@ -53,6 +53,28 @@ class SatifestTest extends TestCase
         $this->assertSame('api_token', Satifest::getAuthTokenName());
     }
 
+
+    /** @test */
+    public function it_cant_override_auth_token_with_blank_value()
+    {
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('Unable to set blank value for auth_token');
+
+        Satifest::setAuthTokenName(' ');
+    }
+
+    /**
+     * @test
+     * @dataProvider invalidColumnNameDataProvider
+     */
+    public function it_cant_override_auth_token_with_invalid_column_name($given)
+    {
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage("[{$given}] not a valid column name for auth_token");
+
+        Satifest::setAuthTokenName($given);
+    }
+
     /** @test */
     public function it_can_handle_serving_event()
     {
@@ -85,5 +107,17 @@ class SatifestTest extends TestCase
         $this->get('satis/test-route')
             ->assertOk()
             ->assertSee('satifest route test');
+    }
+
+
+    /**
+     * Valid column name data provider.
+     *
+     * @return array
+     */
+    public function invalidColumnNameDataProvider()
+    {
+        yield ['email->"%27))%23injectedSQL'];
+        yield [\str_pad('email', 65, 'x')];
     }
 }

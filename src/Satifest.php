@@ -76,7 +76,7 @@ class Satifest
      */
     public static function setAuthTokenName(string $name): void
     {
-        if (\blank($name)) {
+        if (\blank(\trim($name, ' '))) {
             throw new InvalidArgumentException('Unable to set blank value for auth_token');
         } elseif (! Column::validateColumnName($name)) {
             throw new InvalidArgumentException("[{$name}] not a valid column name for auth_token");
