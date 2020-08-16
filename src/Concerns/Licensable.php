@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Satifest\Foundation\Contracts\Licensing;
 use Satifest\Foundation\License;
 use Satifest\Foundation\Plan;
+use Satifest\Foundation\Team;
 
 trait Licensable
 {
@@ -17,6 +18,19 @@ trait Licensable
     public function licenses()
     {
         return $this->hasMany(License::class, 'user_id', 'id');
+    }
+
+    /**
+     * Licensable has many collaboration teams.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function collaborationTeams()
+    {
+        return $this->belongsToMany(License::class, 'sf_teams', 'user_id', 'license_id')
+            ->using(Team::class)
+            ->withPivot('email', 'accepted_at')
+            ->withTimestamps();
     }
 
     /**

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSatifestLicensePlanTable extends Migration
+class CreateSatifestTeamsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,15 @@ class CreateSatifestLicensePlanTable extends Migration
      */
     public function up()
     {
-        Schema::create('sf_license_plan', function (Blueprint $table) {
+        Schema::create('sf_teams', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('license_id');
-            $table->unsignedBigInteger('plan_id');
+            $table->string('email')->index();
+            $table->unsignedBigInteger('license_id')->index();
+            $table->unsignedBigInteger('user_id')->nullable()->index();
 
             $table->timestamps();
-
-            $table->unique(['license_id', 'plan_id']);
+            $table->timestamp('accepted_at')->nullable();
         });
     }
 
@@ -32,6 +32,6 @@ class CreateSatifestLicensePlanTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sf_license_plan');
+        Schema::dropIfExists('sf_teams');
     }
 }

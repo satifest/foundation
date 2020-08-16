@@ -25,7 +25,6 @@ $factory->state(License::class, 'under-utilised', function ($faker) {
     ];
 });
 
-
 $factory->state(License::class, 'utilised', function ($faker) {
     return [
         'allocation' => 10,

@@ -27,6 +27,17 @@ class License extends Model
     ];
 
     /**
+     * License has many relationship with Invites.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function invites()
+    {
+        return $this->hasMany(Team::class, 'license_id', 'id')
+            ->whereNull('user_id');
+    }
+
+    /**
      * License has many and belongs to relationship with Plans.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
@@ -47,6 +58,19 @@ class License extends Model
     }
 
     /**
+     * License has many and belongs to relationship with Teams.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function collaborationTeams()
+    {
+        return $this->belongsToMany(User::class, 'sf_teams', 'license_id', 'user_id')
+            ->using(Team::class)
+            ->withPivot('email', 'accepted_at')
+            ->withTimestamps();
+    }
+
+    /**
      * Scope stable release.
      */
     public function scopeAccessibleBy(Builder $query, Model $user): Builder
@@ -59,7 +83,7 @@ class License extends Model
      */
     public function underUtilised(): bool
     {
-        return $this->allocation >== $this->utilisation;
+        return $this->allocation >= $this->utilisation;
     }
 
     /**
