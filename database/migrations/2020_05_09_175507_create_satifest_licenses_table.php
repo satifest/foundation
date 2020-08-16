@@ -27,6 +27,9 @@ class CreateSatifestLicensesTable extends Migration
 
             $table->timestamp('ends_at')->nullable();
 
+            $table->unsignedInteger('allocation')->default(0);
+            $table->unsignedInteger('utilisation')->default(0);
+
             $table->timestamps();
 
             $table->index(['provider', 'uid']);
