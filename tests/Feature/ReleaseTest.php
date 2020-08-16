@@ -15,38 +15,127 @@ use Satifest\Foundation\Tests\TestCase;
 class ReleaseTest extends TestCase
 {
     /** @test */
-    public function it_can_cast_published_at_to_carbon()
+    public function it_can_use_by_name_scope()
     {
-        $release = \factory(Release::class)->make([
-            'published_at' => $now = Carbon::now(),
+        $repository = \factory(Repository::class)->create([
+            'url' => 'https://github.com/satifest/demo-test-package',
         ]);
 
-        $publishedAt = $release->published_at;
-
-        $this->assertInstanceOf(CarbonInterface::class, $publishedAt);
-        $this->assertSame($now->toDateTimeString(), $publishedAt->toDateTimeString());
-    }
-
-    /** @test */
-    public function it_can_get_name_attribute()
-    {
-        $release = \factory(Release::class)->make([
-            'title' => 'Version 1',
+        \factory(Release::class)->create([
+            'repository_id' => $repository->id,
+            'semver' => '1.0.0.0',
             'version' => 'v1.0.0',
         ]);
 
-        $this->assertSame('Version 1', $release->name);
-
-        $release = \factory(Release::class)->make([
-            'title' => null,
-            'version' => 'v1.0.0',
+        \factory(Release::class)->create([
+            'repository_id' => $repository->id,
+            'semver' => '1.1.0.0',
+            'version' => 'v1.1.0',
         ]);
 
-        $this->assertSame('v1.0.0', $release->name);
+        \factory(Release::class)->create([
+            'repository_id' => 2,
+            'semver' => '0.1.0.0',
+            'version' => 'v0.1.0',
+        ]);
+
+        $query = Release::byName('satifest/demo-test-package');
+
+        $this->assertSame(
+            'select * from "sf_releases" where exists (select * from "sf_repositories" where "sf_releases"."repository_id" = "sf_repositories"."id" and "sf_repositories"."name" = ?)',
+            $query->toSql()
+        );
+
+        $releases = $query->get();
+
+        $this->assertSame([
+            'v1.0.0',
+            'v1.1.0',
+        ], $releases->pluck('version')->all());
     }
 
     /** @test */
-    public function it_can_scoped_by_stable_release()
+    public function it_can_use_by_name_scope_with_name_as_array()
+    {
+        $repository = \factory(Repository::class)->create([
+            'url' => 'https://github.com/satifest/demo-test-package',
+        ]);
+
+        $query = Release::byName(['satifest', 'demo-test-package']);
+
+        $this->assertSame(
+            'select * from "sf_releases" where exists (select * from "sf_repositories" where "sf_releases"."repository_id" = "sf_repositories"."id" and "sf_repositories"."name" = ?)',
+            $query->toSql()
+        );
+
+        $this->assertSame(
+            ['satifest/demo-test-package'], $query->getBindings()
+        );
+    }
+
+    /** @test */
+    public function it_can_use_by_package_scope()
+    {
+        $repository = \factory(Repository::class)->create([
+            'package' => 'satifest/demo-test-package',
+            'url' => 'https://github.com/satifest/demo-test-package',
+        ]);
+
+        \factory(Release::class)->create([
+            'repository_id' => $repository->id,
+            'semver' => '1.0.0.0',
+            'version' => 'v1.0.0',
+        ]);
+
+        \factory(Release::class)->create([
+            'repository_id' => $repository->id,
+            'semver' => '1.1.0.0',
+            'version' => 'v1.1.0',
+        ]);
+
+        \factory(Release::class)->create([
+            'repository_id' => 2,
+            'semver' => '0.1.0.0',
+            'version' => 'v0.1.0',
+        ]);
+
+        $query = Release::byPackage('satifest/demo-test-package');
+
+        $this->assertSame(
+            'select * from "sf_releases" where exists (select * from "sf_repositories" where "sf_releases"."repository_id" = "sf_repositories"."id" and "sf_repositories"."package" = ?)',
+            $query->toSql()
+        );
+
+        $releases = $query->get();
+
+        $this->assertSame([
+            'v1.0.0',
+            'v1.1.0',
+        ], $releases->pluck('version')->all());
+    }
+
+    /** @test */
+    public function it_can_use_by_package_scope_with_name_as_array()
+    {
+        $repository = \factory(Repository::class)->create([
+            'package' => 'satifest/demo-test-package',
+            'url' => 'https://github.com/satifest/demo-test-package',
+        ]);
+
+        $query = Release::byPackage(['satifest', 'demo-test-package']);
+
+        $this->assertSame(
+            'select * from "sf_releases" where exists (select * from "sf_repositories" where "sf_releases"."repository_id" = "sf_repositories"."id" and "sf_repositories"."package" = ?)',
+            $query->toSql()
+        );
+
+        $this->assertSame(
+            ['satifest/demo-test-package'], $query->getBindings()
+        );
+    }
+
+    /** @test */
+    public function it_can_use_stable_release_scope()
     {
         $repository = \factory(Repository::class)->create([
             'url' => 'https://github.com/satifest/demo-test-package',
@@ -93,40 +182,34 @@ class ReleaseTest extends TestCase
     }
 
     /** @test */
-    public function it_can_scoped_by_repo_name()
+    public function it_can_cast_published_at_to_carbon()
     {
-        $repository = \factory(Repository::class)->create([
-            'url' => 'https://github.com/satifest/demo-test-package',
+        $release = \factory(Release::class)->make([
+            'published_at' => $now = Carbon::now(),
         ]);
 
-        \factory(Release::class)->create([
-            'repository_id' => $repository->id,
-            'semver' => '1.0.0.0',
+        $publishedAt = $release->published_at;
+
+        $this->assertInstanceOf(CarbonInterface::class, $publishedAt);
+        $this->assertSame($now->toDateTimeString(), $publishedAt->toDateTimeString());
+    }
+
+    /** @test */
+    public function it_can_get_name_attribute()
+    {
+        $release = \factory(Release::class)->make([
+            'title' => 'Version 1',
             'version' => 'v1.0.0',
         ]);
 
-        \factory(Release::class)->create([
-            'repository_id' => $repository->id,
-            'semver' => '1.1.0.0',
-            'version' => 'v1.1.0',
+        $this->assertSame('Version 1', $release->name);
+
+        $release = \factory(Release::class)->make([
+            'title' => null,
+            'version' => 'v1.0.0',
         ]);
 
-        \factory(Release::class)->create([
-            'repository_id' => 2,
-            'semver' => '0.1.0.0',
-            'version' => 'v0.1.0',
-        ]);
-
-        $query = Release::byName('satifest/demo-test-package');
-
-        $this->assertSame('select * from "sf_releases" where exists (select * from "sf_repositories" where "sf_releases"."repository_id" = "sf_repositories"."id" and "sf_repositories"."name" = ?)', $query->toSql());
-
-        $releases = $query->get();
-
-        $this->assertSame([
-            'v1.0.0',
-            'v1.1.0',
-        ], $releases->pluck('version')->all());
+        $this->assertSame('v1.0.0', $release->name);
     }
 
     /** @test */
