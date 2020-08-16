@@ -13,5 +13,23 @@ $factory->define(License::class, function (Faker $faker) {
         'amount' => 2500,
         'currency' => 'USD',
         'ends_at' => null,
+        'allocation' => 0,
+        'utilisation' => 0,
     ];
 });
+
+$factory->state(License::class, 'under-utilised', function ($faker) {
+    return [
+        'allocation' => 10,
+        'utilisation' => 0,
+    ];
+});
+
+
+$factory->state(License::class, 'utilised', function ($faker) {
+    return [
+        'allocation' => 10,
+        'utilisation' => 10,
+    ];
+});
+

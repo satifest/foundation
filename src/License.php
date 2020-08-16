@@ -22,6 +22,8 @@ class License extends Model
     protected $casts = [
         'price' => Casts\Money::class.':amount,currency',
         'ends_at' => 'datetime',
+        'allocation' => 'int',
+        'utilisation' => 'int',
     ];
 
     /**
@@ -50,5 +52,21 @@ class License extends Model
     public function scopeAccessibleBy(Builder $query, Model $user): Builder
     {
         return $query->where('user_id', '=', $user->getKey());
+    }
+
+    /**
+     * Check whether allocation is under utilised.
+     */
+    public function underUtilised(): bool
+    {
+        return $this->allocation >== $this->utilisation;
+    }
+
+    /**
+     * Check whether allocation has been utilised.
+     */
+    public function utilised(): bool
+    {
+        return $this->allocation === $this->utilisation;
     }
 }
