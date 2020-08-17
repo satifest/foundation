@@ -5,15 +5,41 @@ namespace Satifest\Foundation\Tests\Feature;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Money\Money;
+use Satifest\Foundation\Licensing;
 use Satifest\Foundation\Release;
 use Satifest\Foundation\Repository;
 use Satifest\Foundation\Tests\TestCase;
+use Satifest\Foundation\Tests\User;
 
 /**
  * @testdox Satifest\Foundation\Release feature tests
  */
 class ReleaseTest extends TestCase
 {
+    /** @test */
+    public function it_can_use_accessible_by_scope()
+    {
+        $repository = \factory(Repository::class)->create([
+            'url' => 'https://github.com/satifest/demo-test-package',
+        ]);
+
+        $user = \factory(User::class)->create();
+
+        $user->createLicense(Licensing::makeSponsorware('github', __METHOD__, Money::USD(1000)), '*');
+
+        $query = Release::query()->accessibleBy($user);
+
+        $this->assertSame(
+            'select * from "sf_releases" where exists (select * from "sf_repositories" where "sf_releases"."repository_id" = "sf_repositories"."id" and "sf_repositories"."id" in (?))',
+            $query->toSql()
+        );
+
+        $this->assertSame(
+            [$repository->getKey()], $query->getBindings()
+        );
+    }
+
     /** @test */
     public function it_can_use_by_name_scope()
     {

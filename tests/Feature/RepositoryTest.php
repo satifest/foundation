@@ -3,6 +3,8 @@
 namespace Satifest\Foundation\Tests\Feature;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Money\Money;
+use Satifest\Foundation\Licensing;
 use Satifest\Foundation\Repository;
 use Satifest\Foundation\Tests\TestCase;
 use Satifest\Foundation\Tests\User;
@@ -15,7 +17,13 @@ class RepositoryTest extends TestCase
     /** @test */
     public function it_can_use_accessible_by_scope()
     {
+        $repository = \factory(Repository::class)->create([
+            'url' => 'https://github.com/satifest/demo-test-package',
+        ]);
+
         $user = \factory(User::class)->create();
+
+        $user->createLicense(Licensing::makeSponsorware('github', __METHOD__, Money::USD(1000)), '*');
 
         $query = Repository::query()->accessibleBy($user);
 
