@@ -8,6 +8,7 @@ use Satifest\Foundation\Licensing;
 use Satifest\Foundation\Repository;
 use Satifest\Foundation\Tests\TestCase;
 use Satifest\Foundation\Tests\User;
+use Spatie\TestTime\TestTime;
 
 /**
  * @testdox Satifest\Foundation\Repository feature tests
@@ -17,6 +18,8 @@ class RepositoryTest extends TestCase
     /** @test */
     public function it_can_use_accessible_by_scope()
     {
+        TestTime::freeze();
+
         $repository = \factory(Repository::class)->create([
             'url' => 'https://github.com/satifest/demo-test-package',
         ]);
@@ -28,13 +31,16 @@ class RepositoryTest extends TestCase
         $query = Repository::query()->accessibleBy($user);
 
         $this->assertSame(
-            'select * from "sf_repositories" where exists (select * from "sf_plans" where "sf_repositories"."id" = "sf_plans"."repository_id" and exists (select * from "sf_licenses" inner join "sf_license_plan" on "sf_licenses"."id" = "sf_license_plan"."license_id" where "sf_plans"."id" = "sf_license_plan"."plan_id" and ("user_id" = ? or exists (select * from "sf_teams" where "sf_licenses"."id" = "sf_teams"."license_id" and "sf_teams"."user_id" = ?))) and "sf_plans"."deleted_at" is null)',
+            'select * from "sf_repositories" where exists (select * from "sf_plans" where "sf_repositories"."id" = "sf_plans"."repository_id" and exists (select * from "sf_licenses" inner join "sf_license_plan" on "sf_licenses"."id" = "sf_license_plan"."license_id" where "sf_plans"."id" = "sf_license_plan"."plan_id" and ("ends_at" is null or "ends_at" > ?) and ("user_id" = ? or exists (select * from "sf_teams" where "sf_licenses"."id" = "sf_teams"."license_id" and "sf_teams"."user_id" = ?))) and "sf_plans"."deleted_at" is null)',
             $query->toSql()
         );
 
-        $this->assertSame(
-            [$user->getKey(), $user->getKey()], $query->getBindings()
-        );
+        $bindings = $query->getBindings();
+
+        $this->assertCount(3, $bindings);
+        $this->assertSame(now()->toDatetimeString(), $bindings[0]->toDatetimeString());
+        $this->assertSame($user->getKey(), $bindings[1]);
+        $this->assertSame($user->getKey(), $bindings[2]);
     }
 
     /** @test */

@@ -35,7 +35,8 @@
     },
     "require-dev": {
         "orchestra/canvas": "^5.4.2",
-        "orchestra/testbench": "^5.3"
+        "orchestra/testbench": "^5.3",
+        "spatie/test-time": "^1.2"
     },
     "config": {
         "sort-packages": true

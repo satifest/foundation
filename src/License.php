@@ -2,9 +2,10 @@
 
 namespace Satifest\Foundation;
 
+use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use function Satifest\Foundation\column_name;
 
 class License extends Model
 {
@@ -26,6 +27,16 @@ class License extends Model
         'allocation' => 'int',
         'utilisation' => 'int',
     ];
+
+    /**
+     * Perform any actions required after the model boots.
+     *
+     * @return void
+     */
+    protected static function booted()
+    {
+        static::observe(new Observers\LicenseObserver());
+    }
 
     /**
      * License has many relationship with Teams.
@@ -81,7 +92,18 @@ class License extends Model
     }
 
     /**
-     * Scope stable release.
+     * Scope active on specific datetime.
+     */
+    public function scopeActiveOn(Builder $query, CarbonInterface $carbon): Builder
+    {
+        return $query->where(static function ($query) use ($carbon) {
+            return $query->whereNull('ends_at')
+                ->orWhere('ends_at', '>', $carbon);
+        });
+    }
+
+    /**
+     * Scope accessible by user.
      */
     public function scopeAccessibleBy(Builder $query, Model $user): Builder
     {
@@ -89,11 +111,26 @@ class License extends Model
             return $query->where('id', '<', 1);
         }
 
+        return $this->scopeActiveOn($query, Carbon::now())
+            ->where(static function ($query) use ($user) {
+                return $query->where('user_id', '=', $user->getKey())
+                    ->orWhereHas('teams', static function ($query) use ($user) {
+                        return $query->where(column_name(Team::class, 'user_id'), '=', $user->getKey());
+                    });
+            });
+    }
+
+    /**
+     * Scope owned by user.
+     */
+    public function scopeOwnedBy(Builder $query, Model $user): Builder
+    {
+        if (! $user->exists) {
+            return $query->where('id', '<', 1);
+        }
+
         return $query->where(static function ($query) use ($user) {
-            return $query->where('user_id', '=', $user->getKey())
-                ->orWhereHas('teams', static function ($query) use ($user) {
-                    return $query->where(column_name(Team::class, 'user_id'), '=', $user->getKey());
-                });
+            return $query->where('user_id', '=', $user->getKey());
         });
     }
 

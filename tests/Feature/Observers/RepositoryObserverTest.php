@@ -5,6 +5,8 @@ namespace Satifest\Foundation\Tests\Feature\Observers;
 use Illuminate\Support\Facades\Event;
 use Satifest\Foundation\Events\RepoChanged;
 use Satifest\Foundation\Events\RepoCreated;
+use Satifest\Foundation\Events\RepositoryChanged;
+use Satifest\Foundation\Events\RepositoryCreated;
 use Satifest\Foundation\Repository;
 use Satifest\Foundation\Tests\TestCase;
 
@@ -18,6 +20,7 @@ class RepositoryObserverTest extends TestCase
     {
         Event::fake([
             RepoCreated::class,
+            RepositoryCreated::class,
         ]);
 
         $repository = \factory(Repository::class)->create([
@@ -37,6 +40,8 @@ class RepositoryObserverTest extends TestCase
         Event::fake([
             RepoCreated::class,
             RepoChanged::class,
+            RepositoryCreated::class,
+            RepositoryChanged::class,
         ]);
 
         $repository = \factory(Repository::class)->create([
@@ -49,6 +54,10 @@ class RepositoryObserverTest extends TestCase
         Event::assertDispatched(function (RepoChanged $event) use ($repository) {
             return $event->repository->id === $repository->id;
         });
+
+        Event::assertDispatched(function (RepositoryChanged $event) use ($repository) {
+            return $event->repository->id === $repository->id;
+        });
     }
 
     /** @test */
@@ -57,6 +66,8 @@ class RepositoryObserverTest extends TestCase
         Event::fake([
             RepoCreated::class,
             RepoChanged::class,
+            RepositoryCreated::class,
+            RepositoryChanged::class,
         ]);
 
         $repository = \factory(Repository::class)->create([
@@ -66,6 +77,10 @@ class RepositoryObserverTest extends TestCase
         $repository->delete();
 
         Event::assertDispatched(function (RepoChanged $event) use ($repository) {
+            return $event->repository->id === $repository->id;
+        });
+
+        Event::assertDispatched(function (RepositoryChanged $event) use ($repository) {
             return $event->repository->id === $repository->id;
         });
     }

@@ -4,6 +4,8 @@ namespace Satifest\Foundation\Observers;
 
 use Satifest\Foundation\Events\RepoChanged;
 use Satifest\Foundation\Events\RepoCreated;
+use Satifest\Foundation\Events\RepositoryChanged;
+use Satifest\Foundation\Events\RepositoryCreated;
 use Satifest\Foundation\Repository;
 
 class RepositoryObserver
@@ -18,6 +20,7 @@ class RepositoryObserver
     public function created(Repository $repository)
     {
         \event(new RepoCreated($repository));
+        \event(new RepositoryCreated($repository));
 
         $repository->createPlan();
     }
@@ -33,6 +36,7 @@ class RepositoryObserver
     {
         if ($repository->wasChanged(['name', 'package', 'type', 'url'])) {
             \event(new RepoChanged($repository));
+            \event(new RepositoryChanged($repository, __METHOD__));
         }
     }
 
@@ -46,5 +50,6 @@ class RepositoryObserver
     public function deleted(Repository $repository)
     {
         \event(new RepoChanged($repository));
+        \event(new RepositoryChanged($repository, __METHOD__));
     }
 }
