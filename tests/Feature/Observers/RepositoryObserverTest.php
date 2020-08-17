@@ -32,10 +32,13 @@ class RepositoryObserverTest extends TestCase
             'name' => 'Plan for satifest/demo-test-package',
             'constraint' => '*',
         ]);
+
+        Event::assertDispatched(RepoCreated::class);
+        Event::assertDispatched(RepositoryCreated::class);
     }
 
     /** @test */
-    public function it_triggers_repo_changed_on_update()
+    public function it_triggers_repository_changed_on_update()
     {
         Event::fake([
             RepoCreated::class,
@@ -61,7 +64,7 @@ class RepositoryObserverTest extends TestCase
     }
 
     /** @test */
-    public function it_triggers_repo_changed_on_delete()
+    public function it_triggers_repository_changed_on_delete()
     {
         Event::fake([
             RepoCreated::class,
