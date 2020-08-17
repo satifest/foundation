@@ -2,7 +2,7 @@
 
 namespace Satifest\Foundation;
 
-use Illuminate\Database\Eloquent\Pivot;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class Team extends Pivot
 {

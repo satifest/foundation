@@ -4,6 +4,7 @@ namespace Satifest\Foundation;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use function Satifest\Foundation\column_name;
 
 class License extends Model
 {
@@ -27,14 +28,23 @@ class License extends Model
     ];
 
     /**
+     * License has many relationship with Teams.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function teams()
+    {
+        return $this->hasMany(Team::class, 'license_id', 'id');
+    }
+
+    /**
      * License has many relationship with Invites.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function invites()
     {
-        return $this->hasMany(Team::class, 'license_id', 'id')
-            ->whereNull('user_id');
+        return $this->teams()->whereNull('user_id');
     }
 
     /**
@@ -64,7 +74,7 @@ class License extends Model
      */
     public function collaborationTeams()
     {
-        return $this->belongsToMany(User::class, 'sf_teams', 'license_id', 'user_id')
+        return $this->belongsToMany(Satifest::getUserModel(), 'sf_teams', 'license_id', 'user_id')
             ->using(Team::class)
             ->withPivot('email', 'accepted_at')
             ->withTimestamps();
@@ -75,7 +85,16 @@ class License extends Model
      */
     public function scopeAccessibleBy(Builder $query, Model $user): Builder
     {
-        return $query->where('user_id', '=', $user->getKey());
+        if (! $user->exists) {
+            return $query->where('id', '<', 1);
+        }
+
+        return $query->where(static function ($query) use ($user) {
+            return $query->where('user_id', '=', $user->getKey())
+                ->orWhereHas('teams', static function ($query) use ($user) {
+                    return $query->where(column_name(Team::class, 'user_id'), '=', $user->getKey());
+                });
+        });
     }
 
     /**

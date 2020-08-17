@@ -28,12 +28,12 @@ class RepositoryTest extends TestCase
         $query = Repository::query()->accessibleBy($user);
 
         $this->assertSame(
-            'select * from "sf_repositories" where exists (select * from "sf_plans" where "sf_repositories"."id" = "sf_plans"."repository_id" and exists (select * from "sf_licenses" inner join "sf_license_plan" on "sf_licenses"."id" = "sf_license_plan"."license_id" where "sf_plans"."id" = "sf_license_plan"."plan_id" and "user_id" = ?) and "sf_plans"."deleted_at" is null)',
+            'select * from "sf_repositories" where exists (select * from "sf_plans" where "sf_repositories"."id" = "sf_plans"."repository_id" and exists (select * from "sf_licenses" inner join "sf_license_plan" on "sf_licenses"."id" = "sf_license_plan"."license_id" where "sf_plans"."id" = "sf_license_plan"."plan_id" and ("user_id" = ? or exists (select * from "sf_teams" where "sf_licenses"."id" = "sf_teams"."license_id" and "sf_teams"."user_id" = ?))) and "sf_plans"."deleted_at" is null)',
             $query->toSql()
         );
 
         $this->assertSame(
-            [$user->getKey()], $query->getBindings()
+            [$user->getKey(), $user->getKey()], $query->getBindings()
         );
     }
 
