@@ -123,7 +123,7 @@ class License extends Model
     /**
      * Scope owned by user.
      */
-    public function scopeOwnedBy(Builder $query, Model $user): Builder
+    public function scopeLicensee(Builder $query, Model $user): Builder
     {
         if (! $user->exists) {
             return $query->where('id', '<', 1);
