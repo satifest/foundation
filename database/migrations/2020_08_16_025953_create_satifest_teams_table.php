@@ -19,6 +19,7 @@ class CreateSatifestTeamsTable extends Migration
             $table->string('email')->index();
             $table->unsignedBigInteger('license_id')->index();
             $table->unsignedBigInteger('user_id')->nullable()->index();
+            $table->string('token')->nullable();
 
             $table->timestamps();
             $table->timestamp('accepted_at')->nullable();
