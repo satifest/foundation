@@ -93,6 +93,14 @@ class Repository extends Model
     }
 
     /**
+     * Composer name accessor.
+     */
+    public function getComposerNameAttribute($value): string
+    {
+        return $this->package ?? $this->name;
+    }
+
+    /**
      * Create plan for Repository.
      */
     public function createPlan(?string $name = null, string $constraint = '*'): Plan
