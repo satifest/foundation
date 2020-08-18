@@ -92,6 +92,18 @@ class Licensing implements Contracts\Licensing
     }
 
     /**
+     * Set alias for the license.
+     *
+     * @return $this
+     */
+    public function alias(string $name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
      * Explicitly set supported until (ends at) for the licensing.
      *
      * @return $this

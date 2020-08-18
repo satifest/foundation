@@ -18,6 +18,7 @@ class CreateSatifestLicensesTable extends Migration
 
             $table->unsignedBigInteger('user_id')->index();
 
+            $table->string('name')->nullable();
             $table->string('provider');
             $table->string('uid');
             $table->string('type');
