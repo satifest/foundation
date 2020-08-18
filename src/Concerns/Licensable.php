@@ -42,6 +42,7 @@ trait Licensable
     {
         $license = License::forceCreate([
             'user_id' => $this->getKey(),
+            'name' => $licensing->name(),
             'provider' => $licensing->provider(),
             'uid' => $licensing->uid(),
             'type' => $licensing->type(),

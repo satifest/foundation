@@ -8,6 +8,13 @@ use Money\Money;
 class Licensing implements Contracts\Licensing
 {
     /**
+     * Licensing alias name.
+     *
+     * var string|null
+     */
+    protected $name;
+
+    /**
      * Licensing provider.
      *
      * @var string
@@ -125,6 +132,14 @@ class Licensing implements Contracts\Licensing
         $this->allocation = $allocation;
 
         return $this;
+    }
+
+    /**
+     * Get licensing alias name.
+     */
+    public function name(): ?string
+    {
+        return $this->name;
     }
 
     /**

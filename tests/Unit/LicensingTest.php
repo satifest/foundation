@@ -31,12 +31,14 @@ class LicensingTest extends TestCase
         $this->assertInstanceOf(Money::class, $licensing->price());
         $this->assertInstanceOf(\DatetimeImmutable::class, $licensing->endsAt());
 
+        $this->assertNull($licensing->name());
         $this->assertSame('stripe', $licensing->provider());
         $this->assertSame('4eC39HqLyjWDarjtT1zdp7dc', $licensing->uid());
         $this->assertSame('purchase', $licensing->type());
         $this->assertSame('2500', $licensing->price()->getAmount());
         $this->assertSame('USD', (string) $licensing->price()->getCurrency());
         $this->assertSame($endsAt->toDatetimeString(), (string) $licensing->endsAt()->toDatetimeString());
+        $this->assertSame(0, $licensing->allocation());
     }
 
     /** @test */
