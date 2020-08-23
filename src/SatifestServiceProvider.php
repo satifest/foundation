@@ -28,6 +28,10 @@ class SatifestServiceProvider extends ServiceProvider
             $this->registerPublishing();
             $this->registerMigrations();
         }
+
+        Satifest::setSupportedHosts(
+            $this->app->make('satifest.provider')->pluck('domain')->all()
+        );
     }
 
     /**
