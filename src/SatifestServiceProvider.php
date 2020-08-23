@@ -8,13 +8,20 @@ use Illuminate\Support\ServiceProvider;
 class SatifestServiceProvider extends ServiceProvider
 {
     /**
+     * List of VCS providers.
+     *
+     * @var array
+     */
+    protected $providers = ['github', 'gitlab'];
+
+    /**
      * Register services.
      *
      * @return void
      */
     public function register()
     {
-        $this->registerSatifestProvider();
+        //
     }
 
     /**
@@ -28,10 +35,6 @@ class SatifestServiceProvider extends ServiceProvider
             $this->registerPublishing();
             $this->registerMigrations();
         }
-
-        Satifest::setSupportedHosts(
-            $this->app->make('satifest.provider')->pluck('domain')->all()
-        );
     }
 
     /**
@@ -39,7 +42,7 @@ class SatifestServiceProvider extends ServiceProvider
      */
     protected function registerSatifestProvider(): void
     {
-        $this->app->singleton('satifest.provider', static function () {
+        $this->app->singleton('satifest.provider', function () {
             $config = LazyCollection::make(function () {
                 $config = \config('satifest', []);
                 $schema = ['domain' => null, 'token' => null, 'webhook-secret' => null];
