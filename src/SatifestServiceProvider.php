@@ -2,6 +2,7 @@
 
 namespace Satifest\Foundation;
 
+use Illuminate\Support\LazyCollection;
 use Illuminate\Support\ServiceProvider;
 
 class SatifestServiceProvider extends ServiceProvider
@@ -13,7 +14,7 @@ class SatifestServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->registerSatifestProvider();
     }
 
     /**
@@ -30,9 +31,28 @@ class SatifestServiceProvider extends ServiceProvider
     }
 
     /**
+     * Register "satifest.provider" service.
+     */
+    protected function registerSatifestProvider(): void
+    {
+        $this->app->singleton('satifest.provider', static function () {
+            $config = LazyCollection::make(function () {
+                $config = \config('satifest', []);
+                $schema = ['domain' => null, 'token' => null, 'webhook-secret' => null];
+
+                foreach ($this->providers as $provider) {
+                    yield $provider => ($config[$provider] ?? $schema);
+                }
+            })->filter(static function ($provider) {
+                return ! \is_null($provider['domain']) && ! \is_null($provider['token']);
+            });
+
+            return $config;
+        });
+    }
+
+    /**
      * Register the package's publishable resources.
-     *
-     * @return void
      */
     protected function registerPublishing(): void
     {

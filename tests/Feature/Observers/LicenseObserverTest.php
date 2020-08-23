@@ -5,8 +5,6 @@ namespace Satifest\Foundation\Tests\Feature\Observers;
 use Illuminate\Support\Facades\Event;
 use Satifest\Foundation\Events\LicenseChanged;
 use Satifest\Foundation\Events\LicenseCreated;
-use Satifest\Foundation\Events\RepoChanged;
-use Satifest\Foundation\Events\RepoCreated;
 use Satifest\Foundation\License;
 use Satifest\Foundation\Tests\TestCase;
 use Satifest\Foundation\Tests\User;
