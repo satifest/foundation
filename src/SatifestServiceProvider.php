@@ -17,7 +17,6 @@ class SatifestServiceProvider extends ServiceProvider
         'gitlab' => 'GitLab',
     ];
 
-
     /**
      * Register services.
      *
