@@ -12,10 +12,11 @@ class SatifestServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $providers = [
+    protected $vcsProviders = [
         'github' => 'GitHub',
         'gitlab' => 'GitLab',
     ];
+
 
     /**
      * Register services.
@@ -50,11 +51,9 @@ class SatifestServiceProvider extends ServiceProvider
                 $config = \config('satifest', []);
                 $schema = ['domain' => null, 'token' => null, 'webhook-secret' => null];
 
-                foreach ($this->providers as $key => $name) {
+                foreach ($this->vcsProviders as $key => $name) {
                     yield $key => \array_merge(['name' => $name], $config[$key] ?? $schema);
                 }
-            })->filter(static function ($provider) {
-                return ! \is_null($provider['domain']) && ! \is_null($provider['token']);
             });
         });
     }
