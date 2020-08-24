@@ -101,6 +101,14 @@ class Repository extends Model
     }
 
     /**
+     * Webhook accessor.
+     */
+    public function getHookUrlAttribute($value): Value\HookUrl
+    {
+        return new Value\HookUrl($this->url, $this->provider);
+    }
+
+    /**
      * Create plan for Repository.
      */
     public function createPlan(?string $name = null, string $constraint = '*'): Plan
