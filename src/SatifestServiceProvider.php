@@ -12,7 +12,10 @@ class SatifestServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $providers = ['github', 'gitlab'];
+    protected $providers = [
+        'github' => 'GitHub',
+        'gitlab' => 'GitLab',
+    ];
 
     /**
      * Register services.
@@ -43,18 +46,16 @@ class SatifestServiceProvider extends ServiceProvider
     protected function registerSatifestProvider(): void
     {
         $this->app->singleton('satifest.provider', function () {
-            $config = LazyCollection::make(function () {
+            return LazyCollection::make(function () {
                 $config = \config('satifest', []);
                 $schema = ['domain' => null, 'token' => null, 'webhook-secret' => null];
 
-                foreach ($this->providers as $provider) {
-                    yield $provider => ($config[$provider] ?? $schema);
+                foreach ($this->providers as $key => $name) {
+                    yield $key => \array_merge(['name' => $name], $config[$key] ?? $schema);
                 }
             })->filter(static function ($provider) {
                 return ! \is_null($provider['domain']) && ! \is_null($provider['token']);
             });
-
-            return $config;
         });
     }
 
