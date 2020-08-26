@@ -41,7 +41,8 @@ trait Licensable
     public function createLicense(Licensing $licensing, $plans = []): License
     {
         $license = License::forceCreate([
-            'user_id' => $this->getKey(),
+            'licensee_id' => $this->getKey(),
+            'licensee_type' => $this->getMorphClass(),
             'name' => $licensing->name(),
             'provider' => $licensing->provider(),
             'uid' => $licensing->uid(),

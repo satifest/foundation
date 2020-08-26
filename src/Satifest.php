@@ -146,7 +146,7 @@ class Satifest
      */
     public static function packageNameFromUrl(string $url): string
     {
-        $package = Value\RepoUrl::make($url);
+        $package = Value\RepositoryUrl::make($url);
 
         if (! $package->isSupportedDomain()) {
             throw new InvalidArgumentException("Unable to resolved none supported repository URL: {$url}");

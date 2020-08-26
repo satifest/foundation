@@ -77,9 +77,9 @@ class Repository extends Model
             return $query->where('id', '<', 1);
         }
 
-        $repoUrl = Value\RepoUrl::make($url);
+        $repositoryUrl = Value\RepositoryUrl::make($url);
 
-        return $query->where('url', '=', (string) $repoUrl);
+        return $query->where('url', '=', (string) $repositoryUrl);
     }
 
     /**

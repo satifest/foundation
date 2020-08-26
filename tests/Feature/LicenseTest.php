@@ -63,19 +63,4 @@ class LicenseTest extends TestCase
             'updated_at',
         ], $plans->getPivotColumns());
     }
-
-    /** @test */
-    public function it_belongs_to_user_relation()
-    {
-        $license = \factory(License::class)->make();
-
-        $user = $license->user();
-
-        $this->assertInstanceOf(BelongsTo::class, $user);
-        $this->assertSame('user_id', $user->getForeignKeyName());
-        $this->assertSame('sf_licenses.user_id', $user->getQualifiedForeignKeyName());
-        $this->assertSame('id', $user->getOwnerKeyName());
-        $this->assertSame('users.id', $user->getQualifiedOwnerKeyName());
-        $this->assertSame('user', $user->getRelationName());
-    }
 }

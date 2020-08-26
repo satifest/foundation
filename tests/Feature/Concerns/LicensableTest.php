@@ -48,7 +48,8 @@ class LicensableTest extends TestCase
             'type' => 'purchase',
             'amount' => '3500',
             'currency' => 'USD',
-            'user_id' => $user->getKey(),
+            'licensee_id' => $user->getKey(),
+            'licensee_type' => $user->getMorphClass(),
         ]);
 
         $this->assertSame(0, $license->plans()->count());
@@ -78,7 +79,8 @@ class LicensableTest extends TestCase
             'type' => 'purchase',
             'amount' => '3500',
             'currency' => 'USD',
-            'user_id' => $user->getKey(),
+            'licensee_id' => $user->getKey(),
+            'licensee_type' => $user->getMorphClass(),
         ]);
 
         $this->assertSame(2, $license->plans()->count());

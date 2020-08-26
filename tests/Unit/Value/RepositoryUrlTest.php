@@ -3,12 +3,12 @@
 namespace Satifest\Foundation\Tests\Unit\Value;
 
 use PHPUnit\Framework\TestCase;
-use Satifest\Foundation\Value\RepoUrl;
+use Satifest\Foundation\Value\RepositoryUrl;
 
 /**
- * @testdox Satifest\Foundation\Value\RepoUrl unit tests
+ * @testdox Satifest\Foundation\Value\RepositoryUrl unit tests
  */
-class RepoUrlTest extends TestCase
+class RepositoryUrlTest extends TestCase
 {
     /**
      * @test
@@ -16,7 +16,7 @@ class RepoUrlTest extends TestCase
      */
     public function it_can_validate_valid_packages($given, $expected)
     {
-        $package = RepoUrl::make($given);
+        $package = RepositoryUrl::make($given);
 
         $this->assertTrue($package->isValid());
         $this->assertSame($expected, $package->name());
@@ -33,7 +33,7 @@ class RepoUrlTest extends TestCase
         $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('Unable to find package name from invalid VCS URL');
 
-        $package = RepoUrl::make($given);
+        $package = RepositoryUrl::make($given);
 
         $this->assertFalse($package->isValid());
 

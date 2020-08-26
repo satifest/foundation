@@ -74,11 +74,11 @@ class License extends Model
     /**
      * License belongs to a User.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function user()
+    public function licensee()
     {
-        return $this->belongsTo(Satifest::getUserModel(), 'user_id', 'id', 'user');
+        return $this->morphTo('licensee');
     }
 
     /**
@@ -115,8 +115,8 @@ class License extends Model
         }
 
         return $this->scopeActiveOn($query, Carbon::now())
-            ->where(static function ($query) use ($user) {
-                return $query->where('user_id', '=', $user->getKey())
+            ->where(function ($query) use ($user) {
+                return $this->scopeLicensee($query, $user)
                     ->orWhereHas('teams', static function ($query) use ($user) {
                         return $query->where(column_name(Team::class, 'user_id'), '=', $user->getKey());
                     });
@@ -133,7 +133,8 @@ class License extends Model
         }
 
         return $query->where(static function ($query) use ($user) {
-            return $query->where('user_id', '=', $user->getKey());
+            return $query->where('licensee_id', '=', $user->getKey())
+                ->where('licensee_type', '=', $user->getMorphClass());
         });
     }
 
