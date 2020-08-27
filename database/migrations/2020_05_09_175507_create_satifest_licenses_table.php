@@ -16,7 +16,7 @@ class CreateSatifestLicensesTable extends Migration
         Schema::create('sf_licenses', function (Blueprint $table) {
             $table->id();
 
-            $table->morphs('licensee');
+            $table->morphs('licensable');
 
             $table->string('name')->nullable();
             $table->string('provider');

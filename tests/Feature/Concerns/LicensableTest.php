@@ -2,7 +2,7 @@
 
 namespace Satifest\Foundation\Tests\Feature\Concerns;
 
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Money\Money;
 use Satifest\Foundation\License;
 use Satifest\Foundation\Licensing;
@@ -23,11 +23,11 @@ class LicensableTest extends TestCase
 
         $licenses = $user->licenses();
 
-        $this->assertInstanceOf(HasMany::class, $licenses);
+        $this->assertInstanceOf(MorphMany::class, $licenses);
         $this->assertNull($licenses->getParentKey());
         $this->assertSame('users.id', $licenses->getQualifiedParentKeyName());
-        $this->assertSame('user_id', $licenses->getForeignKeyName());
-        $this->assertSame('sf_licenses.user_id', $licenses->getQualifiedForeignKeyName());
+        $this->assertSame('licensable_id', $licenses->getForeignKeyName());
+        $this->assertSame('sf_licenses.licensable_id', $licenses->getQualifiedForeignKeyName());
         $this->assertSame('id', $licenses->getLocalKeyName());
     }
 
@@ -48,8 +48,8 @@ class LicensableTest extends TestCase
             'type' => 'purchase',
             'amount' => '3500',
             'currency' => 'USD',
-            'licensee_id' => $user->getKey(),
-            'licensee_type' => $user->getMorphClass(),
+            'licensable_id' => $user->getKey(),
+            'licensable_type' => $user->getMorphClass(),
         ]);
 
         $this->assertSame(0, $license->plans()->count());
@@ -79,8 +79,8 @@ class LicensableTest extends TestCase
             'type' => 'purchase',
             'amount' => '3500',
             'currency' => 'USD',
-            'licensee_id' => $user->getKey(),
-            'licensee_type' => $user->getMorphClass(),
+            'licensable_id' => $user->getKey(),
+            'licensable_type' => $user->getMorphClass(),
         ]);
 
         $this->assertSame(2, $license->plans()->count());

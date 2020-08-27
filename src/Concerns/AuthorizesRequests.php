@@ -2,8 +2,18 @@
 
 namespace Satifest\Foundation\Concerns;
 
+use InvalidArgumentException;
+use Laravie\QueryFilter\Value\Column;
+
 trait AuthorizesRequests
 {
+    /**
+     * Auth token name.
+     *
+     * @var string
+     */
+    protected static $authTokenName = 'satifest_token';
+
     /**
      * The callback that should be used to authenticate Satifest users.
      *
@@ -31,5 +41,27 @@ trait AuthorizesRequests
         return (static::$authUsing ?: static function () {
             return \app()->environment('local');
         })($request);
+    }
+
+    /**
+     * Set auth token name.
+     */
+    public static function setAuthTokenName(string $name): void
+    {
+        if (\blank(\trim($name, ' '))) {
+            throw new InvalidArgumentException('Unable to set blank value for auth_token');
+        } elseif (! Column::validateColumnName($name)) {
+            throw new InvalidArgumentException("[{$name}] not a valid column name for auth_token");
+        }
+
+        static::$authTokenName = $name;
+    }
+
+    /**
+     * Get auth token name.
+     */
+    public static function getAuthTokenName(): string
+    {
+        return static::$authTokenName;
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Satifest\Foundation;
 
+use Closure;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Routing\RouteRegistrar;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Route;
@@ -10,7 +12,8 @@ use Laravie\QueryFilter\Value\Column;
 
 class Satifest
 {
-    use Concerns\AuthorizesRequests;
+    use Concerns\AuthorizesRequests,
+        Concerns\ManagesLicenses;
 
     /**
      * Indicates if Satifest migrations will be run.
@@ -35,13 +38,6 @@ class Satifest
         'github.com',
         'gitlab.com',
     ];
-
-    /**
-     * Auth token name.
-     *
-     * @var string
-     */
-    protected static $authTokenName = 'satifest_token';
 
     /**
      * Set purchaser model.
@@ -69,28 +65,6 @@ class Satifest
         }
 
         return static::$userModel;
-    }
-
-    /**
-     * Set auth token name.
-     */
-    public static function setAuthTokenName(string $name): void
-    {
-        if (\blank(\trim($name, ' '))) {
-            throw new InvalidArgumentException('Unable to set blank value for auth_token');
-        } elseif (! Column::validateColumnName($name)) {
-            throw new InvalidArgumentException("[{$name}] not a valid column name for auth_token");
-        }
-
-        static::$authTokenName = $name;
-    }
-
-    /**
-     * Get auth token name.
-     */
-    public static function getAuthTokenName(): string
-    {
-        return static::$authTokenName;
     }
 
     /**

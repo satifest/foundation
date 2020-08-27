@@ -17,20 +17,7 @@ trait Licensable
      */
     public function licenses()
     {
-        return $this->hasMany(License::class, 'user_id', 'id');
-    }
-
-    /**
-     * Licensable has many collaboration teams.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function collaborationTeams()
-    {
-        return $this->belongsToMany(License::class, 'sf_teams', 'user_id', 'license_id')
-            ->using(Team::class)
-            ->withPivot('email', 'accepted_at')
-            ->withTimestamps();
+        return $this->morphMany(License::class, 'licensable');
     }
 
     /**
@@ -41,8 +28,8 @@ trait Licensable
     public function createLicense(Licensing $licensing, $plans = []): License
     {
         $license = License::forceCreate([
-            'licensee_id' => $this->getKey(),
-            'licensee_type' => $this->getMorphClass(),
+            'licensable_id' => $this->getKey(),
+            'licensable_type' => $this->getMorphClass(),
             'name' => $licensing->name(),
             'provider' => $licensing->provider(),
             'uid' => $licensing->uid(),
