@@ -31,4 +31,9 @@ interface Licensing
      * Get licensing ends at.
      */
     public function endsAt(): ?DateTimeImmutable;
+
+    /**
+     * Get collaborator allocation.
+     */
+    public function allocation(): int;
 }
