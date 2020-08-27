@@ -47,6 +47,11 @@ class CreateLicense
         );
     }
 
+    /**
+     * Handle creating license.
+     *
+     * @param  \Illuminate\Support\Collection|array|string  $plans
+     */
     public function __invoke(Licensing $licensing, $plans = []): License
     {
         $license = License::forceCreate([
