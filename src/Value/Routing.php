@@ -87,6 +87,9 @@ class Routing implements Arrayable
         ];
     }
 
+    /**
+     * Invoke building routing.
+     */
     public function __invoke(?string $namespace): RouteRegistrar
     {
         return \tap(Route::prefix($this->prefix()), function ($router) use ($namespace) {
