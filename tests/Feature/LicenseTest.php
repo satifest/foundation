@@ -4,7 +4,6 @@ namespace Satifest\Foundation\Tests\Feature;
 
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Money\Money;
 use Satifest\Foundation\License;

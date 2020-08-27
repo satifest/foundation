@@ -2,18 +2,14 @@
 
 namespace Satifest\Foundation;
 
-use Closure;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Routing\RouteRegistrar;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Route;
 use InvalidArgumentException;
-use Laravie\QueryFilter\Value\Column;
 
 class Satifest
 {
     use Concerns\AuthorizesRequests,
-        Concerns\ManagesLicenses;
+        Concerns\ManagesLicenses,
+        Concerns\ManagesRoutes,
+        Concerns\WithCashierPaddle;
 
     /**
      * Indicates if Satifest migrations will be run.
@@ -91,28 +87,6 @@ class Satifest
     public static function ignoreMigrations(): void
     {
         static::$runsMigrations = false;
-    }
-
-    /**
-     * Register an event listener for the Nova "serving" event.
-     *
-     * @param  \Closure|string  $callback
-     *
-     * @return void
-     */
-    public static function serving($callback): void
-    {
-        Event::listen(Events\ServingSatifest::class, $callback);
-    }
-
-    /**
-     * Register routing for Satifest.
-     */
-    public static function route(?string $namespace): RouteRegistrar
-    {
-        $routing = Value\Routing::make(\config('satifest.url') ?? '/');
-
-        return $routing($namespace);
     }
 
     /**

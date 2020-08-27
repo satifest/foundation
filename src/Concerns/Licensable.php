@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Collection;
 use Satifest\Foundation\Contracts\Licensing;
 use Satifest\Foundation\License;
 use Satifest\Foundation\Plan;
-use Satifest\Foundation\Team;
 
 trait Licensable
 {
