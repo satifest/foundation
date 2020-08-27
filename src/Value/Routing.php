@@ -90,9 +90,14 @@ class Routing implements Arrayable
     /**
      * Invoke building routing.
      */
-    public function __invoke(?string $namespace): RouteRegistrar
+    public function __invoke(?string $namespace, ?string $prefix): RouteRegistrar
     {
-        return \tap(Route::prefix($this->prefix()), function ($router) use ($namespace) {
+        $currentPrefix = $this->prefix();
+        $routePrefixes = \array_filter([
+            ($currentPrefix !== '/' ? $currentPrefix : null), \trim($prefix, '/')
+        ]);
+
+        return \tap(Route::prefix(\implode('/', $routePrefixes)), function ($router) use ($namespace) {
             if (! empty($namespace)) {
                 $router->namespace($namespace);
             }

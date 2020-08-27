@@ -24,10 +24,18 @@ trait ManagesRoutes
     /**
      * Register routing for Satifest.
      */
-    public static function route(?string $namespace): RouteRegistrar
+    public static function route(?string $namespace, ?string $prefix = null): RouteRegistrar
     {
         $routing = Routing::make(\config('satifest.url') ?? '/');
 
-        return $routing($namespace);
+        return $routing($namespace, null);
+    }
+
+    /**
+     * Register routing for Satifest.
+     */
+    public static function dashboardRoute(?string $namespace): RouteRegistrar
+    {
+        return static::route($namespace, \config('satifest.path'));
     }
 }
