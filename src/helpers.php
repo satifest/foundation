@@ -51,7 +51,7 @@ function column_name($model, string $attribute): string
  */
 function release_stability(string $semver): string
 {
-    return Str::endsWith($semver, '-dev')
+    return Str::endsWith($semver, '-dev') || Str::startsWith($semver, 'dev-')
         ? Release::NIGHTLY
         : Release::STABLE;
 }
