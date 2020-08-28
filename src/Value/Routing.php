@@ -3,7 +3,6 @@
 namespace Satifest\Foundation\Value;
 
 use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Routing\RouteRegistrar as LaravelRouteRegistrar;
 use Illuminate\Support\Facades\Route;
 use Satifest\Foundation\Http\RouteRegistrar;
 use Spatie\Url\Url;
