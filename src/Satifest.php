@@ -7,9 +7,9 @@ use InvalidArgumentException;
 class Satifest
 {
     use Concerns\AuthorizesRequests,
+        Concerns\ManagesCollaborations,
         Concerns\ManagesLicenses,
-        Concerns\ManagesRoutes,
-        Concerns\WithCashierPaddle;
+        Concerns\ManagesRoutes;
 
     /**
      * Indicates if Satifest migrations will be run.

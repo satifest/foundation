@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Satifest\Foundation\Contracts\Licensing;
 use Satifest\Foundation\License;
 use Satifest\Foundation\Plan;
+use Satifest\Foundation\Satifest;
 
 class CreateLicense
 {
@@ -64,7 +65,7 @@ class CreateLicense
             'amount' => (int) $licensing->price()->getAmount(),
             'currency' => (string) $licensing->price()->getCurrency(),
             'ends_at' => $licensing->endsAt(),
-            'allocation' => $licensing->allocation(),
+            'allocation' => ! Satifest::$allowsCollaborations ? 0 : $licensing->allocation(),
         ]);
 
         if ($plans === '*') {

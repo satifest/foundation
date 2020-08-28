@@ -3,8 +3,9 @@
 namespace Satifest\Foundation\Value;
 
 use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Routing\RouteRegistrar;
+use Illuminate\Routing\RouteRegistrar as LaravelRouteRegistrar;
 use Illuminate\Support\Facades\Route;
+use Satifest\Foundation\Http\RouteRegistrar;
 use Spatie\Url\Url;
 
 class Routing implements Arrayable
@@ -97,7 +98,9 @@ class Routing implements Arrayable
             ($currentPrefix !== '/' ? $currentPrefix : null), \trim($prefix, '/')
         ]);
 
-        return \tap(Route::prefix(\implode('/', $routePrefixes)), function ($router) use ($namespace) {
+        return \tap(new RouteRegistrar(\app('router')), function ($router) use ($namespace, $routePrefixes) {
+            $router->prefix(\implode('/', $routePrefixes));
+
             if (! empty($namespace)) {
                 $router->namespace($namespace);
             }
