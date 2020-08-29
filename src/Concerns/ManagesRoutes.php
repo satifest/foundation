@@ -5,7 +5,7 @@ namespace Satifest\Foundation\Concerns;
 use Illuminate\Routing\RouteRegistrar;
 use Illuminate\Support\Facades\Event;
 use Satifest\Foundation\Events\ServingSatifest;
-use Satifest\Foundation\Value\Routing;
+use Satifest\Foundation\Http\Routing;
 
 trait ManagesRoutes
 {

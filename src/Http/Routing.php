@@ -1,6 +1,6 @@
 <?php
 
-namespace Satifest\Foundation\Value;
+namespace Satifest\Foundation\Http;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Support\Facades\Route;
