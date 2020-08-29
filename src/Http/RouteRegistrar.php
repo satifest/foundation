@@ -8,11 +8,11 @@ use Satifest\Foundation\Http\Middleware\DispatchServingSatifestEvent;
 class RouteRegistrar extends \Illuminate\Routing\RouteRegistrar
 {
     /**
-     * Include backend middleware.
+     * Include backend middlewares.
      *
      * @return $this
      */
-    public function withBackendMiddleware()
+    public function withBackendMiddlewares()
     {
         return $this->middleware(\config('satifest.middleware', [
             'web',
