@@ -28,7 +28,7 @@ trait ManagesRoutes
     {
         $routing = Routing::make(\config('satifest.url') ?? '/');
 
-        return $routing($namespace, null);
+        return $routing($namespace, $prefix);
     }
 
     /**
