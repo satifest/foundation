@@ -3,9 +3,9 @@
 namespace Satifest\Foundation\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsInboundAttributes;
-use Satifest\Foundation\Value\RepoUrl as Value;
+use Satifest\Foundation\Value\RepositoryUrl as Value;
 
-class RepoUrl implements CastsInboundAttributes
+class RepositoryUrl implements CastsInboundAttributes
 {
     /**
      * Prepare the given value for storage.

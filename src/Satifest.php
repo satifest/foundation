@@ -2,15 +2,14 @@
 
 namespace Satifest\Foundation;
 
-use Illuminate\Routing\RouteRegistrar;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Route;
 use InvalidArgumentException;
-use Laravie\QueryFilter\Value\Column;
 
 class Satifest
 {
-    use Concerns\AuthorizesRequests;
+    use Concerns\AuthorizesRequests,
+        Concerns\ManagesCollaborations,
+        Concerns\ManagesLicenses,
+        Concerns\ManagesRoutes;
 
     /**
      * Indicates if Satifest migrations will be run.
@@ -35,13 +34,6 @@ class Satifest
         'github.com',
         'gitlab.com',
     ];
-
-    /**
-     * Auth token name.
-     *
-     * @var string
-     */
-    protected static $authTokenName = 'satifest_token';
 
     /**
      * Set purchaser model.
@@ -72,28 +64,6 @@ class Satifest
     }
 
     /**
-     * Set auth token name.
-     */
-    public static function setAuthTokenName(string $name): void
-    {
-        if (\blank(\trim($name, ' '))) {
-            throw new InvalidArgumentException('Unable to set blank value for auth_token');
-        } elseif (! Column::validateColumnName($name)) {
-            throw new InvalidArgumentException("[{$name}] not a valid column name for auth_token");
-        }
-
-        static::$authTokenName = $name;
-    }
-
-    /**
-     * Get auth token name.
-     */
-    public static function getAuthTokenName(): string
-    {
-        return static::$authTokenName;
-    }
-
-    /**
      * Set supported hosts.
      */
     public static function setSupportedHosts(array $hosts): void
@@ -120,33 +90,11 @@ class Satifest
     }
 
     /**
-     * Register an event listener for the Nova "serving" event.
-     *
-     * @param  \Closure|string  $callback
-     *
-     * @return void
-     */
-    public static function serving($callback): void
-    {
-        Event::listen(Events\ServingSatifest::class, $callback);
-    }
-
-    /**
-     * Register routing for Satifest.
-     */
-    public static function route(?string $namespace): RouteRegistrar
-    {
-        $routing = Value\Routing::make(\config('satifest.url') ?? '/');
-
-        return $routing($namespace);
-    }
-
-    /**
      * Get package name from GitHub.
      */
     public static function packageNameFromUrl(string $url): string
     {
-        $package = Value\RepoUrl::make($url);
+        $package = Value\RepositoryUrl::make($url);
 
         if (! $package->isSupportedDomain()) {
             throw new InvalidArgumentException("Unable to resolved none supported repository URL: {$url}");

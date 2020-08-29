@@ -1,10 +1,10 @@
 <?php
 
-namespace Satifest\Foundation\Value;
+namespace Satifest\Foundation\Http;
 
 use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Routing\RouteRegistrar;
 use Illuminate\Support\Facades\Route;
+use Satifest\Foundation\Http\RouteRegistrar;
 use Spatie\Url\Url;
 
 class Routing implements Arrayable
@@ -87,9 +87,19 @@ class Routing implements Arrayable
         ];
     }
 
-    public function __invoke(?string $namespace): RouteRegistrar
+    /**
+     * Invoke building routing.
+     */
+    public function __invoke(?string $namespace, ?string $prefix): RouteRegistrar
     {
-        return \tap(Route::prefix($this->prefix()), function ($router) use ($namespace) {
+        $currentPrefix = $this->prefix();
+        $prefixes = \collect([
+            ($currentPrefix !== '/' ? $currentPrefix : null), \trim($prefix, '/')
+        ])->filter();
+
+        return \tap(new RouteRegistrar(\app('router')), function ($router) use ($namespace, $prefixes) {
+            $router->prefix($prefixes->join('/'));
+
             if (! empty($namespace)) {
                 $router->namespace($namespace);
             }

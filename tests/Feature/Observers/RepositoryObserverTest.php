@@ -3,8 +3,6 @@
 namespace Satifest\Foundation\Tests\Feature\Observers;
 
 use Illuminate\Support\Facades\Event;
-use Satifest\Foundation\Events\RepoChanged;
-use Satifest\Foundation\Events\RepoCreated;
 use Satifest\Foundation\Events\RepositoryChanged;
 use Satifest\Foundation\Events\RepositoryCreated;
 use Satifest\Foundation\Repository;
@@ -19,7 +17,6 @@ class RepositoryObserverTest extends TestCase
     public function it_create_default_plan_on_create()
     {
         Event::fake([
-            RepoCreated::class,
             RepositoryCreated::class,
         ]);
 
@@ -33,7 +30,6 @@ class RepositoryObserverTest extends TestCase
             'constraint' => '*',
         ]);
 
-        Event::assertDispatched(RepoCreated::class);
         Event::assertDispatched(RepositoryCreated::class);
     }
 
@@ -41,8 +37,6 @@ class RepositoryObserverTest extends TestCase
     public function it_triggers_repository_changed_on_update()
     {
         Event::fake([
-            RepoCreated::class,
-            RepoChanged::class,
             RepositoryCreated::class,
             RepositoryChanged::class,
         ]);
@@ -54,10 +48,6 @@ class RepositoryObserverTest extends TestCase
         $repository->url = 'https://github.com/satifest/demo-test-package';
         $repository->save();
 
-        Event::assertDispatched(function (RepoChanged $event) use ($repository) {
-            return $event->repository->id === $repository->id;
-        });
-
         Event::assertDispatched(function (RepositoryChanged $event) use ($repository) {
             return $event->repository->id === $repository->id;
         });
@@ -67,8 +57,6 @@ class RepositoryObserverTest extends TestCase
     public function it_triggers_repository_changed_on_delete()
     {
         Event::fake([
-            RepoCreated::class,
-            RepoChanged::class,
             RepositoryCreated::class,
             RepositoryChanged::class,
         ]);
@@ -78,10 +66,6 @@ class RepositoryObserverTest extends TestCase
         ]);
 
         $repository->delete();
-
-        Event::assertDispatched(function (RepoChanged $event) use ($repository) {
-            return $event->repository->id === $repository->id;
-        });
 
         Event::assertDispatched(function (RepositoryChanged $event) use ($repository) {
             return $event->repository->id === $repository->id;

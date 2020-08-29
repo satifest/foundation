@@ -24,7 +24,8 @@ class LicenseObserverTest extends TestCase
         $user = \factory(User::class)->create();
 
         \factory(License::class)->create([
-            'user_id' => $user->getKey(),
+            'licensable_id' => $user->getKey(),
+            'licensable_type' => $user->getMorphClass(),
         ]);
 
         Event::assertDispatched(LicenseCreated::class);
@@ -41,7 +42,8 @@ class LicenseObserverTest extends TestCase
         $user = \factory(User::class)->create();
 
         $license = \factory(License::class)->create([
-            'user_id' => $user->getKey(),
+            'licensable_id' => $user->getKey(),
+            'licensable_type' => $user->getMorphClass(),
         ]);
 
         $license->allocation = 10;
@@ -63,7 +65,8 @@ class LicenseObserverTest extends TestCase
         $user = \factory(User::class)->create();
 
         $license = \factory(License::class)->create([
-            'user_id' => $user->getKey(),
+            'licensable_id' => $user->getKey(),
+            'licensable_type' => $user->getMorphClass(),
         ]);
 
         $license->delete();

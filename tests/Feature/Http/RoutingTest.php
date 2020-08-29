@@ -1,13 +1,13 @@
 <?php
 
-namespace Satifest\Foundation\Tests\Feature\Value;
+namespace Satifest\Foundation\Tests\Feature\Http;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Satifest\Foundation\Tests\TestCase;
-use Satifest\Foundation\Value\Routing;
+use Satifest\Foundation\Http\Routing;
 
 /**
- * @testdox Satifest\Foundation\Value\Routing feature tests
+ * @testdox Satifest\Foundation\Http\Routing feature tests
  */
 class RoutingTest extends TestCase
 {

@@ -5,6 +5,7 @@ namespace Satifest\Foundation;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class License extends Model
@@ -71,11 +72,11 @@ class License extends Model
     /**
      * License belongs to a User.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */
-    public function user()
+    public function licensable()
     {
-        return $this->belongsTo(Satifest::getUserModel(), 'user_id', 'id', 'user');
+        return $this->morphTo('licensable');
     }
 
     /**
@@ -111,27 +112,75 @@ class License extends Model
             return $query->where('id', '<', 1);
         }
 
-        return $this->scopeActiveOn($query, Carbon::now())
-            ->where(static function ($query) use ($user) {
-                return $query->where('user_id', '=', $user->getKey())
-                    ->orWhereHas('teams', static function ($query) use ($user) {
-                        return $query->where(column_name(Team::class, 'user_id'), '=', $user->getKey());
-                    });
-            });
+        return Satifest::licensesAccessibleBy($query, $user)
+            ->activeOn(Carbon::now());
     }
 
     /**
-     * Scope owned by user.
+     * Scope owned by licensee.
+     *
+     * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection  $licensee
      */
-    public function scopeLicensee(Builder $query, Model $user): Builder
+    public function scopeLicensee(Builder $query, $licensee, bool $orWhere = false): Builder
+    {
+        if ($licensee instanceof Collection) {
+            $licensee->filter(static function ($model) {
+                return $model instanceof Model && $model->exists;
+            });
+
+            if ($licensee->isEmpty()) {
+                return $query->where('id', '<', 1);
+            }
+
+            $licensee->each(static function ($model, $index) use ($query) {
+                $query->licensee($query, $model, $index > 1);
+            });
+        }
+
+        if (! ($licensee instanceof Model && $licensee->exists)) {
+            return $query->where('id', '<', 1);
+        }
+
+        $where = ! $orWhere ? 'where' : 'orWhere';
+
+        return $query->{$where}(static function ($query) use ($licensee) {
+            return $query->where('licensable_id', '=', $licensee->getKey())
+                ->where('licensable_type', '=', $licensee->getMorphClass());
+        });
+    }
+
+    /**
+     * Scope owned by licensee (using or).
+     *
+     * @param \Illuminate\Database\Eloquent\Model|\Illuminate\Database\Eloquent\Collection  $licensee
+     */
+    public function scopeOrLicensee(Builder $query, $licensee): Builder
+    {
+        return $this->scopeLicensee($query, $licensee, true);
+    }
+
+    /**
+     * Scope by collaborators.
+     */
+    public function scopeCollaborators(Builder $query, Model $user, bool $orWhere = false): Builder
     {
         if (! $user->exists) {
             return $query->where('id', '<', 1);
         }
 
-        return $query->where(static function ($query) use ($user) {
-            return $query->where('user_id', '=', $user->getKey());
+        $where = ! $orWhere ? 'whereHas' : 'orWhereHas';
+
+        return $query->{$where}('teams', static function ($query) use ($user) {
+            return $query->where(column_name(Team::class, 'user_id'), '=', $user->getKey());
         });
+    }
+
+    /**
+     * Scope by collaborators (using or).
+     */
+    public function scopeOrCollaborators(Builder $query, Model $user): Builder
+    {
+        return $this->scopeCollaborators($query, $user, true);
     }
 
     /**
