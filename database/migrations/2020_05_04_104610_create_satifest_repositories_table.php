@@ -25,6 +25,8 @@ class CreateSatifestRepositoriesTable extends Migration
             $table->longText('description')->nullable();
             $table->string('url');
 
+            $table->json('metadata')->nullable();
+
             $table->timestamps();
         });
     }
