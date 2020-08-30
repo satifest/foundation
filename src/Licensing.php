@@ -72,6 +72,7 @@ class Licensing implements Contracts\Licensing
         $this->type = $type;
         $this->price = $price ?? Money::USD(0);
         $this->endsAt = $endsAt;
+        $this->allocation = $allocation;
     }
 
     /**
