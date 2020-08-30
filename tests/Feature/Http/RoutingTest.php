@@ -4,6 +4,8 @@ namespace Satifest\Foundation\Tests\Feature\Http;
 
 use Illuminate\Contracts\Support\Arrayable;
 use Satifest\Foundation\Http\Routing;
+use Satifest\Foundation\Satifest;
+use Satifest\Foundation\Testing\Factories\UserFactory;
 use Satifest\Foundation\Tests\TestCase;
 
 /**
@@ -39,6 +41,45 @@ class RoutingTest extends TestCase
             'domain' => $domain,
             'prefix' => $prefix,
         ], $routing->toArray());
+    }
+
+    /** @test */
+    public function it_can_create_and_handle_dashboard_route()
+    {
+        Satifest::auth(function ($user) {
+            return ! \is_null($user);
+        });
+
+        Satifest::dashboardRoute('Satifest\Foundation\Tests\Feature\Http')
+            ->withBackendMiddlewares()
+            ->group(function($router) {
+                $router->get('test-route', 'TestController');
+            });
+
+        $user = UserFactory::new()->create();
+
+        $this->actingAs($user)->get('test-route')->assertOk();
+    }
+
+
+    /** @test */
+    public function it_can_create_and_handle_dashboard_route_as_guest()
+    {
+        Satifest::auth(function ($user) {
+            return ! \is_null($user);
+        });
+
+        Satifest::dashboardRoute('Satifest\Foundation\Tests\Feature\Http')
+            ->withBackendMiddlewares()
+            ->group(function($router) {
+                $router->get('test-route', 'TestController');
+
+                $router->get('login', function() {
+                    return 'login page';
+                })->name('login');
+            });
+
+        $this->get('test-route')->assertRedirect('login');
     }
 
     /**
