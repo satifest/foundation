@@ -4,7 +4,7 @@ namespace Satifest\Foundation\Tests\Unit\Helpers;
 
 use PHPUnit\Framework\TestCase;
 use function Satifest\Foundation\table_name;
-use Satifest\Foundation\Tests\User;
+use Satifest\Foundation\Testing\User;
 
 /**
  * @testdox Satifest\Foundation\table_name() unit tests

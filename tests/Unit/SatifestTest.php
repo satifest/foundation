@@ -5,7 +5,7 @@ namespace Satifest\Foundation\Tests\Unit;
 use Mockery as m;
 use PHPUnit\Framework\TestCase;
 use Satifest\Foundation\Satifest;
-use Satifest\Foundation\Tests\User;
+use Satifest\Foundation\Testing\User;
 
 /**
  * @testdox Satifest\Foundation\Satifest unit tests

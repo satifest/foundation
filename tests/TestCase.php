@@ -4,6 +4,7 @@ namespace Satifest\Foundation\Tests;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Orchestra\Testbench\TestCase as Testbench;
+use Satifest\Foundation\Testing\User;
 
 abstract class TestCase extends Testbench
 {

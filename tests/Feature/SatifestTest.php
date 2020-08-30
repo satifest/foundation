@@ -6,7 +6,7 @@ use Mockery as m;
 use Satifest\Foundation\Events\ServingSatifest;
 use Satifest\Foundation\Satifest;
 use Satifest\Foundation\Tests\TestCase;
-use Satifest\Foundation\Tests\User;
+use Satifest\Foundation\Testing\User;
 
 /**
  * @testdox Satifest\Foundation\Satifest feature tests
