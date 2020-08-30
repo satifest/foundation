@@ -16,6 +16,9 @@
         <include>
             <directory suffix=".php">src/</directory>
         </include>
+        <exclude>
+            <directory suffix=".php">src/Testing/</directory>
+        </exclude>
     </coverage>
     <testsuites>
         <testsuite name="Satifest Foundation Test Suite">
