@@ -56,6 +56,57 @@ class LicensableTest extends TestCase
     }
 
     /** @test */
+    public function it_can_create_license_for_user_with_license_name()
+    {
+        $user = UserFactory::new()->create();
+
+        $license = $user->createLicense(Licensing::makePurchase(
+            'stripe', '4eC39HqLyjWDarjtT1zdp7dc', Money::USD(3500)
+        )->alias('Satifest v2'));
+
+        $this->assertInstanceOf(License::class, $license);
+
+        $this->assertDatabaseHas('sf_licenses', [
+            'name' => 'Satifest v2',
+            'provider' => 'stripe',
+            'uid' => '4eC39HqLyjWDarjtT1zdp7dc',
+            'type' => 'purchase',
+            'amount' => '3500',
+            'currency' => 'USD',
+            'licensable_id' => $user->getKey(),
+            'licensable_type' => $user->getMorphClass(),
+        ]);
+
+        $this->assertSame(0, $license->plans()->count());
+    }
+
+    /** @test */
+    public function it_can_create_license_for_user_with_allocations()
+    {
+        $user = UserFactory::new()->create();
+
+        $license = $user->createLicense(Licensing::makePurchase(
+            'stripe', '4eC39HqLyjWDarjtT1zdp7dc', Money::USD(3500)
+        )->collaborators(3));
+
+        $this->assertInstanceOf(License::class, $license);
+
+        $this->assertDatabaseHas('sf_licenses', [
+            'provider' => 'stripe',
+            'uid' => '4eC39HqLyjWDarjtT1zdp7dc',
+            'type' => 'purchase',
+            'amount' => '3500',
+            'currency' => 'USD',
+            'licensable_id' => $user->getKey(),
+            'licensable_type' => $user->getMorphClass(),
+            'allocation' => 3,
+            'utilisation' => 0,
+        ]);
+
+        $this->assertSame(0, $license->plans()->count());
+    }
+
+    /** @test */
     public function it_can_create_license_with_plans_for_user()
     {
         $user = UserFactory::new()->create();
