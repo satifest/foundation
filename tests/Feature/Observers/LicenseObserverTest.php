@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Event;
 use Satifest\Foundation\Events\LicenseChanged;
 use Satifest\Foundation\Events\LicenseCreated;
 use Satifest\Foundation\License;
+use Satifest\Foundation\Testing\Factories\LicenseFactory;
+use Satifest\Foundation\Testing\Factories\UserFactory;
 use Satifest\Foundation\Tests\TestCase;
 use Satifest\Foundation\Tests\User;
 
@@ -21,9 +23,9 @@ class LicenseObserverTest extends TestCase
             LicenseCreated::class,
         ]);
 
-        $user = \factory(User::class)->create();
+        $user = UserFactory::new()->create();
 
-        \factory(License::class)->create([
+        LicenseFactory::new()->create([
             'licensable_id' => $user->getKey(),
             'licensable_type' => $user->getMorphClass(),
         ]);
@@ -39,9 +41,9 @@ class LicenseObserverTest extends TestCase
             LicenseChanged::class,
         ]);
 
-        $user = \factory(User::class)->create();
+        $user = UserFactory::new()->create();
 
-        $license = \factory(License::class)->create([
+        $license = LicenseFactory::new()->create([
             'licensable_id' => $user->getKey(),
             'licensable_type' => $user->getMorphClass(),
         ]);
@@ -62,9 +64,9 @@ class LicenseObserverTest extends TestCase
             LicenseChanged::class,
         ]);
 
-        $user = \factory(User::class)->create();
+        $user = UserFactory::new()->create();
 
-        $license = \factory(License::class)->create([
+        $license = LicenseFactory::new()->create([
             'licensable_id' => $user->getKey(),
             'licensable_type' => $user->getMorphClass(),
         ]);

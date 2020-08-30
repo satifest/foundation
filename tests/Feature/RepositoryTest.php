@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Money\Money;
 use Satifest\Foundation\Licensing;
 use Satifest\Foundation\Repository;
+use Satifest\Foundation\Testing\Factories\RepositoryFactory;
+use Satifest\Foundation\Testing\Factories\UserFactory;
 use Satifest\Foundation\Tests\TestCase;
 use Satifest\Foundation\Tests\User;
 use Spatie\TestTime\TestTime;
@@ -20,11 +22,11 @@ class RepositoryTest extends TestCase
     {
         TestTime::freeze();
 
-        $repository = \factory(Repository::class)->create([
+        $repository = RepositoryFactory::new()->create([
             'url' => 'https://github.com/satifest/demo-test-package',
         ]);
 
-        $user = \factory(User::class)->create();
+        $user = UserFactory::new()->create();
 
         $user->createLicense(Licensing::makeSponsorware('github', __METHOD__, Money::USD(1000)), '*');
 
@@ -77,7 +79,7 @@ class RepositoryTest extends TestCase
     /** @test */
     public function it_can_cast_name_from_url()
     {
-        $repository = \factory(Repository::class)->make();
+        $repository = RepositoryFactory::new()->make();
 
         $repository->url = 'https://github.com/satifest/demo-test-package';
 
@@ -93,7 +95,7 @@ class RepositoryTest extends TestCase
     /** @test */
     public function it_has_many_plans_relation()
     {
-        $repository = \factory(Repository::class)->make();
+        $repository = RepositoryFactory::new()->make();
 
         $plans = $repository->plans();
 
@@ -108,7 +110,7 @@ class RepositoryTest extends TestCase
     /** @test */
     public function it_has_many_releases_relation()
     {
-        $repository = \factory(Repository::class)->make();
+        $repository = RepositoryFactory::new()->make();
 
         $releases = $repository->releases();
 

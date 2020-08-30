@@ -4,6 +4,7 @@ namespace Satifest\Foundation\Tests\Feature\Casts;
 
 use Money\Money;
 use Satifest\Foundation\License;
+use Satifest\Foundation\Testing\Factories\LicenseFactory;
 use Satifest\Foundation\Tests\TestCase;
 
 /**
@@ -14,7 +15,7 @@ class MoneyTest extends TestCase
     /** @test */
     public function it_cast_to_money()
     {
-        $license = \factory(License::class)->make([
+        $license = LicenseFactory::new()->make([
             'amount' => 3500,
             'currency' => 'MYR',
         ]);
@@ -29,7 +30,7 @@ class MoneyTest extends TestCase
     /** @test */
     public function it_cast_from_money()
     {
-        $license = \factory(License::class)->make([
+        $license = LicenseFactory::new()->make([
             'amount' => 3500,
             'currency' => 'MYR',
         ]);

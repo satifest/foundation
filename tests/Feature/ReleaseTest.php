@@ -9,6 +9,9 @@ use Money\Money;
 use Satifest\Foundation\Licensing;
 use Satifest\Foundation\Release;
 use Satifest\Foundation\Repository;
+use Satifest\Foundation\Testing\Factories\ReleaseFactory;
+use Satifest\Foundation\Testing\Factories\RepositoryFactory;
+use Satifest\Foundation\Testing\Factories\UserFactory;
 use Satifest\Foundation\Tests\TestCase;
 use Satifest\Foundation\Tests\User;
 
@@ -20,11 +23,11 @@ class ReleaseTest extends TestCase
     /** @test */
     public function it_can_use_accessible_by_scope()
     {
-        $repository = \factory(Repository::class)->create([
+        $repository = RepositoryFactory::new()->create([
             'url' => 'https://github.com/satifest/demo-test-package',
         ]);
 
-        $user = \factory(User::class)->create();
+        $user = UserFactory::new()->create();
 
         $user->createLicense(Licensing::makeSponsorware('github', __METHOD__, Money::USD(1000)), '*');
 
@@ -43,23 +46,23 @@ class ReleaseTest extends TestCase
     /** @test */
     public function it_can_use_by_name_scope()
     {
-        $repository = \factory(Repository::class)->create([
+        $repository = RepositoryFactory::new()->create([
             'url' => 'https://github.com/satifest/demo-test-package',
         ]);
 
-        \factory(Release::class)->create([
+        ReleaseFactory::new()->create([
             'repository_id' => $repository->id,
             'semver' => '1.0.0.0',
             'version' => 'v1.0.0',
         ]);
 
-        \factory(Release::class)->create([
+        ReleaseFactory::new()->create([
             'repository_id' => $repository->id,
             'semver' => '1.1.0.0',
             'version' => 'v1.1.0',
         ]);
 
-        \factory(Release::class)->create([
+        ReleaseFactory::new()->create([
             'repository_id' => 2,
             'semver' => '0.1.0.0',
             'version' => 'v0.1.0',
@@ -83,7 +86,7 @@ class ReleaseTest extends TestCase
     /** @test */
     public function it_can_use_by_name_scope_with_name_as_array()
     {
-        $repository = \factory(Repository::class)->create([
+        $repository = RepositoryFactory::new()->create([
             'url' => 'https://github.com/satifest/demo-test-package',
         ]);
 
@@ -102,24 +105,24 @@ class ReleaseTest extends TestCase
     /** @test */
     public function it_can_use_by_package_scope()
     {
-        $repository = \factory(Repository::class)->create([
+        $repository = RepositoryFactory::new()->create([
             'package' => 'satifest/demo-test-package',
             'url' => 'https://github.com/satifest/demo-test-package',
         ]);
 
-        \factory(Release::class)->create([
+        ReleaseFactory::new()->create([
             'repository_id' => $repository->id,
             'semver' => '1.0.0.0',
             'version' => 'v1.0.0',
         ]);
 
-        \factory(Release::class)->create([
+        ReleaseFactory::new()->create([
             'repository_id' => $repository->id,
             'semver' => '1.1.0.0',
             'version' => 'v1.1.0',
         ]);
 
-        \factory(Release::class)->create([
+        ReleaseFactory::new()->create([
             'repository_id' => 2,
             'semver' => '0.1.0.0',
             'version' => 'v0.1.0',
@@ -143,7 +146,7 @@ class ReleaseTest extends TestCase
     /** @test */
     public function it_can_use_by_package_scope_with_name_as_array()
     {
-        $repository = \factory(Repository::class)->create([
+        $repository = RepositoryFactory::new()->create([
             'package' => 'satifest/demo-test-package',
             'url' => 'https://github.com/satifest/demo-test-package',
         ]);
@@ -163,30 +166,30 @@ class ReleaseTest extends TestCase
     /** @test */
     public function it_can_use_stable_release_scope()
     {
-        $repository = \factory(Repository::class)->create([
+        $repository = RepositoryFactory::new()->create([
             'url' => 'https://github.com/satifest/demo-test-package',
         ]);
 
-        \factory(Release::class)->create([
+        ReleaseFactory::new()->create([
             'repository_id' => $repository->id,
             'semver' => '1.0.0.0',
             'version' => 'v1.0.0',
             'type' => 'stable',
         ]);
 
-        \factory(Release::class)->create([
+        ReleaseFactory::new()->create([
             'repository_id' => $repository->id,
             'semver' => '1.1.0.0',
             'version' => 'v1.1.0',
         ]);
 
-        \factory(Release::class)->create([
+        ReleaseFactory::new()->create([
             'repository_id' => 2,
             'semver' => '0.1.0.0',
             'version' => 'v0.1.0',
         ]);
 
-        \factory(Release::class)->create([
+        ReleaseFactory::new()->create([
             'repository_id' => $repository->id,
             'semver' => '9999999-dev',
             'version' => 'dev-master',
@@ -210,7 +213,7 @@ class ReleaseTest extends TestCase
     /** @test */
     public function it_can_cast_published_at_to_carbon()
     {
-        $release = \factory(Release::class)->make([
+        $release = ReleaseFactory::new()->make([
             'published_at' => $now = Carbon::now(),
         ]);
 
@@ -223,14 +226,14 @@ class ReleaseTest extends TestCase
     /** @test */
     public function it_can_get_name_attribute()
     {
-        $release = \factory(Release::class)->make([
+        $release = ReleaseFactory::new()->make([
             'title' => 'Version 1',
             'version' => 'v1.0.0',
         ]);
 
         $this->assertSame('Version 1', $release->name);
 
-        $release = \factory(Release::class)->make([
+        $release = ReleaseFactory::new()->make([
             'title' => null,
             'version' => 'v1.0.0',
         ]);
@@ -241,7 +244,7 @@ class ReleaseTest extends TestCase
     /** @test */
     public function it_belongs_to_repository_relation()
     {
-        $release = \factory(Release::class)->make();
+        $release = ReleaseFactory::new()->make();
 
         $repository = $release->repository();
 
@@ -256,7 +259,7 @@ class ReleaseTest extends TestCase
     /** @test */
     public function it_can_verify_stable_version()
     {
-        $release = \factory(Release::class)->make([
+        $release = ReleaseFactory::new()->make([
             'type' => Release::STABLE,
         ]);
 
@@ -267,7 +270,7 @@ class ReleaseTest extends TestCase
     /** @test */
     public function it_can_verify_unstable_version()
     {
-        $release = \factory(Release::class)->make([
+        $release = ReleaseFactory::new()->make([
             'type' => Release::NIGHTLY,
         ]);
 

@@ -16,9 +16,6 @@ abstract class TestCase extends Testbench
     {
         parent::setUp();
 
-        $this->withFactories(__DIR__.'/../database/factories');
-        $this->withFactories(__DIR__.'/factories');
-
         $this->loadLaravelMigrations();
     }
 

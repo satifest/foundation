@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Event;
 use Satifest\Foundation\Events\RepositoryChanged;
 use Satifest\Foundation\Events\RepositoryCreated;
 use Satifest\Foundation\Repository;
+use Satifest\Foundation\Testing\Factories\RepositoryFactory;
 use Satifest\Foundation\Tests\TestCase;
 
 /**
@@ -20,7 +21,7 @@ class RepositoryObserverTest extends TestCase
             RepositoryCreated::class,
         ]);
 
-        $repository = \factory(Repository::class)->create([
+        $repository = RepositoryFactory::new()->create([
             'url' => 'https://github.com/satifest/demo-test-package',
         ]);
 
@@ -41,7 +42,7 @@ class RepositoryObserverTest extends TestCase
             RepositoryChanged::class,
         ]);
 
-        $repository = \factory(Repository::class)->create([
+        $repository = RepositoryFactory::new()->create([
             'url' => 'https://github.com/satifest/satifest',
         ]);
 
@@ -61,7 +62,7 @@ class RepositoryObserverTest extends TestCase
             RepositoryChanged::class,
         ]);
 
-        $repository = \factory(Repository::class)->create([
+        $repository = RepositoryFactory::new()->create([
             'url' => 'https://github.com/satifest/satifest',
         ]);
 

@@ -8,6 +8,9 @@ use Satifest\Foundation\License;
 use Satifest\Foundation\Licensing;
 use Satifest\Foundation\Plan;
 use Satifest\Foundation\Repository;
+use Satifest\Foundation\Testing\Factories\PlanFactory;
+use Satifest\Foundation\Testing\Factories\RepositoryFactory;
+use Satifest\Foundation\Testing\Factories\UserFactory;
 use Satifest\Foundation\Tests\TestCase;
 use Satifest\Foundation\Tests\User;
 
@@ -19,7 +22,7 @@ class LicensableTest extends TestCase
     /** @test */
     public function it_has_many_licenses_relation()
     {
-        $user = \factory(User::class)->make();
+        $user = UserFactory::new()->make();
 
         $licenses = $user->licenses();
 
@@ -34,7 +37,7 @@ class LicensableTest extends TestCase
     /** @test */
     public function it_can_create_license_for_user()
     {
-        $user = \factory(User::class)->create();
+        $user = UserFactory::new()->create();
 
         $license = $user->createLicense(Licensing::makePurchase(
             'stripe', '4eC39HqLyjWDarjtT1zdp7dc', Money::USD(3500)
@@ -58,12 +61,12 @@ class LicensableTest extends TestCase
     /** @test */
     public function it_can_create_license_with_plans_for_user()
     {
-        $user = \factory(User::class)->create();
-        $repository = \factory(Repository::class)->create([
+        $user = UserFactory::new()->create();
+        $repository = RepositoryFactory::new()->create([
             'name' => 'satifest/test-demo-package',
             'url' => 'http://github.com/satifest/test-demo-package',
         ]);
-        $plans = \factory(Plan::class, 2)->create([
+        $plans = PlanFactory::new()->times(2)->create([
             'repository_id' => $repository->id,
         ]);
 

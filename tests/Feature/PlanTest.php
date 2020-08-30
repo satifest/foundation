@@ -5,6 +5,7 @@ namespace Satifest\Foundation\Tests\Feature;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Satifest\Foundation\Plan;
+use Satifest\Foundation\Testing\Factories\PlanFactory;
 use Satifest\Foundation\Tests\TestCase;
 
 /**
@@ -15,7 +16,7 @@ class PlanTest extends TestCase
     /** @test */
     public function it_belongs_to_many_licenses_relation()
     {
-        $plan = \factory(Plan::class)->make();
+        $plan = PlanFactory::new()->make();
 
         $licenses = $plan->licenses();
 
@@ -39,7 +40,7 @@ class PlanTest extends TestCase
     /** @test */
     public function it_belongs_to_user_relation()
     {
-        $plan = \factory(Plan::class)->make();
+        $plan = PlanFactory::new()->make();
 
         $repository = $plan->repository();
 

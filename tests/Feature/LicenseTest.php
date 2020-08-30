@@ -7,6 +7,7 @@ use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Money\Money;
 use Satifest\Foundation\License;
+use Satifest\Foundation\Testing\Factories\LicenseFactory;
 use Satifest\Foundation\Tests\TestCase;
 
 /**
@@ -17,7 +18,7 @@ class LicenseTest extends TestCase
     /** @test */
     public function it_can_cast_price_to_money()
     {
-        $license = \factory(License::class)->make();
+        $license = LicenseFactory::new()->make();
 
         $price = $license->price;
 
@@ -29,7 +30,7 @@ class LicenseTest extends TestCase
     /** @test */
     public function it_can_cast_ends_at_to_carbon()
     {
-        $license = \factory(License::class)->make([
+        $license = LicenseFactory::new()->make([
             'ends_at' => $now = Carbon::now(),
         ]);
 
@@ -42,7 +43,7 @@ class LicenseTest extends TestCase
     /** @test */
     public function it_belongs_to_many_plans_relation()
     {
-        $license = \factory(License::class)->make();
+        $license = LicenseFactory::new()->make();
 
         $plans = $license->plans();
 
