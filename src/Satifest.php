@@ -2,6 +2,7 @@
 
 namespace Satifest\Foundation;
 
+use Illuminate\Support\Traits\Macroable;
 use InvalidArgumentException;
 
 class Satifest
@@ -9,7 +10,8 @@ class Satifest
     use Concerns\AuthorizesRequests,
         Concerns\ManagesCollaborations,
         Concerns\ManagesLicenses,
-        Concerns\ManagesRoutes;
+        Concerns\ManagesRoutes,
+        Macroable;
 
     /**
      * Indicates if Satifest migrations will be run.
