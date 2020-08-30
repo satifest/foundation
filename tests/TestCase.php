@@ -44,7 +44,7 @@ abstract class TestCase extends Testbench
     protected function getPackageProviders($app)
     {
         return [
-            'Satifest\Foundation\SatifestServiceProvider',
+            ApplicationServiceProvider::class,
         ];
     }
 }

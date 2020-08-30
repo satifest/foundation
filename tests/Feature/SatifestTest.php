@@ -5,8 +5,8 @@ namespace Satifest\Foundation\Tests\Feature;
 use Mockery as m;
 use Satifest\Foundation\Events\ServingSatifest;
 use Satifest\Foundation\Satifest;
-use Satifest\Foundation\Tests\TestCase;
 use Satifest\Foundation\Testing\User;
+use Satifest\Foundation\Tests\TestCase;
 
 /**
  * @testdox Satifest\Foundation\Satifest feature tests

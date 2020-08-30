@@ -9,6 +9,7 @@ use Satifest\Foundation\Repository;
 use Satifest\Foundation\Testing\Factories\RepositoryFactory;
 use Satifest\Foundation\Testing\Factories\UserFactory;
 use Satifest\Foundation\Tests\TestCase;
+use Satifest\Foundation\Value\HookUrl;
 use Spatie\TestTime\TestTime;
 
 /**
@@ -73,6 +74,55 @@ class RepositoryTest extends TestCase
         $this->assertSame(
             [1], $query->getBindings()
         );
+    }
+
+    /** @test */
+    public function it_can_get_composer_name_attribute_from_package()
+    {
+        $repository = RepositoryFactory::new()->make([
+            'package' => 'satifest/demo-test',
+            'name' => 'satifest/demo-test-package',
+        ]);
+
+        $this->assertSame('satifest/demo-test', $repository->composer_name);
+    }
+
+    /** @test */
+    public function it_can_get_composer_name_attribute_from_name()
+    {
+        $repository = RepositoryFactory::new()->make([
+            'name' => 'satifest/demo-test-package',
+        ]);
+
+        $this->assertSame('satifest/demo-test-package', $repository->composer_name);
+    }
+
+    /** @test */
+    public function it_can_get_hook_url_for_github()
+    {
+        $repository = RepositoryFactory::new()->make([
+            'url' => 'https://github.com/satifest/demo-test-package',
+            'provider' => 'github',
+        ]);
+
+        $hookUrl = $repository->hook_url;
+
+        $this->assertInstanceOf(HookUrl::class, $hookUrl);
+        $this->assertSame('https://github.com/satifest/demo-test-package/settings/hooks/new', (string) $hookUrl);
+    }
+
+    /** @test */
+    public function it_can_get_hook_url_for_gitlab()
+    {
+        $repository = RepositoryFactory::new()->make([
+            'url' => 'https://gitlab.com/satifest/demo-test-package',
+            'provider' => 'gitlab',
+        ]);
+
+        $hookUrl = $repository->hook_url;
+
+        $this->assertInstanceOf(HookUrl::class, $hookUrl);
+        $this->assertSame('https://gitlab.com/satifest/demo-test-package/hooks', (string) $hookUrl);
     }
 
     /** @test */
