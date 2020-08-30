@@ -5,7 +5,6 @@ namespace Satifest\Foundation\Tests\Feature\Observers;
 use Illuminate\Support\Facades\Event;
 use Satifest\Foundation\Events\RepositoryChanged;
 use Satifest\Foundation\Events\RepositoryCreated;
-use Satifest\Foundation\Repository;
 use Satifest\Foundation\Testing\Factories\RepositoryFactory;
 use Satifest\Foundation\Tests\TestCase;
 

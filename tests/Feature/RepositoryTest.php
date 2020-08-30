@@ -9,7 +9,6 @@ use Satifest\Foundation\Repository;
 use Satifest\Foundation\Testing\Factories\RepositoryFactory;
 use Satifest\Foundation\Testing\Factories\UserFactory;
 use Satifest\Foundation\Tests\TestCase;
-use Satifest\Foundation\Tests\User;
 use Spatie\TestTime\TestTime;
 
 /**

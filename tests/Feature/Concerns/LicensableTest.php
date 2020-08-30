@@ -6,13 +6,10 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Money\Money;
 use Satifest\Foundation\License;
 use Satifest\Foundation\Licensing;
-use Satifest\Foundation\Plan;
-use Satifest\Foundation\Repository;
 use Satifest\Foundation\Testing\Factories\PlanFactory;
 use Satifest\Foundation\Testing\Factories\RepositoryFactory;
 use Satifest\Foundation\Testing\Factories\UserFactory;
 use Satifest\Foundation\Tests\TestCase;
-use Satifest\Foundation\Tests\User;
 
 /**
  * @testdox Satifest\Foundation\Concerns\Licensable feature tests

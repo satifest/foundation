@@ -4,7 +4,6 @@ namespace Satifest\Foundation\Tests\Feature;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Satifest\Foundation\Plan;
 use Satifest\Foundation\Testing\Factories\PlanFactory;
 use Satifest\Foundation\Tests\TestCase;
 

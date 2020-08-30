@@ -3,7 +3,6 @@
 namespace Satifest\Foundation\Testing\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use Satifest\Foundation\Plan;
 
 class PlanFactory extends Factory

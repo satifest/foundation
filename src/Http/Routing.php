@@ -3,8 +3,6 @@
 namespace Satifest\Foundation\Http;
 
 use Illuminate\Contracts\Support\Arrayable;
-use Illuminate\Support\Facades\Route;
-use Satifest\Foundation\Http\RouteRegistrar;
 use Spatie\Url\Url;
 
 class Routing implements Arrayable
@@ -94,7 +92,7 @@ class Routing implements Arrayable
     {
         $currentPrefix = $this->prefix();
         $prefixes = \collect([
-            ($currentPrefix !== '/' ? $currentPrefix : null), \trim($prefix, '/')
+            ($currentPrefix !== '/' ? $currentPrefix : null), \trim($prefix, '/'),
         ])->filter();
 
         return \tap(new RouteRegistrar(\app('router')), function ($router) use ($namespace, $prefixes) {

@@ -2,9 +2,7 @@
 
 namespace Satifest\Foundation\Testing\Factories;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 use Satifest\Foundation\Repository;
 
 class RepositoryFactory extends Factory

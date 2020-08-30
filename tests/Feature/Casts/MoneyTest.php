@@ -3,7 +3,6 @@
 namespace Satifest\Foundation\Tests\Feature\Casts;
 
 use Money\Money;
-use Satifest\Foundation\License;
 use Satifest\Foundation\Testing\Factories\LicenseFactory;
 use Satifest\Foundation\Tests\TestCase;
 

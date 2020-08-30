@@ -2,9 +2,9 @@
 
 namespace Satifest\Foundation\Testing\Factories;
 
-use Satifest\Foundation\Testing\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Satifest\Foundation\Testing\User;
 
 class UserFactory extends Factory
 {

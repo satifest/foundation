@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Money\Money;
-use Satifest\Foundation\License;
 use Satifest\Foundation\Testing\Factories\LicenseFactory;
 use Satifest\Foundation\Tests\TestCase;
 

@@ -3,8 +3,8 @@
 namespace Satifest\Foundation\Tests\Feature\Http;
 
 use Illuminate\Contracts\Support\Arrayable;
-use Satifest\Foundation\Tests\TestCase;
 use Satifest\Foundation\Http\Routing;
+use Satifest\Foundation\Tests\TestCase;
 
 /**
  * @testdox Satifest\Foundation\Http\Routing feature tests
