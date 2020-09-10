@@ -44,6 +44,8 @@ class RepositoryUrl
 
     /**
      * Get package name from URL.
+     *
+     * @throws \InvalidArgumentException
      */
     public function name(): string
     {

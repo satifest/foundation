@@ -45,6 +45,8 @@ trait AuthorizesRequests
 
     /**
      * Set auth token name.
+     *
+     * @throws \InvalidArgumentException
      */
     public static function setAuthTokenName(string $name): void
     {
