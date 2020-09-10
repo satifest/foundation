@@ -84,16 +84,6 @@ class Repository extends Model
     }
 
     /**
-     * Scope release by repository name.
-     *
-     * @deprecated
-     */
-    public function scopeByPackageUrl(Builder $query, ?string $url): Builder
-    {
-        return $this->scopeByUrl($query, $url);
-    }
-
-    /**
      * Composer name accessor.
      */
     public function getComposerNameAttribute($value): string
