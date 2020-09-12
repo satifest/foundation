@@ -4,8 +4,8 @@ namespace Satifest\Foundation\Tests\Feature\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use Satifest\Foundation\Satifest;
 use Satifest\Foundation\Http\Middleware\Authorize;
+use Satifest\Foundation\Satifest;
 use Satifest\Foundation\Tests\TestCase;
 
 /**

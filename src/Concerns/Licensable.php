@@ -25,7 +25,10 @@ trait Licensable
      */
     public function createLicense(Licensing $licensing, $plans = []): License
     {
-        $action = CreateLicense::licensable($this);
+        $action = \app(CreateLicense::class, [
+            'licensableId' => $this->getKey(),
+            'licensableType' => $this->getMorphClass(),
+        ]);
 
         return $action($licensing, $plans);
     }

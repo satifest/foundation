@@ -26,7 +26,6 @@ class RepositoryObserverTest extends TestCase
 
         $this->assertDatabaseHas('sf_plans', [
             'repository_id' => $repository->getKey(),
-            'name' => 'Plan for satifest/demo-test-package',
             'constraint' => '*',
         ]);
 

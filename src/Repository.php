@@ -104,10 +104,8 @@ class Repository extends Model
      */
     public function createPlan(?string $name = null, string $constraint = '*'): Plan
     {
-        return Plan::forceCreate([
-            'repository_id' => $this->getKey(),
-            'name' => $name ?? "Plan for {$this->name}",
-            'constraint' => $constraint,
-        ]);
+        $action = \app(Actions\CreatePlan::class, ['repository' => $this]);
+
+        return $action($name, $constraint);
     }
 }

@@ -52,7 +52,7 @@ class RoutingTest extends TestCase
 
         Satifest::dashboardRoute('Satifest\Foundation\Tests\Feature\Http')
             ->withBackendMiddlewares()
-            ->group(function($router) {
+            ->group(function ($router) {
                 $router->get('test-route', 'TestController');
             });
 
@@ -60,7 +60,6 @@ class RoutingTest extends TestCase
 
         $this->actingAs($user)->get('test-route')->assertOk();
     }
-
 
     /** @test */
     public function it_can_create_and_handle_dashboard_route_as_guest()
@@ -71,10 +70,10 @@ class RoutingTest extends TestCase
 
         Satifest::dashboardRoute('Satifest\Foundation\Tests\Feature\Http')
             ->withBackendMiddlewares()
-            ->group(function($router) {
+            ->group(function ($router) {
                 $router->get('test-route', 'TestController');
 
-                $router->get('login', function() {
+                $router->get('login', function () {
                     return 'login page';
                 })->name('login');
             });

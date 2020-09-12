@@ -3,7 +3,6 @@
 namespace Satifest\Foundation\Actions;
 
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use Satifest\Foundation\Contracts\Licensing;
 use Satifest\Foundation\License;
 use Satifest\Foundation\Plan;
@@ -29,23 +28,12 @@ class CreateLicense
      * Construct a new Create License object.
      *
      * @param  string|int  $licensableId
+     * @param  string  $licensableType
      */
     public function __construct($licensableId, string $licensableType)
     {
         $this->licensableId = $licensableId;
         $this->licensableType = $licensableType;
-    }
-
-    /**
-     * Make a new Create License object from Eloquent.
-     *
-     * @return static
-     */
-    public static function licensable(Model $eloquent)
-    {
-        return new static(
-            $eloquent->getKey(), $eloquent->getMorphClass()
-        );
     }
 
     /**
