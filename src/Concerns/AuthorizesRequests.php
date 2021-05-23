@@ -3,7 +3,7 @@
 namespace Satifest\Foundation\Concerns;
 
 use InvalidArgumentException;
-use Laravie\QueryFilter\Value\Column;
+use Laravie\QueryFilter\Column;
 
 trait AuthorizesRequests
 {
